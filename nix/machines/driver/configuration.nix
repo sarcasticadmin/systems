@@ -5,10 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-    ];
+  #imports =
+  #  [ # Include the results of the hardware scan.
+  #    /etc/nixos/hardware-configuration.nix
+  #  ];
 
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
@@ -65,18 +65,21 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" "audio" "sound" ]; # Enable ‘sudo’ for the user.
-     openssh.authorizedKeys.keys  = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+    isNormalUser = true;
+    uid = 1000;
+    extraGroups = [ "wheel" "audio" "sound" ]; # Enable ‘sudo’ for the user.
+    openssh.authorizedKeys.keys  = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  #   firefox
-  # ];
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+    git
+    tmux
+    ag
+   ];
   
   # Enable the OpenSSH daemon.
   services.openssh = {

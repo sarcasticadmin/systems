@@ -153,32 +153,39 @@ info "Creating persistent directory for host SSH keys ..."
 mkdir -p /mnt/persist/etc/ssh
 
 info "Generating NixOS configuration (/mnt/etc/nixos/*.nix) ..."
+
+# Generate the hardware nix without chroot
+# wont touch configuration.nix if it already exists
 nixos-generate-config --root /mnt
 
-#info "Enter password for the root user ..."
-#ROOT_PASSWORD_HASH="$(mkpasswd -m sha-512 | sed 's/\$/\\$/g')"
+mkdir /mnt/home/${USER_NAME}
+chmod 700 /mnt/home/${USER_NAME}
 
-#info "Enter password for '${USER_NAME}' user ..."
-#USER_PASSWORD_HASH="$(mkpasswd -m sha-512 | sed 's/\$/\\$/g')"
+# Get the right repo and checkout specific branch if needed
+git clone git@github.com:sarcasticadmin/systems.git /mnt/home/${USER_NAME}/systems --branch ${2:-master}
 
-info "Moving generated hardware-configuration.nix to /persist/etc/nixos/ ..."
-mkdir -p /mnt/persist/etc/nixos
-ln -s /mnt/etc/nixos/hardware-configuration.nix /mnt/persist/etc/nixos/
+chown 1000:100 -R /mnt/home/${USER_NAME}
 
-info "Backing up the originally generated configuration.nix to /persist/etc/nixos/configuration.nix.original ..."
-mv /mnt/etc/nixos/configuration.nix /mnt/persist/etc/nixos/configuration.nix.original
-
-info "Backing up the this installer script to /persist/etc/nixos/install.sh.original ..."
-cp "$0" /mnt/persist/etc/nixos/install.sh.original
-
-# Get full config
-git clone git@github.com:sarcasticadmin/systems.git /mnt/persist/system
+# Temporarily make this symlink due to chroot installation needs for config.nix path is consistent before reboot
+ln -s /mnt/home/${USER_NAME} /home/${USER_NAME}
 
 info "Installing NixOS to /mnt ..."
-# TODO: Dont assume same path in system repo
-ln -s /mnt/persist/systems/nix/machines/driver/configuration.nix /mnt/etc/nixos/configuration.nix
-# Temporarily link during livecd
-ln -s /mnt/persist/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix
-#nixos-install -I "nixos-config=/mnt/persist/etc/nixos/configuration.nix" --no-root-passwd  # already prompted for and configured password
+
+# Great idea: https://discourse.nixos.org/t/github-strategies-for-configuration-nix/1983/20
+cat << EOF > /mnt/etc/nixos/configuration.nix
+{ config, pkgs, options, ... }:
+let
+  machine="driver";
+in
+{
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      (/home/${USER_NAME}/systems/nix/machines + "/\${machine}" + /configuration.nix)
+    ];
+}
+EOF
+
 info "need to run nixos-install -I \"nixos-config=/mnt/etc/nixos/configuration.nix\" && passwd bits"
-#nixos-install -I "nixos-config=/mnt/etc/nixos/configuration.nix"
+# nixos-install assumes /mnt as chroot but its nice to be specific here with the configuration.nix path
+nixos-install -I "nixos-config=/mnt/etc/nixos/configuration.nix"
