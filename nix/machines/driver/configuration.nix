@@ -109,6 +109,10 @@ in
       myFirefox # robs custom firefox
       nixpkgs-fmt
       shellcheck
+      manix # useful search for nix docs
+      scrot # screenshots
+      ticker # stocks
+      newsboat
       # hardware key
       gnupg
       pcsclite
