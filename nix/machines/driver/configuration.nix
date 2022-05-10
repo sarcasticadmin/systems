@@ -79,6 +79,8 @@
     git
     tmux
     ag
+    stow
+    gnumake
    ];
 
   # Enable the OpenSSH daemon.
