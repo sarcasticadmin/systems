@@ -12,7 +12,7 @@
 
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
-  
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -79,8 +79,14 @@
     git
     tmux
     ag
+    stow
+    gnumake
+    # hardware key
+    gnupg
+    pcsclite
+    pinentry
    ];
-  
+
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
@@ -99,6 +105,30 @@
 
   services.logind.extraConfig = "HandleLidSwitch=ignore";
 
+  services.xserver = {
+    enable = true;
+
+    desktopManager = {
+      xterm.enable = false;
+    };
+
+    displayManager = {
+        defaultSession = "none+i3";
+    };
+
+    # This is the way
+    windowManager.i3 = {
+      enable = true;
+      extraPackages = with pkgs; [
+        dmenu # simple launcher
+        i3status # default i3 status bar
+        i3lock # default + simple lock that matches my config
+     ];
+    };
+  };
+
+  # part of gnupg reqs
+  services.pcscd.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
