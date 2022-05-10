@@ -81,6 +81,10 @@
     ag
     stow
     gnumake
+    # hardware key
+    gnupg
+    pcsclite
+    pinentry
    ];
 
   # Enable the OpenSSH daemon.
@@ -123,6 +127,8 @@
     };
   };
 
+  # part of gnupg reqs
+  services.pcscd.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
