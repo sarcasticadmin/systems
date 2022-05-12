@@ -3,7 +3,28 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+let
+  # Nix firefox addons only work with the firefox-esr package.
+  # https://github.com/NixOS/nixpkgs/blob/master/doc/builders/packages/firefox.section.md
+  myFirefox = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
+    cfg = { smartcardSupport = true; };
+    nixExtensions = [
+      (pkgs.fetchFirefoxAddon {
+        name = "ublock"; # Has to be unique!
+        url = "https://addons.mozilla.org/firefox/downloads/file/3933192/ublock_origin-1.42.4-an+fx.xpi"; # Get this from about:addons
+        sha256 = "sha256:1kirlfp5x10rdkgzpj6drbpllryqs241fm8ivm0cns8jjrf36g5w";
+      })
+      (pkgs.fetchFirefoxAddon {
+        name = "bitwarden";
+        url = "https://addons.mozilla.org/firefox/downloads/file/3940986/bitwarden_free_password_manager-1.58.0-an+fx.xpi";
+        sha256 = "sha256:062v695pmy1nvhav13750dqav69mw6i9yfdfspkxz9lv4j21fram";
+      })
+    ];
+  };
 
+  # Need the pythons in my vims
+  myvim = pkgs.vim_configurable.override { python = pkgs.python3; };
+in
 {
   #imports =
   #  [ # Include the results of the hardware scan.
@@ -22,7 +43,8 @@
   # Failed assertions:
   # - ZFS requires networking.hostId to be set
   networking.hostId = "6f602d2b";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
+  networking.wireless.userControlled.enable = true;
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
@@ -34,6 +56,7 @@
   networking.interfaces.enp2s0f0.useDHCP = true;
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
+  networking.interfaces.enp7s0f4u2.useDHCP = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -68,25 +91,35 @@
     isNormalUser = true;
     uid = 1000;
     extraGroups = [ "wheel" "audio" "sound" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys  = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    git
-    tmux
-    ag
-    stow
-    gnumake
-    # hardware key
-    gnupg
-    pcsclite
-    pinentry
-   ];
+  environment = {
+    systemPackages = with pkgs; [
+      wget
+      git
+      tmux
+      ag
+      stow
+      gnumake
+      # Custom pkgs
+      myvim
+      myFirefox # robs custom firefox
+      nixpkgs-fmt
+      shellcheck
+      # hardware key
+      gnupg
+      pcsclite
+      pinentry
+    ];
 
+    etc."wpa_supplicant.conf" = {
+      source = "/persist/etc/wpa_supplicant.conf";
+      mode = "symlink";
+    };
+  };
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
@@ -113,7 +146,7 @@
     };
 
     displayManager = {
-        defaultSession = "none+i3";
+      defaultSession = "none+i3";
     };
 
     # This is the way
@@ -123,7 +156,7 @@
         dmenu # simple launcher
         i3status # default i3 status bar
         i3lock # default + simple lock that matches my config
-     ];
+      ];
     };
   };
 
@@ -162,4 +195,3 @@
   system.stateVersion = "21.11"; # Did you read the comment?
 
 }
-
