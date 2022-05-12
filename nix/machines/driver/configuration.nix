@@ -91,26 +91,35 @@ in
     isNormalUser = true;
     uid = 1000;
     extraGroups = [ "wheel" "audio" "sound" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys  = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    git
-    tmux
-    ag
-    stow
-    gnumake
-    myFirefox # robs custom firefox
-    # hardware key
-    gnupg
-    pcsclite
-    pinentry
-   ];
+  environment = {
+    systemPackages = with pkgs; [
+      wget
+      git
+      tmux
+      ag
+      stow
+      gnumake
+      # Custom pkgs
+      myvim
+      myFirefox # robs custom firefox
+      nixpkgs-fmt
+      shellcheck
+      # hardware key
+      gnupg
+      pcsclite
+      pinentry
+    ];
 
+    etc."wpa_supplicant.conf" = {
+      source = "/persist/etc/wpa_supplicant.conf";
+      mode = "symlink";
+    };
+  };
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
@@ -137,7 +146,7 @@ in
     };
 
     displayManager = {
-        defaultSession = "none+i3";
+      defaultSession = "none+i3";
     };
 
     # This is the way
@@ -147,7 +156,7 @@ in
         dmenu # simple launcher
         i3status # default i3 status bar
         i3lock # default + simple lock that matches my config
-     ];
+      ];
     };
   };
 
@@ -186,4 +195,3 @@ in
   system.stateVersion = "21.11"; # Did you read the comment?
 
 }
-
