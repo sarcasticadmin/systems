@@ -21,6 +21,9 @@ let
       })
     ];
   };
+
+  # Need the pythons in my vims
+  myvim = pkgs.vim_configurable.override { python = pkgs.python3; };
 in
 {
   #imports =
