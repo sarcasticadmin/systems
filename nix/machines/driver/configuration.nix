@@ -22,7 +22,8 @@
   # Failed assertions:
   # - ZFS requires networking.hostId to be set
   networking.hostId = "6f602d2b";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
+  networking.wireless.userControlled.enable = true;
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
