@@ -61,7 +61,9 @@ in
   networking.interfaces.enp2s0f0.useDHCP = true;
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
-  networking.interfaces.enp7s0f4u2.useDHCP = true;
+
+  # Leave this false until tether is needed
+  networking.interfaces.enp7s0f4u2.useDHCP = false;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
