@@ -102,6 +102,7 @@ in
       scrot # screenshots
       ticker # stocks
       newsboat
+      imagemagick
       # hardware key
       gnupg
       pcsclite
