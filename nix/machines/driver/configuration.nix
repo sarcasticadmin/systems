@@ -43,8 +43,13 @@ in
   # Failed assertions:
   # - ZFS requires networking.hostId to be set
   networking.hostId = "6f602d2b";
-  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
-  networking.wireless.userControlled.enable = true;
+
+  # Enables wireless support via wpa_supplicant
+  networking.wireless.enable = true;
+  # Option is misleading but we dont want it
+  networking.wireless.userControlled.enable = false;
+  # Allow configuring networks "imperatively"
+  networking.wireless.allowAuxiliaryImperativeNetworks = true;
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
@@ -56,7 +61,9 @@ in
   networking.interfaces.enp2s0f0.useDHCP = true;
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
-  networking.interfaces.enp7s0f4u2.useDHCP = true;
+
+  # Leave this false until tether is needed
+  networking.interfaces.enp7s0f4u2.useDHCP = false;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -95,6 +102,7 @@ in
       scrot # screenshots
       ticker # stocks
       newsboat
+      imagemagick
       # hardware key
       gnupg
       pcsclite
