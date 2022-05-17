@@ -90,6 +90,7 @@ in
     systemPackages = with pkgs; [
       wget
       git
+      gh
       tmux
       ag
       stow
