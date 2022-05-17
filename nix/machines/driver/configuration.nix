@@ -26,10 +26,11 @@ let
   myvim = pkgs.vim_configurable.override { python = pkgs.python3; };
 in
 {
-  #imports =
-  #  [ # Include the results of the hardware scan.
-  #    /etc/nixos/hardware-configuration.nix
-  #  ];
+  imports =
+    [
+      # Import nix-garage
+      ./nix-garage-overlay.nix
+    ];
 
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
