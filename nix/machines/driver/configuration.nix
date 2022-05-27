@@ -4,30 +4,13 @@
 
 { config, pkgs, ... }:
 let
-  # Nix firefox addons only work with the firefox-esr package.
-  # https://github.com/NixOS/nixpkgs/blob/master/doc/builders/packages/firefox.section.md
-  myFirefox = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
-    cfg = { smartcardSupport = true; };
-    nixExtensions = [
-      (pkgs.fetchFirefoxAddon {
-        name = "ublock"; # Has to be unique!
-        url = "https://addons.mozilla.org/firefox/downloads/file/3933192/ublock_origin-1.42.4-an+fx.xpi"; # Get this from about:addons
-        sha256 = "sha256:1kirlfp5x10rdkgzpj6drbpllryqs241fm8ivm0cns8jjrf36g5w";
-      })
-      (pkgs.fetchFirefoxAddon {
-        name = "bitwarden";
-        url = "https://addons.mozilla.org/firefox/downloads/file/3940986/bitwarden_free_password_manager-1.58.0-an+fx.xpi";
-        sha256 = "sha256:062v695pmy1nvhav13750dqav69mw6i9yfdfspkxz9lv4j21fram";
-      })
-    ];
-  };
-
   # Need the pythons in my vims
   myvim = pkgs.vim_configurable.override { python = pkgs.python3; };
 in
 {
   imports =
     [
+      ../_common/desktop.nix
       # Import nix-garage
       ./nix-garage-overlay.nix
     ];
@@ -63,8 +46,8 @@ in
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
 
-  # Leave this false until tether is needed
-  networking.interfaces.enp7s0f4u2.useDHCP = false;
+  # Leave commented until tether is needed
+  #networking.interfaces.enp7s0f4u2.useDHCP = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -72,9 +55,6 @@ in
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
@@ -97,11 +77,9 @@ in
       gnumake
       # Custom pkgs
       myvim
-      myFirefox # robs custom firefox
       nixpkgs-fmt
       shellcheck
       manix # useful search for nix docs
-      scrot # screenshots
       ticker # stocks
       newsboat
       imagemagick
@@ -133,28 +111,6 @@ in
   };
 
   services.logind.extraConfig = "HandleLidSwitch=ignore";
-
-  services.xserver = {
-    enable = true;
-
-    desktopManager = {
-      xterm.enable = false;
-    };
-
-    displayManager = {
-      defaultSession = "none+i3";
-    };
-
-    # This is the way
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu # simple launcher
-        i3status # default i3 status bar
-        i3lock # default + simple lock that matches my config
-      ];
-    };
-  };
 
   # part of gnupg reqs
   services.pcscd.enable = true;
