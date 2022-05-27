@@ -25,6 +25,8 @@ in
   environment.systemPackages = with pkgs; [
     myFirefox # robs custom firefox
     scrot # screenshots
+    zoom-us
+    zathura
     #imagemagick # dup might be a problem?
   ];
 
