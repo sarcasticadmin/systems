@@ -4,13 +4,12 @@
 
 { config, pkgs, ... }:
 let
-  # Need the pythons in my vims
-  myvim = pkgs.vim_configurable.override { python = pkgs.python3; };
+  # Locals
 in
 {
   imports =
     [
-      # Desktop
+      ./base.nix
       ./desktop.nix
       # Import nix-garage
       ./nix-garage-overlay.nix
@@ -69,18 +68,7 @@ in
   # $ nix search wget
   environment = {
     systemPackages = with pkgs; [
-      wget
-      git
       gh
-      tmux
-      ag
-      stow
-      gnumake
-      # Custom pkgs
-      myvim
-      nixpkgs-fmt
-      shellcheck
-      manix # useful search for nix docs
       ticker # stocks
       newsboat
       imagemagick
