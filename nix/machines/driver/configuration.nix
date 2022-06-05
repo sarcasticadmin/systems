@@ -4,7 +4,8 @@
 
 { config, pkgs, ... }:
 let
-  # Locals
+  # Give me my expected flavor of pinentry
+  pinentry-tty = pkgs.pinentry.override { flavor = "tty"; };
 in
 {
   imports =
@@ -76,6 +77,7 @@ in
       gnupg
       pcsclite
       pinentry
+      pinentry-tty
     ];
 
     etc."wpa_supplicant.conf" = {
