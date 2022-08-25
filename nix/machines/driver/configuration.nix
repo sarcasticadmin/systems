@@ -68,6 +68,7 @@ in
   # $ nix search wget
   environment = {
     systemPackages = with pkgs; [
+      awscli2
       gh
       ticker # stocks
       newsboat
