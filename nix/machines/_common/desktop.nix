@@ -31,8 +31,13 @@ in
   environment.systemPackages = with pkgs; [
     myFirefox # robs custom firefox
     scrot # screenshots
+    feh # set wallpaper
     zoom-us
     zathura
+    obsidian
+    xsel
+    viewnior
+    mpv
     #imagemagick # dup might be a problem?
   ];
 
