@@ -17,6 +17,12 @@ let
         url = "https://addons.mozilla.org/firefox/downloads/file/3940986/bitwarden_free_password_manager-1.58.0-an+fx.xpi";
         sha256 = "sha256:062v695pmy1nvhav13750dqav69mw6i9yfdfspkxz9lv4j21fram";
       })
+      (pkgs.fetchFirefoxAddon {
+        name = "zoomScheduler";
+        url = "https://addons.mozilla.org/firefox/downloads/file/3979414/zoom_new_scheduler-2.1.29.xpi";
+        sha256 = "sha256:18zsrcg82pbj08645k5pq970hyblmjs01fnwbv6hw31zwgb0bjyl";
+      })
+
     ];
   };
 in
