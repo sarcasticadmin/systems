@@ -18,5 +18,6 @@ in
     nixpkgs-fmt
     shellcheck
     manix # useful search for nix docs
+    unzip
   ];
 }
