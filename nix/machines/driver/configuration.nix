@@ -73,6 +73,7 @@ in
       ticker # stocks
       newsboat
       imagemagick
+      nixpkgs-review
       # hardware key
       gnupg
       pcsclite
