@@ -10,6 +10,7 @@ in
   environment.systemPackages = with pkgs; [
     wget
     git
+    git-lfs
     tmux
     ag
     stow
