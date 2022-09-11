@@ -42,6 +42,10 @@ in
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
+
+  # Make sure that dhcpcd doesnt timeout when interfaces are down
+  # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
+  networking.dhcpcd.wait = "if-carrier-up";
   networking.interfaces.enp2s0f0.useDHCP = true;
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;

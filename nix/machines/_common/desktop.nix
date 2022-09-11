@@ -33,11 +33,12 @@ in
     scrot # screenshots
     feh # set wallpaper
     zoom-us
-    zathura
+    zathura # simple pdf viewer
     obsidian
     xsel
     viewnior
     mpv
+    xournal # pdf annotations
     #imagemagick # dup might be a problem?
   ];
 

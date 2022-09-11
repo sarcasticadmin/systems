@@ -10,10 +10,12 @@ in
   environment.systemPackages = with pkgs; [
     wget
     git
+    git-lfs
     tmux
     ag
     stow
     gnumake
+    lsof
     myVim # Custom vim
     nixpkgs-fmt
     shellcheck
