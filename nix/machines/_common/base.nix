@@ -15,6 +15,7 @@ in
     ag
     stow
     gnumake
+    lsof
     myVim # Custom vim
     nixpkgs-fmt
     shellcheck
