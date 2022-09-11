@@ -19,6 +19,7 @@ in
     myVim # Custom vim
     nixpkgs-fmt
     shellcheck
+    tree
     manix # useful search for nix docs
     unzip
   ];
