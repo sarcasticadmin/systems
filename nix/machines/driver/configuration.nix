@@ -13,6 +13,7 @@ in
       ../_common/base.nix
       # Import nix-garage
       ./nix-garage-overlay.nix
+      ./home.nix
     ];
 
   # Necessary in most configurations
