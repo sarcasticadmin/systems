@@ -9,13 +9,13 @@ let
     nixExtensions = [
       (pkgs.fetchFirefoxAddon {
         name = "ublock"; # Has to be unique!
-        url = "https://addons.mozilla.org/firefox/downloads/file/3933192/ublock_origin-1.42.4-an+fx.xpi"; # Get this from about:addons
-        sha256 = "sha256:1kirlfp5x10rdkgzpj6drbpllryqs241fm8ivm0cns8jjrf36g5w";
+        url = "https://addons.mozilla.org/firefox/downloads/file/3998742/ublock_origin-1.44.2.xpi"; # Get this from about:addons
+        sha256 = "sha256:0zvsjsjlp0r1glqf0qpv425zshrwmimk1in1v339acwy1ysxkx00";
       })
       (pkgs.fetchFirefoxAddon {
         name = "bitwarden";
-        url = "https://addons.mozilla.org/firefox/downloads/file/3940986/bitwarden_free_password_manager-1.58.0-an+fx.xpi";
-        sha256 = "sha256:062v695pmy1nvhav13750dqav69mw6i9yfdfspkxz9lv4j21fram";
+        url = "https://addons.mozilla.org/firefox/downloads/file/3986147/bitwarden_password_manager-2022.8.0.xpi";
+        sha256 = "sha256:002lap6vn1n1k7w1pmrm996dg4x9802yvq33csyyizc6iwsbm3r0";
       })
       (pkgs.fetchFirefoxAddon {
         name = "zoomScheduler";
@@ -30,6 +30,7 @@ in
   # install Desktop packages
   environment.systemPackages = with pkgs; [
     myFirefox # robs custom firefox
+    chromium
     scrot # screenshots
     feh # set wallpaper
     zoom-us

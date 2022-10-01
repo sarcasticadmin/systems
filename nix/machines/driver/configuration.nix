@@ -13,10 +13,16 @@ in
       ../_common/base.nix
       # Import nix-garage
       ./nix-garage-overlay.nix
+      ./home.nix
     ];
 
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
+
+  # remove the annoying experimental warnings
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
