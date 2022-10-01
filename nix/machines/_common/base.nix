@@ -3,7 +3,7 @@
 
 let
   # Need the pythons in my vims
-  myVim = pkgs.vim_configurable.override { python = pkgs.python3; };
+  myVim = pkgs.vim_configurable.override { pythonSupport = true; };
 in
 {
   # install Nebulaworks packages
@@ -12,7 +12,7 @@ in
     git
     git-lfs
     tmux
-    ag
+    silver-searcher
     stow
     gnumake
     lsof
