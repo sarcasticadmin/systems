@@ -30,6 +30,7 @@ in
   # install Desktop packages
   environment.systemPackages = with pkgs; [
     myFirefox # robs custom firefox
+    chromium
     scrot # screenshots
     feh # set wallpaper
     zoom-us
