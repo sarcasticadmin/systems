@@ -8,6 +8,7 @@ in
 {
   # install Nebulaworks packages
   environment.systemPackages = with pkgs; [
+    dig
     wget
     git
     git-lfs
@@ -15,6 +16,7 @@ in
     silver-searcher
     stow
     gnumake
+    jq
     lsof
     myVim # Custom vim
     nixpkgs-fmt
