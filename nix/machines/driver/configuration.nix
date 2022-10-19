@@ -132,8 +132,17 @@ in
   # networking.firewall.enable = false;
 
   # ZFS
-  services.zfs.autoScrub.enable = true;
-  services.zfs.autoScrub.interval = "weekly";
+  services.zfs = {
+    autoScrub = {
+      enable = true;
+      interval = "weekly";
+    };
+    autoSnapshot = {
+      enable = true;
+      monthly = 3;
+    };
+  };
+
   systemd.services.zfs-scrub.unitConfig.ConditionACPower = true;
 
   # This value determines the NixOS release from which the default
