@@ -148,6 +148,7 @@ in
   # dont hiberate/sleep by default
   powerManagement.enable = false;
   # Enable tlp for stricter governance of power management
+  # Validate status: `sudo tlp-stat -b`
   services.tlp.enable = true;
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
