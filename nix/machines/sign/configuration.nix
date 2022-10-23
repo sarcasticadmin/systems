@@ -9,6 +9,7 @@ in
 {
   imports =
     [
+      ./hardware-configuration.nix
       ../_common/base.nix
     ];
 
