@@ -18,8 +18,9 @@
       fsType = "zfs";
     };
 
+  # Defaulted to /dev/disk/by-uuid but switched to by-label for reusability
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/82D7-C420";
+    { device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
 
