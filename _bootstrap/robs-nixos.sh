@@ -8,10 +8,9 @@
 #   - NixOS Manual (https://nixos.org/nixos/manual/)
 #
 # It expects the name of the block device (e.g. 'sda') to partition
-# and install NixOS on and an authorized public ssh key to log in as
-# 'root' remotely. The script must also be executed as root.
+# and install NixOS on.
 #
-# Example: `sudo ./install.sh sde "ssh-rsa AAAAB..."`
+# Example: `setup.sh sda`
 #
 
 set -euo pipefail
@@ -65,10 +64,6 @@ fi
 
 # TODO: I dont think I need this
 # personal user name
-USER_NAME="rherna"
-
-AUTHORIZED_SSH_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKnoK/IJ1o8bZluhJQsb6q6VOWu25Dc8N4JtmCSZuRXu rherna@sputnik"
-
 export ZFS_POOL="zroot"
 
 # ephemeral datasets
@@ -152,40 +147,12 @@ zfs set com.sun:auto-snapshot=true "$ZFS_DS_PERSIST"
 info "Creating persistent directory for host SSH keys ..."
 mkdir -p /mnt/persist/etc/ssh
 
-info "Generating NixOS configuration (/mnt/etc/nixos/*.nix) ..."
-
-# Generate the hardware nix without chroot
+# Generate the hardware-configuration.nix
+# Copy this file out to nixosConfigurations if hardware is new
+# Otherwise flake will use its own module
 # wont touch configuration.nix if it already exists
+info "Generating NixOS configuration (/mnt/etc/nixos/*.nix) just in case"
 nixos-generate-config --root /mnt
 
-mkdir /mnt/home/${USER_NAME}
-chmod 700 /mnt/home/${USER_NAME}
-
-# Get the right repo and checkout specific branch if needed
-git clone git@github.com:sarcasticadmin/systems.git /mnt/home/${USER_NAME}/systems --branch ${2:-master}
-
-chown 1000:100 -R /mnt/home/${USER_NAME}
-
-# Temporarily make this symlink due to chroot installation needs for config.nix path is consistent before reboot
-ln -s /mnt/home/${USER_NAME} /home/${USER_NAME}
-
-info "Installing NixOS to /mnt ..."
-
-# Great idea: https://discourse.nixos.org/t/github-strategies-for-configuration-nix/1983/20
-cat << EOF > /mnt/etc/nixos/configuration.nix
-{ config, pkgs, options, ... }:
-let
-  machine="driver";
-in
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      (/home/${USER_NAME}/systems/nix/machines + "/\${machine}" + /configuration.nix)
-    ];
-}
-EOF
-
-info "need to run nixos-install -I \"nixos-config=/mnt/etc/nixos/configuration.nix\" && passwd bits"
-# nixos-install assumes /mnt as chroot but its nice to be specific here with the configuration.nix path
-nixos-install -I "nixos-config=/mnt/etc/nixos/configuration.nix"
+info "copy out the /mnt/etc/nixos/hardware-configuration.nix if new hardware"
+info "nixos-install --flake github:sarcasticadmin/systems#<host>"
