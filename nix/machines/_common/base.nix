@@ -8,7 +8,9 @@ in
 {
   # install Nebulaworks packages
   environment.systemPackages = with pkgs; [
+    btop
     dig
+    file
     wget
     git
     git-lfs
