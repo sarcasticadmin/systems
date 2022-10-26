@@ -9,6 +9,7 @@ in
 {
   imports =
     [
+      ./hardware-configuration.nix
       ../_common/desktop.nix
       ../_common/base.nix
       # Import nix-garage
