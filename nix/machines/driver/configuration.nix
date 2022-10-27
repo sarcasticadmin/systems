@@ -91,7 +91,7 @@ in
       # hardware key
       gnupg
       pcsclite
-      pinentry
+      myPinentry
     ];
 
     etc."wpa_supplicant.conf" = {
