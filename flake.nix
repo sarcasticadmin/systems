@@ -4,7 +4,7 @@
   outputs = { self, nixpkgs }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
+      myOverlay = import nixpkgs {
         inherit system;
         overlays = [
           self.overlays.default
@@ -20,7 +20,9 @@
       nixosConfigurations = {
         driver = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./nix/machines/driver/configuration.nix ];
+          modules = [ 
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ myOverlay ]; })
+            ./nix/machines/driver/configuration.nix ];
         };
         sign = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
