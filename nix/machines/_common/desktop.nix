@@ -33,6 +33,7 @@ in
     chromium
     scrot # screenshots
     feh # set wallpaper
+    gomuks # matrix
     zoom-us
     zathura # simple pdf viewer
     obsidian

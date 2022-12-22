@@ -20,6 +20,8 @@ in
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
 
+  nix.settings.trusted-users = [ "rherna" ];
+
   # remove the annoying experimental warnings
   nix.extraOptions = ''
     experimental-features = nix-command flakes
