@@ -86,6 +86,7 @@ in
       ticker # stocks
       newsboat
       imagemagick
+      magic-wormhole
       nixpkgs-review
       # hardware key
       gnupg
