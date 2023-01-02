@@ -86,6 +86,7 @@ in
       ticker # stocks
       newsboat
       imagemagick
+      magic-wormhole
       nixpkgs-review
       # hardware key
       gnupg
@@ -121,11 +122,22 @@ in
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "curses";
+    # Make pinentry across multiple terminal windows, seamlessly
+    enableSSHSupport = true;
+  };
 
+  programs.ssh = {
+    # Fix timeout from client side
+    # Ref: https://www.cyberciti.biz/tips/open-ssh-server-connection-drops-out-after-few-or-n-minutes-of-inactivity.html
+    extraConfig = ''
+      Host *
+        ServerAliveInterval 15
+        ServerAliveCountMax 3
+    '';
+  };
   # List services that you want to enable:
 
   # Open ports in the firewall.
