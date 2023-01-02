@@ -18,3 +18,5 @@ make CONFIG=./_make/workstation-pkgs.mk world
 
 - Check to make sure the interface is actually enabled, sometimes the hardware button (F8) is disabling the wifi card. You can notice this in
   the `wpa_cli status` since it will say `DISABLE_INTERFACE`
+
+- pinentry is not present for the binary I was execting. Seems to be only ncurses pinentry is available, maybe make a new drv upstream?
