@@ -9,20 +9,19 @@ let
     nixExtensions = [
       (pkgs.fetchFirefoxAddon {
         name = "ublock"; # Has to be unique!
-        url = "https://addons.mozilla.org/firefox/downloads/file/3998742/ublock_origin-1.44.2.xpi"; # Get this from about:addons
-        sha256 = "sha256:0zvsjsjlp0r1glqf0qpv425zshrwmimk1in1v339acwy1ysxkx00";
+        url = "https://addons.mozilla.org/firefox/downloads/file/4047353/ublock_origin-1.46.0.xpi"; # Get this from about:addons
+        sha256 = "sha256-a/ivUmY1P6teq9x0dt4CbgHt+3kBsEMMXlOfZ5Hx7cg=";
       })
       (pkgs.fetchFirefoxAddon {
         name = "bitwarden";
-        url = "https://addons.mozilla.org/firefox/downloads/file/3986147/bitwarden_password_manager-2022.8.0.xpi";
-        sha256 = "sha256:002lap6vn1n1k7w1pmrm996dg4x9802yvq33csyyizc6iwsbm3r0";
+        url = "https://addons.mozilla.org/firefox/downloads/file/4046308/bitwarden_password_manager-2022.12.1.xpi";
+        sha256 = "sha256-fSixe/USIr9gUUK5GJoYHgUYTJWTfHKQbqH48I8jq7A=";
       })
       (pkgs.fetchFirefoxAddon {
         name = "zoomScheduler";
-        url = "https://addons.mozilla.org/firefox/downloads/file/3979414/zoom_new_scheduler-2.1.29.xpi";
-        sha256 = "sha256:18zsrcg82pbj08645k5pq970hyblmjs01fnwbv6hw31zwgb0bjyl";
+        url = "https://addons.mozilla.org/firefox/downloads/file/4048126/zoom_new_scheduler-2.1.37.xpi";
+        sha256 = "sha256-Tj8DU5fxLIp3UgHZfD4hMhO/yKiQNlzCa1U6dOVjVAY=";
       })
-
     ];
   };
 in
