@@ -115,6 +115,16 @@ in
     ];
   };
 
+  services.cron = {
+    enable = true;
+    # Clean up nixOS generations
+    # NOTE: Still requires a nix-rebuild switch to update grub
+    # List generations: nix-env --list-generations -p /nix/var/nix/profiles/system
+    systemCronJobs = [
+      "0 1 * * * root nix-env --delete-generations +10 -p /nix/var/nix/profiles/system 2>&1 | logger -t generations-cleanup"
+    ];
+  };
+
   services.logind.extraConfig = "HandleLidSwitch=ignore";
 
   # part of gnupg reqs
