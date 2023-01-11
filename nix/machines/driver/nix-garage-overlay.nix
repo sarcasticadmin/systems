@@ -4,7 +4,7 @@ let
   # Using pkgs.fetchFromGitHub causes infinite recursion
   nix-garage = builtins.fetchGit {
     url = "https://github.com/nebulaworks/nix-garage";
-    rev = "e5baed156d59f36776ef8e4e8cd63d8850ed63fa";
+    rev = "22a0c8fb0b39bf3a440fdf3e2ff514a24022a13d";
   };
   garage-overlay = import (nix-garage.outPath + "/overlay.nix");
 in
