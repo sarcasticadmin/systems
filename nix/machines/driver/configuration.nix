@@ -83,6 +83,7 @@ in
     systemPackages = with pkgs; [
       awscli2
       gh
+      glab
       ticker # stocks
       newsboat
       imagemagick
