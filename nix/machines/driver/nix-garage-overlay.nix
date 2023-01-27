@@ -15,7 +15,8 @@ in
   environment.systemPackages = with pkgs; [
     aws-key-rotator
     git-divergence
-    sshcb
+    # Currently broken
+    #sshcb
     terraform-config-inspect
   ];
 }
