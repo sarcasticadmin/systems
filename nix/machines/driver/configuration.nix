@@ -73,7 +73,7 @@ in
   users.users.rherna = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "audio" "sound" "docker" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
@@ -83,6 +83,7 @@ in
     systemPackages = with pkgs; [
       awscli2
       gh
+      glab
       ticker # stocks
       newsboat
       imagemagick
@@ -167,6 +168,8 @@ in
       monthly = 3;
     };
   };
+
+  virtualisation.docker.enable = true;
 
   systemd.services.zfs-scrub.unitConfig.ConditionACPower = true;
 
