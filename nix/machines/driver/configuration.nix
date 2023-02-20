@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   # Locals
 in
@@ -12,6 +12,7 @@ in
       ./hardware-configuration.nix
       ../_common/desktop.nix
       ../_common/base.nix
+      ./autorandr.nix
       # Import nix-garage
       ./nix-garage-overlay.nix
       ./home.nix
