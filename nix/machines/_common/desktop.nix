@@ -29,6 +29,8 @@ in
   # install Desktop packages
   environment.systemPackages = with pkgs; [
     myFirefox # robs custom firefox
+    autorandr # cli xrandr tool for saving/load profiles
+    arandr # ui xrandr tool for interacting the multimonitors
     chromium
     scrot # screenshots
     feh # set wallpaper
