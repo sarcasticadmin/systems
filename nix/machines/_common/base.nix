@@ -14,6 +14,7 @@ in
     wget
     git
     git-lfs
+    ldns
     tmux
     silver-searcher
     stow
