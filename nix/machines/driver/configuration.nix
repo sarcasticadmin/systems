@@ -86,6 +86,7 @@ in
       glab
       ticker # stocks
       newsboat
+      icdiff
       imagemagick
       magic-wormhole
       nixpkgs-review
