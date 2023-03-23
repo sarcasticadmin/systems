@@ -85,8 +85,8 @@ parted "$DISK_PATH" -- mklabel gpt
 parted "$DISK_PATH" -- mkpart primary 512MiB 100%
 parted "$DISK_PATH" -- mkpart ESP fat32 1MiB 512MiB
 parted "$DISK_PATH" -- set 2 boot on
-export DISK_PART_ROOT="${DISK_PATH}p1"
-export DISK_PART_BOOT="${DISK_PATH}p2"
+export DISK_PART_ROOT="${DISK_PATH}1"
+export DISK_PART_BOOT="${DISK_PATH}2"
 
 info "Formatting boot partition ..."
 mkfs.fat -F 32 -n boot "$DISK_PART_BOOT"
