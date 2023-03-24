@@ -24,10 +24,6 @@ in
     experimental-features = nix-command flakes
   '';
 
-  # Use the GRUB 2 boot loader since not uefi
-  #boot.loader.grub.enable = true;
-  #boot.loader.grub.version = 2;
-  #boot.loader.grub.device = "/dev/disk/by-uuid/8087-9A70";
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -73,16 +69,15 @@ in
   users.users.rherna = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "audio" "sound" "dialout" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment = {
     systemPackages = with pkgs; [
       newsboat
       opencpn
+      gpsd # explicitly include in pkgs to get gpsd clients: gpsctl, etc
     ];
 
     etc."wpa_supplicant.conf" = {
@@ -118,6 +113,14 @@ in
       enable = true;
       monthly = 3;
     };
+  };
+
+  services.gpsd = {
+    enable = true;
+    # -n and required for opencpn to use the gps
+    nowait = true;
+    # TODO: figure out a better way than hardcoding the serial device
+    device = "/dev/ttyACM0";
   };
 
   systemd.services.zfs-scrub.unitConfig.ConditionACPower = true;
