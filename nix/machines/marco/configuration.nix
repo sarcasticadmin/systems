@@ -8,6 +8,26 @@ let
   # https://github.com/NixOS/nixpkgs/issues/16285
   # https://github.com/NixOS/nixpkgs/pull/220336
   myOpencpn = pkgs.opencpn.overrideAttrs (old: { buildInputs = old.buildInputs ++ [ pkgs.wrapGAppsHook ]; });
+  imgkap = pkgs.stdenv.mkDerivation rec {
+    # https://github.com/bdbcat/o-charts_pi.git
+    pname = "imgkap";
+    version = "1.16.2";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "nohal";
+      repo = "imgkap";
+      rev = "v${version}";
+      hash = "sha256-Dthx6yS1ApirQ6AHFDG0kuHDnPGPVUTInwMzyyh5WTQ=";
+    };
+    buildInputs = with pkgs; [
+      freeimage
+    ];
+    installPhase = ''
+      mkdir -p $out/bin
+      cp imgkap $out/bin
+    '';
+  };
+
   oChartsPlugin = pkgs.stdenv.mkDerivation rec {
     # https://github.com/bdbcat/o-charts_pi.git
     pname = "o-charts_pi";
@@ -23,6 +43,7 @@ let
       cmake
       pkg-config
       gettext
+      xorg.libX11.dev
     ] ++ lib.optionals stdenv.isLinux [
       lsb-release
     ];
@@ -31,8 +52,10 @@ let
       tinyxml
       zlib
       curl
+      libGLU
+      libGL
     ];
-    cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
+    #cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
     #SEARCH_LIB = "${pkgs.libGLU.out}/lib ${pkgs.libGL.out}/lib";
   };
 in
@@ -109,6 +132,7 @@ in
       gpsd # explicitly include in pkgs to get gpsd clients: gpsctl, etc
       myOpencpn
       oChartsPlugin
+      imgkap
     ];
 
     etc."wpa_supplicant.conf" = {
