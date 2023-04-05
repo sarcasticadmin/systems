@@ -127,6 +127,7 @@ in
       "0 1 * * * root nix-env --delete-generations +10 -p /nix/var/nix/profiles/system 2>&1 | logger -t generations-cleanup"
     ];
   };
+  services.fwupd.enable = true;
 
   # Dont start tailscale by default
   services.tailscale.enable = false;
