@@ -23,6 +23,7 @@ in
     lsof
     myVim # Custom vim
     nixpkgs-fmt
+    openssl
     shellcheck
     tree
     manix # useful search for nix docs
