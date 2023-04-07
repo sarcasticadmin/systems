@@ -14,6 +14,7 @@ in
     wget
     git
     git-lfs
+    ldns
     tmux
     silver-searcher
     stow
@@ -22,6 +23,7 @@ in
     lsof
     myVim # Custom vim
     nixpkgs-fmt
+    openssl
     shellcheck
     tree
     manix # useful search for nix docs

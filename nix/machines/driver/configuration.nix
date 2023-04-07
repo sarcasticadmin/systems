@@ -86,6 +86,7 @@ in
       glab
       ticker # stocks
       newsboat
+      icdiff
       imagemagick
       magic-wormhole
       nixpkgs-review
@@ -93,6 +94,7 @@ in
       gnupg
       pcsclite
       pinentry
+      tailscale
     ];
 
     etc."wpa_supplicant.conf" = {
@@ -125,6 +127,14 @@ in
       "0 1 * * * root nix-env --delete-generations +10 -p /nix/var/nix/profiles/system 2>&1 | logger -t generations-cleanup"
     ];
   };
+  services.fwupd.enable = true;
+
+  # Dont start tailscale by default
+  services.tailscale.enable = false;
+  # didnt work for me
+  #systemd.services.tailscaled.after = [ "network-online.target" "systemd-resolved.service" ];
+  # Remove warning from tailscale: Strict reverse path filtering breaks Tailscale exit node use and some subnet routing setups
+  networking.firewall.checkReversePath = "loose";
 
   services.logind.extraConfig = "HandleLidSwitch=ignore";
 
