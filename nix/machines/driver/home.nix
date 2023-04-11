@@ -8,4 +8,4 @@ in
   linker [{
   origin = "${dotfiles}/xpdf/.xpdfrc";
   target = ".xpdfrc";
-}] "/home/rherna"
+}] "/home/rramirez"

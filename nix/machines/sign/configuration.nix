@@ -51,7 +51,7 @@ in
   sound.enable = false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rherna = {
+  users.users.rramirez = {
     isNormalUser = true;
     uid = 1000;
     extraGroups = [ "wheel" "audio" "sound" ]; # Enable ‘sudo’ for the user.

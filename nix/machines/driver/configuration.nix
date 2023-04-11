@@ -20,7 +20,7 @@ in
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.trusted-users = [ "rherna" ];
+  nix.settings.trusted-users = [ "rramirez" ];
 
   # remove the annoying experimental warnings
   nix.extraOptions = ''
@@ -70,11 +70,11 @@ in
   hardware.pulseaudio.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rherna = {
+  users.users.rramirez = {
     isNormalUser = true;
     uid = 1000;
     extraGroups = [ "wheel" "audio" "sound" "docker" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+    openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFeq0/IpNsLCUDVhxRx/wEj4BViCSH/8n4nhD7+PFkzuXpwKft1s5PVFJrlixv7cEJyJTi4FgeeP4N6tPglsIamplfzBjXgRTs0+ssH8ZrHM6l+0jbMqVc39hDRYl78qoxslrz3b0oU4H8bKylyOoEBO9qlJEh4bsIYkUD8ZIbaJa6g3wnPzp/WPjAG76tdoMnuxDQ1uVWph4diQxI85iwnU32anC85w6KthXQABbyV8SAYZvc7vKcN8Mf1JJSGct4nVB/XzZ3mTk3C3L0DA63f6UTtgtCZAXIsqhjeGahp+QUBIgrFG5fG1o5hmHgyHZuOIrbU1BbH/mWpaXbGUut rramirez@le-laptop" ];
   };
 
   # List packages installed in system profile. To search, run:
