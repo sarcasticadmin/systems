@@ -28,5 +28,17 @@ in
     tree
     manix # useful search for nix docs
     unzip
+    iotop
+    htop
+    nethogs
+    vim
+    black
+    ctags
+    cmake
+    mosh
+    cargo
+    fish
   ];
 }
+
+

@@ -13,15 +13,12 @@ let
         sha256 = "sha256-a/ivUmY1P6teq9x0dt4CbgHt+3kBsEMMXlOfZ5Hx7cg=";
       })
       (pkgs.fetchFirefoxAddon {
-        name = "bitwarden";
-        url = "https://addons.mozilla.org/firefox/downloads/file/4046308/bitwarden_password_manager-2022.12.1.xpi";
-        sha256 = "sha256-fSixe/USIr9gUUK5GJoYHgUYTJWTfHKQbqH48I8jq7A=";
-      })
-      (pkgs.fetchFirefoxAddon {
         name = "zoomScheduler";
         url = "https://addons.mozilla.org/firefox/downloads/file/4048126/zoom_new_scheduler-2.1.37.xpi";
         sha256 = "sha256-Tj8DU5fxLIp3UgHZfD4hMhO/yKiQNlzCa1U6dOVjVAY=";
       })
+      # TODO: add vimium
+      # TODO: add 1password
     ];
   };
 in
@@ -43,6 +40,16 @@ in
     mpv
     xournal # pdf annotations
     #imagemagick # dup might be a problem?
+    alacritty
+    _1password-gui
+    slack
+    flameshot
+    powertop
+    pavucontrol
+    pasystray
+    teams
+    light
+    keychain
   ];
 
   services.xserver = {
@@ -67,6 +74,11 @@ in
     };
 
     # Enable touchpad support (enabled default in most desktopManager).
-    # libinput.enable = true;
+    libinput.enable = true;
+
+    layout = "us";
+    xkbOptions = "caps:escape";
+
   };
+
 }

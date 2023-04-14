@@ -50,14 +50,14 @@ in
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
+  #networking.useDHCP = false;
 
   # Make sure that dhcpcd doesnt timeout when interfaces are down
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
-  networking.dhcpcd.wait = "if-carrier-up";
-  networking.interfaces.enp2s0f0.useDHCP = true;
-  networking.interfaces.enp5s0.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
+  #networking.dhcpcd.wait = "if-carrier-up";
+  #networking.interfaces.enp2s0f0.useDHCP = true;
+  #networking.interfaces.enp5s0.useDHCP = true;
+  #networking.interfaces.wlp3s0.useDHCP = true;
 
   # Leave commented until tether is needed
   #networking.interfaces.enp7s0f4u2.useDHCP = true;
@@ -65,9 +65,11 @@ in
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
+  # Audio
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+
+  users.defaultUserShell = pkgs.fish;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rramirez = {
@@ -76,6 +78,17 @@ in
     extraGroups = [ "wheel" "audio" "sound" "docker" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFeq0/IpNsLCUDVhxRx/wEj4BViCSH/8n4nhD7+PFkzuXpwKft1s5PVFJrlixv7cEJyJTi4FgeeP4N6tPglsIamplfzBjXgRTs0+ssH8ZrHM6l+0jbMqVc39hDRYl78qoxslrz3b0oU4H8bKylyOoEBO9qlJEh4bsIYkUD8ZIbaJa6g3wnPzp/WPjAG76tdoMnuxDQ1uVWph4diQxI85iwnU32anC85w6KthXQABbyV8SAYZvc7vKcN8Mf1JJSGct4nVB/XzZ3mTk3C3L0DA63f6UTtgtCZAXIsqhjeGahp+QUBIgrFG5fG1o5hmHgyHZuOIrbU1BbH/mWpaXbGUut rramirez@le-laptop" ];
   };
+  security.sudo.extraRules = [
+    {
+      users = ["rramirez"];
+      commands = [
+        {
+          command = "ALL";
+          options = ["NOPASSWD"];
+        }
+      ];
+    }
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
