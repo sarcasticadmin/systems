@@ -53,6 +53,11 @@ nix flake update
 nixos-rebuild switch --flake /home/rherna/systems#driver
 ```
 
+## Firefox addons
+
+Update the firefox addons found in `nix/machines/_common/desktop.nix`. Unforunately, I dont have a better way of do this
+outside of just copying the url found on the addons page and adding it to the wrapped firefox config.
+
 ## autorandr
 
 Show all exiting profiles:
