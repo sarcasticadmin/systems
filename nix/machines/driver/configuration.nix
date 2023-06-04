@@ -136,6 +136,11 @@ in
         bits = 4096;
       }
     ];
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
   };
 
   services.cron = {
