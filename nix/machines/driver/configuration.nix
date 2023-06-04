@@ -4,7 +4,17 @@
 
 { config, pkgs, ... }:
 let
-  # Locals
+  # for pixel USB device rules
+  # TODO: Remove after 23.05 release
+  my-android-udev-rules = pkgs.android-udev-rules.overrideDerivation (oldAttrs: {
+    pname = "android-udev-rules-unstable";
+    src = pkgs.fetchFromGitHub {
+      owner = "M0Rf30";
+      repo = "android-udev-rules";
+      rev = "20230303";
+      sha256 = "sha256-ddalOVt0gLuTcwk322fNNn6WNZx1Ubsa4MgaG0Lmn2k=";
+    };
+  });
 in
 {
   imports =
@@ -77,9 +87,11 @@ in
   users.users.rherna = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "audio" "sound" "docker" "plugdev" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
+
+  users.groups.plugdev = { };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -106,6 +118,8 @@ in
       mode = "symlink";
     };
   };
+
+  services.udev.packages = [ my-android-udev-rules ];
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
