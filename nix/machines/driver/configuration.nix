@@ -203,6 +203,10 @@ in
 
   # dont hiberate/sleep by default
   powerManagement.enable = false;
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
   # Enable tlp for stricter governance of power management
   # Validate status: `sudo tlp-stat -b`
   services.tlp.enable = true;
