@@ -171,12 +171,14 @@ in
   };
 
   programs.ssh = {
-    # Fix timeout from client side
-    # Ref: https://www.cyberciti.biz/tips/open-ssh-server-connection-drops-out-after-few-or-n-minutes-of-inactivity.html
     extraConfig = ''
       Host *
+        # Fix timeout from client side
+        # Ref: https://www.cyberciti.biz/tips/open-ssh-server-connection-drops-out-after-few-or-n-minutes-of-inactivity.html
         ServerAliveInterval 15
         ServerAliveCountMax 3
+        # Keep ~C control seq enabled post ssh-9.2
+        EnableEscapeCommandline yes
     '';
   };
   # List services that you want to enable:
