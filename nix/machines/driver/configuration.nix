@@ -27,6 +27,10 @@ in
     experimental-features = nix-command flakes
   '';
 
+  # enabled apropos and "man -K" searching
+  # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
+  documentation.man.generateCaches = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
