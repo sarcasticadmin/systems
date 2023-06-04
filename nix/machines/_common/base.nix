@@ -3,7 +3,7 @@
 
 let
   # Need the pythons in my vims
-  myVim = pkgs.vim_configurable.override { pythonSupport = true; };
+  myVim = pkgs.vim-full.override { pythonSupport = true; };
 in
 {
   # install Nebulaworks packages
