@@ -24,6 +24,7 @@ in
     myVim # Custom vim
     nixpkgs-fmt
     openssl
+    parted
     shellcheck
     tree
     manix # useful search for nix docs

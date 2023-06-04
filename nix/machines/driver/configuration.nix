@@ -4,7 +4,17 @@
 
 { config, pkgs, ... }:
 let
-  # Locals
+  # for pixel USB device rules
+  # TODO: Remove after 23.05 release
+  my-android-udev-rules = pkgs.android-udev-rules.overrideDerivation (oldAttrs: {
+    pname = "android-udev-rules-unstable";
+    src = pkgs.fetchFromGitHub {
+      owner = "M0Rf30";
+      repo = "android-udev-rules";
+      rev = "20230303";
+      sha256 = "sha256-ddalOVt0gLuTcwk322fNNn6WNZx1Ubsa4MgaG0Lmn2k=";
+    };
+  });
 in
 {
   imports =
@@ -26,6 +36,10 @@ in
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+
+  # enabled apropos and "man -K" searching
+  # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
+  documentation.man.generateCaches = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -73,15 +87,18 @@ in
   users.users.rherna = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "audio" "sound" "docker" "plugdev" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
+
+  users.groups.plugdev = { };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
     systemPackages = with pkgs; [
       awscli2
+      cntr
       gh
       glab
       ticker # stocks
@@ -94,6 +111,7 @@ in
       gnupg
       pcsclite
       pinentry
+      strace
       tailscale
     ];
 
@@ -102,6 +120,8 @@ in
       mode = "symlink";
     };
   };
+
+  services.udev.packages = [ my-android-udev-rules ];
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
@@ -185,6 +205,10 @@ in
 
   # dont hiberate/sleep by default
   powerManagement.enable = false;
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
   # Enable tlp for stricter governance of power management
   # Validate status: `sudo tlp-stat -b`
   services.tlp.enable = true;
