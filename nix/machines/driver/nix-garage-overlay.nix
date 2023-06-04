@@ -13,7 +13,7 @@ in
 
   # install Nebulaworks packages
   environment.systemPackages = with pkgs; [
-    aws-key-rotator
+    #aws-key-rotator
     git-divergence
     # Currently broken
     #sshcb
