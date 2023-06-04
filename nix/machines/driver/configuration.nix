@@ -111,6 +111,7 @@ in
       gnupg
       pcsclite
       pinentry
+      strace
       tailscale
     ];
 
