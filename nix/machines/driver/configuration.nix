@@ -98,6 +98,7 @@ in
   environment = {
     systemPackages = with pkgs; [
       awscli2
+      cntr
       gh
       glab
       ticker # stocks

@@ -122,6 +122,14 @@ zfs create -p -o mountpoint=legacy "$ZFS_DS_NIX"
 info "Disabling access time setting for '$ZFS_DS_NIX' ZFS dataset ..."
 zfs set atime=off "$ZFS_DS_NIX"
 
+# Required for cntr to work
+# Ref: https://github.com/Mic92/cntr/issues/108
+# The key advantage of this type of xattr is improved performance.
+# Storing xattrs as system attributes significantly decreases the amount of disk IO required
+info "Enable posixacl and xttr=sa on ZFS dataset ..."
+zfs set xattr=sa "$ZFS_DS_NIX"
+zfs set acltype=posixacl "$ZFS_DS_NIX"
+
 info "Mounting '$ZFS_DS_NIX' to /mnt/nix ..."
 mkdir /mnt/nix
 mount -t zfs "$ZFS_DS_NIX" /mnt/nix
