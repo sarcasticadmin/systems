@@ -23,6 +23,19 @@ let
         sha256 = "sha256-xJBHh6ZyOPMkf1GOa7dC41WBi15x4qreeJxUydfglqQ=";
       })
     ];
+
+    # https://github.com/mozilla/policy-templates
+    extraPolicies = {
+      PasswordManagerEnabled = false;
+      OfferToSaveLogins = false;
+      DisablePocket = true;
+      DisableTelemetry = true;
+      DNSOverHTTPS = {
+        Enabled = false;
+        Locked = true;
+      };
+      DontCheckDefaultBrowser = true;
+    };
   };
 in
 {
