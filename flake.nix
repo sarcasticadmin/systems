@@ -22,6 +22,7 @@
           system = "x86_64-linux";
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
+            ./nix/machines/_common/base.nix
             ./nix/machines/mulligan/configuration.nix
           ];
         };
