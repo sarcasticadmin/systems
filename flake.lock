@@ -1,12 +1,32 @@
 {
   "nodes": {
+    "ham-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1683008069,
+        "narHash": "sha256-BDA2F127vje1d9qGQfExPXfmgckWO+g9NUmQ4r75mk8=",
+        "owner": "sarcasticadmin",
+        "repo": "ham-overlay",
+        "rev": "f346287b96008db893c66f17c4d620d35d1888e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sarcasticadmin",
+        "repo": "ham-overlay",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1685801374,
-        "narHash": "sha256-otaSUoFEMM+LjBI1XL/xGB5ao6IwnZOXc47qhIgJe8U=",
+        "lastModified": 1685865905,
+        "narHash": "sha256-XJZ/o17eOd2sEsGif+/MQBnfa2DKmndWgJyc7CWajFc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c37ca420157f4abc31e26f436c1145f8951ff373",
+        "rev": "e7603eba51f2c7820c0a182c6bbb351181caa8e7",
         "type": "github"
       },
       "original": {
@@ -18,6 +38,7 @@
     },
     "root": {
       "inputs": {
+        "ham-overlay": "ham-overlay",
         "nixpkgs": "nixpkgs"
       }
     }
