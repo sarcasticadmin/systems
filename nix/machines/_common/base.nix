@@ -30,4 +30,7 @@ in
     manix # useful search for nix docs
     unzip
   ];
+
+  # Purge nano from being the default
+  environment.variables = { EDITOR = "vim"; };
 }
