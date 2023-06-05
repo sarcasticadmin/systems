@@ -18,6 +18,13 @@
           system = "x86_64-linux";
           modules = [ ./nix/machines/driver/configuration.nix ];
         };
+        mulligan = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
+            ./nix/machines/mulligan/configuration.nix
+          ];
+        };
         sign = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./nix/machines/sign/configuration.nix ];
