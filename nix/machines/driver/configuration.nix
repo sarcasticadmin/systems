@@ -3,19 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let
-  # for pixel USB device rules
-  # TODO: Remove after 23.05 release
-  my-android-udev-rules = pkgs.android-udev-rules.overrideDerivation (oldAttrs: {
-    pname = "android-udev-rules-unstable";
-    src = pkgs.fetchFromGitHub {
-      owner = "M0Rf30";
-      repo = "android-udev-rules";
-      rev = "20230303";
-      sha256 = "sha256-ddalOVt0gLuTcwk322fNNn6WNZx1Ubsa4MgaG0Lmn2k=";
-    };
-  });
-in
 {
   imports =
     [
@@ -113,6 +100,7 @@ in
       pinentry
       strace
       tailscale
+      android-udev-rules
     ];
 
     etc."wpa_supplicant.conf" = {
@@ -121,7 +109,7 @@ in
     };
   };
 
-  services.udev.packages = [ my-android-udev-rules ];
+  services.udev.packages = [ pkgs.android-udev-rules ];
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
