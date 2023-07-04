@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1685950216,
-        "narHash": "sha256-8R/7goS4G5RTdje/ae+9TdmqJLQcF2f9s1SCFYQLAbw=",
+        "lastModified": 1688423485,
+        "narHash": "sha256-RN+3LCe2l8GiRapOsa/Yc6YSqQfv0zeFTXg9Mm8ylhw=",
         "owner": "sarcasticadmin",
         "repo": "ham-overlay",
-        "rev": "97d8f4cd413a334c0d1bba9390b500779e01d31b",
+        "rev": "b6c9db8226ebcb68ce1f88b6731acf0592d27be3",
         "type": "github"
       },
       "original": {
