@@ -1,5 +1,14 @@
 { config, pkgs, lib, ... }:
 
+let
+  UdevRulesNinoTNC = pkgs.writeTextFile {
+    name = "extra-udev-rules";
+    text = ''
+      KERNEL=="ttyACM*", SUBSYSTEMS=="usb", ATTRS{idProduct}=="00dd", SYMLINK+="ninotnc" TAG+="systemd" ENV{SYSTEMD_WANTS}+="ax25.target"
+    '';
+    destination = "/etc/udev/rules.d/99-ham.rules";
+  };
+in
 {
   imports =
     [
@@ -72,6 +81,15 @@
     };
 
   };
+
+  services.udev.packages = [ UdevRulesNinoTNC ];
+
+  #boot.initrd.extraUdevRulesCommands =
+  #  ''
+  #    cat <<'EOF' > $out/99-other.rules
+  #    ${config.boot.initrd.services.udev.rules}
+  #    EOF
+  #  '';
 
   # Enable the OpenSSH daemon.
   services.openssh = {
