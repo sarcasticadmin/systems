@@ -48,6 +48,7 @@
       ax25-apps
       tncattach
       libax25
+      hamlib_4
       pat
       flashtnc
       tmux
