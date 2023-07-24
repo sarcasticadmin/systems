@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     ham-overlay = {
-      url = "github:sarcasticadmin/ham-overlay";
+      url = "github:sarcasticadmin/ham-overlay/c473b3524e3bfab9d53392c9a80075d16c9ed2bd";
       # Make sure to set to the specific input of the remote flake
       inputs.nixpkgs.follows = "nixpkgs";
     };
