@@ -8,6 +8,10 @@ let
     '';
     destination = "/etc/udev/rules.d/99-ham.rules";
   };
+
+  myAXTools = pkgs.ax25-tools.overrideAttrs (old: rec {
+    configureFlags = [ "--sysconfdir=/etc" "--localstatedir=/var/lib" ];
+  });
 in
 {
   imports =
@@ -54,7 +58,8 @@ in
       alsa-utils # Soundcard utils
       ardopc
       aprx
-      ax25-tools
+      #ax25-tools
+      myAXTools
       ax25-apps
       tncattach
       libax25
