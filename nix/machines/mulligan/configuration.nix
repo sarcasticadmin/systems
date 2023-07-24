@@ -1,5 +1,18 @@
 { config, pkgs, lib, ... }:
 
+let
+  UdevRulesNinoTNC = pkgs.writeTextFile {
+    name = "extra-udev-rules";
+    text = ''
+      KERNEL=="ttyACM*", SUBSYSTEMS=="usb", ATTRS{idProduct}=="00dd", SYMLINK+="ninotnc" TAG+="systemd" ENV{SYSTEMD_WANTS}+="ax25.target"
+    '';
+    destination = "/etc/udev/rules.d/99-ham.rules";
+  };
+
+  myAXTools = pkgs.ax25-tools.overrideAttrs (old: rec {
+    configureFlags = [ "--sysconfdir=/etc" "--localstatedir=/var/lib" ];
+  });
+in
 {
   imports =
     [
@@ -42,11 +55,15 @@
   environment = {
     # Installs all necessary packages for the minimal
     systemPackages = with pkgs; [
+      alsa-utils # Soundcard utils
+      ardopc
       aprx
-      ax25-tools
+      #ax25-tools
+      myAXTools
       ax25-apps
       tncattach
       libax25
+      hamlib_4
       pat
       flashtnc
       tmux
@@ -70,9 +87,40 @@
 
   };
 
+  services.udev.packages = [ UdevRulesNinoTNC ];
+
+  #boot.initrd.extraUdevRulesCommands =
+  #  ''
+  #    cat <<'EOF' > $out/99-other.rules
+  #    ${config.boot.initrd.services.udev.rules}
+  #    EOF
+  #  '';
+
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
+  };
+
+  services.ax25d = {
+    enable = true;
+    package = myAXTools;
+  };
+
+  services.mheardd = {
+    enable = true;
+    package = myAXTools;
+  };
+
+  #services.beacond = {
+  #  enable = true;
+  #  package = myAXTools;
+  #  interval = 5;
+  #  message = "hello this is rob";
+  #};
+
+  services.axlistend = {
+    enable = true;
+    package = myAXTools;
   };
 
   # Bug in kernels ~5.4<5.19
