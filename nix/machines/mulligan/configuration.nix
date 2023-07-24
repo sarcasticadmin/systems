@@ -101,6 +101,28 @@ in
     enable = true;
   };
 
+  services.ax25d = {
+    enable = true;
+    package = myAXTools;
+  };
+
+  services.mheardd = {
+    enable = true;
+    package = myAXTools;
+  };
+
+  #services.beacond = {
+  #  enable = true;
+  #  package = myAXTools;
+  #  interval = 5;
+  #  message = "hello this is rob";
+  #};
+
+  services.axlistend = {
+    enable = true;
+    package = myAXTools;
+  };
+
   # Bug in kernels ~5.4<5.19
   # Resulting in pat to error with: address already in use error after first connection
   #boot.kernelPackages = pkgs.linuxPackages_6_0;
