@@ -9,9 +9,6 @@ let
     destination = "/etc/udev/rules.d/99-ham.rules";
   };
 
-  myAXTools = pkgs.ax25-tools.overrideAttrs (old: rec {
-    configureFlags = [ "--sysconfdir=/etc" "--localstatedir=/var/lib" ];
-  });
 in
 {
   imports =
@@ -58,8 +55,7 @@ in
       alsa-utils # Soundcard utils
       ardopc
       aprx
-      #ax25-tools
-      myAXTools
+      ax25-tools
       ax25-apps
       tncattach
       libax25
@@ -103,24 +99,20 @@ in
 
   services.ax25d = {
     enable = true;
-    package = myAXTools;
   };
 
   services.mheardd = {
     enable = true;
-    package = myAXTools;
   };
 
   #services.beacond = {
   #  enable = true;
-  #  package = myAXTools;
   #  interval = 5;
   #  message = "hello this is rob";
   #};
 
   services.axlistend = {
     enable = true;
-    package = myAXTools;
   };
 
   # Bug in kernels ~5.4<5.19
