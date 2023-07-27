@@ -74,7 +74,7 @@
   users.users.rherna = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" "docker" "plugdev" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "audio" "sound" "docker" "plugdev" "libvirtd" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
@@ -101,6 +101,7 @@
       strace
       tailscale
       android-udev-rules
+      vagrant
     ];
 
     etc."wpa_supplicant.conf" = {
@@ -194,7 +195,10 @@
     };
   };
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+  };
 
   systemd.services.zfs-scrub.unitConfig.ConditionACPower = true;
 
