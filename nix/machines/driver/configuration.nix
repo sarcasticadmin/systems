@@ -51,17 +51,13 @@
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
+  # Assume all interfaces attached to the system use DHCP
+  # Can disable by doing: networking.interfaces.<if>.useDHCP = false;
+  networking.useDHCP = true;
 
   # Make sure that dhcpcd doesnt timeout when interfaces are down
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
   networking.dhcpcd.wait = "if-carrier-up";
-  networking.interfaces.enp2s0f0.useDHCP = true;
-  networking.interfaces.enp5s0.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
-
-  # Leave commented until tether is needed
-  #networking.interfaces.enp7s0f4u2.useDHCP = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
