@@ -133,6 +133,7 @@ in
       myOpencpn
       oChartsPlugin
       imgkap
+      cntr
     ];
 
     etc."wpa_supplicant.conf" = {

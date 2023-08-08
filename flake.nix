@@ -11,6 +11,7 @@
 
       # Nixpkgs instantiated for supported system types.
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; overlays = [ self.overlays.default ]; });
+
     in
     {
       overlays.default = (final: prev:
@@ -19,10 +20,19 @@
           oChartsPlugin = callPackage ./nix/pkgs/oChartsPlugin.nix { };
         });
 
-      packages = forAllSystems (system: {
-        inherit (nixpkgsFor.${system}) oChartsPlugin;
-      });
+      #packages = forAllSystems (system: {
+      #  inherit (nixpkgsFor.${system}) oChartsPlugin;
+      #});
 
+      packages.x86_64-linux =
+        let
+          pkgs = import nixpkgs { system = "x86_64-linux"; overlays = [ self.overlays.default ]; };
+        in
+        {
+          #system = "x86_64-linux";
+          #oChartsPlugin = callPackage ./nix/pkgs/oChartsPlugin.nix { };
+          inherit (pkgs) oChartsPlugin;
+        };
       nixosConfigurations = {
         driver = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

@@ -20,6 +20,7 @@ pkgs.stdenv.mkDerivation rec {
     lsb-release
   ];
   buildInputs = with pkgs; [
+    breakpointHook
     wxGTK31 # Instead of wxGTK32 due to deprecation errors - maybe try compat in 32 later?
     tinyxml
     zlib
@@ -27,6 +28,8 @@ pkgs.stdenv.mkDerivation rec {
     libGLU
     libGL
   ];
-  #cmakeFlags = [ "-DCMAKE_BUILD_TYPE=Release" ];
-  #SEARCH_LIB = "${pkgs.libGLU.out}/lib ${pkgs.libGL.out}/lib";
-};
+  installPhase = ''
+    mkdir -p $out/bin
+    exit 1
+  '';
+}
