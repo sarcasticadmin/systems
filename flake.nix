@@ -40,6 +40,10 @@
             ./nix/machines/mulligan/configuration.nix
           ];
         };
+        rufio = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./nix/machines/rufio/configuration.nix ];
+        };
         sign = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./nix/machines/sign/configuration.nix ];
