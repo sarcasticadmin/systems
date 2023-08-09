@@ -45,14 +45,15 @@
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
-  networking.useDHCP = true;
+  # dhcpcd will conflict with interfaces being put into monitoring mode
+  networking.useDHCP = false;
+
+  # Explicitly set interfaces we need dhcp on
+  networking.interfaces.enp0s25.useDHCP = true;
 
   # Make sure that dhcpcd doesnt timeout when interfaces are down
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
   networking.dhcpcd.wait = "if-carrier-up";
-
-  # Leave commented until tether is needed
-  #networking.interfaces.enp7s0f4u2.useDHCP = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
