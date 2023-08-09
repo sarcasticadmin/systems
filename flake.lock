@@ -7,17 +7,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1690222048,
-        "narHash": "sha256-iqMPXoe61HzCQeTU59pNthbLSQbrQH2QZvnUE8o0+fE=",
+        "lastModified": 1691697034,
+        "narHash": "sha256-OkkzScMy3bvwM3RjaFQasSCqeGEmnyuQr3msHJnMOhk=",
         "owner": "sarcasticadmin",
         "repo": "ham-overlay",
-        "rev": "c473b3524e3bfab9d53392c9a80075d16c9ed2bd",
+        "rev": "ae4f6598391185435313df7de32beb8810c50103",
         "type": "github"
       },
       "original": {
         "owner": "sarcasticadmin",
         "repo": "ham-overlay",
-        "rev": "c473b3524e3bfab9d53392c9a80075d16c9ed2bd",
         "type": "github"
       }
     },
