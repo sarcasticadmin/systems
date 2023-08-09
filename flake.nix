@@ -1,4 +1,14 @@
 {
+  nixConfig = {
+    extra-experimental-features = "nix-command flakes";
+    extra-substituters = [
+      "https://sarcasticadmin-systems.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "sarcasticadmin-systems.cachix.org-1:K6fNUgpf4HtKZLt+HoJBBNzLnt8xHm/aoKbTH2U2SfA="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     ham-overlay = {
@@ -29,6 +39,10 @@
             ./nix/machines/_common/base.nix
             ./nix/machines/mulligan/configuration.nix
           ];
+        };
+        rufio = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./nix/machines/rufio/configuration.nix ];
         };
         sign = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
