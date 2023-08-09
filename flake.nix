@@ -1,4 +1,14 @@
 {
+  nixConfig = {
+    extra-experimental-features = "nix-command flakes";
+    extra-substituters = [
+      "https://sarcasticadmin-systems.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "sarcasticadmin-systems.cachix.org-1:K6fNUgpf4HtKZLt+HoJBBNzLnt8xHm/aoKbTH2U2SfA="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     ham-overlay = {
