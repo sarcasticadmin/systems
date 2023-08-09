@@ -3,6 +3,31 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+let
+  myReaverwps-t6x = pkgs.reaverwps-t6x.overrideAttrs (finalAttrs: previousAttrs: {
+    version = "2023-07-19_unstable";
+    src = pkgs.fetchFromGitHub {
+      owner = "t6x";
+      repo = "reaver-wps-fork-t6x";
+      rev = "bd0f38262224c1b88ba9f1f95cb5476a488d2295";
+      sha256 = "sha256-DE0Jai9EXioueo6HBTDTJUan7mA8b3f+o2LbvvMfgKg=";
+    };
+  });
+
+  # For now use my fork until merged upstream
+  myKismet = pkgs.kismet.overrideAttrs (finalAttrs: previousAttrs: {
+    pname = "kismet";
+    version = "2023-08-07_unstable";
+    src = pkgs.fetchFromGitHub {
+      #owner = "kismetwireless";
+      owner = "sarcasticadmin";
+      repo = "kismet";
+      rev = "c0b1ab78f0eda395549ed59090ae2cbe44f7d2ed";
+      sha256 = "sha256-8izDUtLbsR09u2rDoWJbB3QMWX6XNqZhs2qpYPugB7U=";
+    };
+    #nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [ pkgs.breakpointHook ];
+  });
+in
 {
   imports =
     [
@@ -92,6 +117,10 @@
       tailscale
       vagrant
       proxmark3-rrg
+      aircrack-ng
+      myKismet
+      wifite2
+      myReaverwps-t6x
     ];
 
     etc."wpa_supplicant.conf" = {
