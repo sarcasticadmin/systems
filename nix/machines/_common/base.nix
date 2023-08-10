@@ -10,6 +10,7 @@ in
   environment.systemPackages = with pkgs; [
     binutils
     btop
+    cachix
     dig
     dmidecode
     file
