@@ -50,6 +50,10 @@ in
   # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
   documentation.man.generateCaches = true;
 
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    rtl8812au # Realtek usb adapter 0bda:8812
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
