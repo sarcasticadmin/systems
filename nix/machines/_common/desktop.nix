@@ -51,6 +51,7 @@ in
     zoom-us
     zathura # simple pdf viewer
     obsidian
+    shiori
     xsel
     viewnior
     mpv
