@@ -11,6 +11,7 @@ in
     binutils
     btop
     dig
+    dmidecode
     file
     wget
     git
@@ -25,10 +26,12 @@ in
     myVim # Custom vim
     nixpkgs-fmt
     openssl
+    pciutils
     parted
     shellcheck
     tree
     manix # useful search for nix docs
+    usbutils
     unzip
   ];
 
