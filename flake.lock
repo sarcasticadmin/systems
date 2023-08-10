@@ -7,27 +7,26 @@
         ]
       },
       "locked": {
-        "lastModified": 1690222048,
-        "narHash": "sha256-iqMPXoe61HzCQeTU59pNthbLSQbrQH2QZvnUE8o0+fE=",
+        "lastModified": 1691697034,
+        "narHash": "sha256-OkkzScMy3bvwM3RjaFQasSCqeGEmnyuQr3msHJnMOhk=",
         "owner": "sarcasticadmin",
         "repo": "ham-overlay",
-        "rev": "c473b3524e3bfab9d53392c9a80075d16c9ed2bd",
+        "rev": "ae4f6598391185435313df7de32beb8810c50103",
         "type": "github"
       },
       "original": {
         "owner": "sarcasticadmin",
         "repo": "ham-overlay",
-        "rev": "c473b3524e3bfab9d53392c9a80075d16c9ed2bd",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1688177999,
-        "narHash": "sha256-JZ5nk90Ym79b4J593xYb0mI79QxU0efJLuCU3sXDalQ=",
+        "lastModified": 1690271650,
+        "narHash": "sha256-qwdsW8DBY1qH+9luliIH7VzgwvL+ZGI3LZWC0LTiDMI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "0de86059128947b2438995450f2c2ca08cc783d5",
+        "rev": "6dc93f0daec55ee2f441da385aaf143863e3d671",
         "type": "github"
       },
       "original": {
