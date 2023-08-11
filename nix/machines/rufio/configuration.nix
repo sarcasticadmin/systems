@@ -125,6 +125,13 @@ in
       myKismet
       wifite2
       myReaverwps-t6x
+      wireshark
+      tshark
+      tcpdump
+      yt-dlp
+      hashcat
+      hashcat-utils
+      hcxtools
     ];
 
     etc."wpa_supplicant.conf" = {
