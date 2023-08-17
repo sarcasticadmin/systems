@@ -24,6 +24,13 @@
     , ham-overlay
     }: {
       nixosConfigurations = {
+        cola = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nix/machines/_common/base.nix
+            ./nix/machines/cola/configuration.nix
+          ];
+        };
         driver = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./nix/machines/driver/configuration.nix ];

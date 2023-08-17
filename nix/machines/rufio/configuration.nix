@@ -54,6 +54,12 @@ in
     rtl8812au # Realtek usb adapter 0bda:8812
   ];
 
+  # Disable scatter-gather so kernel doesnt crash for mediatek cards
+  #   confirm via: cat /sys/modules/mt76_usb/parameters/disable_usb (should result in Y
+  boot.extraModprobeConfig = ''
+  options mt76-usb disable_usb_sg=1
+  '';
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -65,11 +71,15 @@ in
   networking.hostId = "7f702d2b";
 
   # Enables wireless support via wpa_supplicant
-  networking.wireless.enable = true;
-  # Option is misleading but we dont want it
-  networking.wireless.userControlled.enable = false;
-  # Allow configuring networks "imperatively"
-  networking.wireless.allowAuxiliaryImperativeNetworks = true;
+  networking.wireless = {
+    enable = true;
+    # Limit wpa_supplicant to specific interface
+    interfaces = [ "wlp3s0" ];
+    # Option is misleading but we dont want it
+    userControlled.enable = false;
+    # Allow configuring networks "imperatively"
+    allowAuxiliaryImperativeNetworks = true;
+  };
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
@@ -79,6 +89,10 @@ in
 
   # Explicitly set interfaces we need dhcp on
   networking.interfaces.enp0s25.useDHCP = true;
+  networking.interfaces.wlp3s0.useDHCP = true;
+
+  # Tether to android
+  networking.interfaces.enp0s20u2.useDHCP = true;
 
   # Make sure that dhcpcd doesnt timeout when interfaces are down
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
@@ -132,6 +146,7 @@ in
       hashcat
       hashcat-utils
       hcxtools
+      sdrpp
     ];
 
     etc."wpa_supplicant.conf" = {
