@@ -89,6 +89,10 @@ in
 
   # Explicitly set interfaces we need dhcp on
   networking.interfaces.enp0s25.useDHCP = true;
+  networking.interfaces.wlp3s0.useDHCP = true;
+
+  # Tether to android
+  networking.interfaces.enp0s20u2.useDHCP = true;
 
   # Make sure that dhcpcd doesnt timeout when interfaces are down
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
