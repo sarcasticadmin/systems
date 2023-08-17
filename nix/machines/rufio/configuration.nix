@@ -54,6 +54,12 @@ in
     rtl8812au # Realtek usb adapter 0bda:8812
   ];
 
+  # Disable scatter-gather so kernel doesnt crash for mediatek cards
+  #   confirm via: cat /sys/modules/mt76_usb/parameters/disable_usb (should result in Y
+  boot.extraModprobeConfig = ''
+  options mt76-usb disable_usb_sg=1
+  '';
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
