@@ -71,11 +71,15 @@ in
   networking.hostId = "7f702d2b";
 
   # Enables wireless support via wpa_supplicant
-  networking.wireless.enable = true;
-  # Option is misleading but we dont want it
-  networking.wireless.userControlled.enable = false;
-  # Allow configuring networks "imperatively"
-  networking.wireless.allowAuxiliaryImperativeNetworks = true;
+  networking.wireless = {
+    enable = true;
+    # Limit wpa_supplicant to specific interface
+    interfaces = [ "wlp3s0" ];
+    # Option is misleading but we dont want it
+    userControlled.enable = false;
+    # Allow configuring networks "imperatively"
+    allowAuxiliaryImperativeNetworks = true;
+  };
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
