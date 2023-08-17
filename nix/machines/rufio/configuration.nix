@@ -146,6 +146,7 @@ in
       hashcat
       hashcat-utils
       hcxtools
+      sdrpp
     ];
 
     etc."wpa_supplicant.conf" = {
