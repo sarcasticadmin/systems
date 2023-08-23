@@ -51,12 +51,17 @@
           system = "x86_64-linux";
           modules = [ ./nix/machines/rufio/configuration.nix ];
         };
-        tinfoil = nixpkgs.lib.nixosSystem { # nix build -L .#nixosConfigurations.tinfoil.config.system.build.isoImage
+        tinfoil = nixpkgs.lib.nixosSystem {
+          # nix build -L .#nixosConfigurations.tinfoil.config.system.build.isoImage
           system = "x86_64-linux";
           modules = [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
             ./nix/isos/tinfoil/configuration.nix
           ];
+        };
+        sidekick = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./nix/machines/sidekick/configuration.nix ];
         };
         sign = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
