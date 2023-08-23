@@ -3,6 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+let
+  aercUnstable = pkgs.callPackage ./aerc { };
+in
 {
   imports =
     [
@@ -102,6 +105,13 @@
       tailscale
       android-udev-rules
       vagrant
+      isync  #mbsync
+      protonmail-bridge
+      #aerc
+      aercUnstable
+      notmuch
+      afew
+      msmtp
     ];
 
     etc."wpa_supplicant.conf" = {
