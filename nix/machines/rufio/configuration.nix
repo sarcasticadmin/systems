@@ -17,15 +17,16 @@ let
   # For now use my fork until merged upstream
   myKismet = pkgs.kismet.overrideAttrs (finalAttrs: previousAttrs: {
     pname = "kismet";
-    version = "2023-08-07_unstable";
+    version = "2023-08-11_unstable";
     src = pkgs.fetchFromGitHub {
-      #owner = "kismetwireless";
-      owner = "sarcasticadmin";
+      owner = "kismetwireless";
+      #owner = "sarcasticadmin";
       repo = "kismet";
-      rev = "c0b1ab78f0eda395549ed59090ae2cbe44f7d2ed";
-      sha256 = "sha256-8izDUtLbsR09u2rDoWJbB3QMWX6XNqZhs2qpYPugB7U=";
+      rev = "f5a3205895bd013052403b30a972719cb16c6119";
+      sha256 = "sha256-+Q7KtK5W3NaotnJAn7xBkXFE9aoBW/ocwHRgRO49ElA=";
     };
-    #nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [ pkgs.breakpointHook ];
+    configureFlags = previousAttrs.configureFlags ++ [ "--enable-wifi-coconut" ];
+    nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [ pkgs.breakpointHook ];
   });
 in
 {
