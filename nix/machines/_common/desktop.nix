@@ -45,6 +45,7 @@ in
     autorandr # cli xrandr tool for saving/load profiles
     arandr # ui xrandr tool for interacting the multimonitors
     chromium
+    exfat
     scrot # screenshots
     feh # set wallpaper
     gomuks # matrix

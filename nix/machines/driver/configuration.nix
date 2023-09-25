@@ -3,6 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+let
+  aercUnstable = pkgs.callPackage ./aerc { };
+in
 {
   imports =
     [
@@ -64,8 +67,8 @@
   #networking.interfaces.enp7s0f4u2.useDHCP = true;
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
+  services.printing.enable = true;
+  services.printing.drivers = [ pkgs.gutenprint ];
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -102,6 +105,13 @@
       tailscale
       android-udev-rules
       vagrant
+      isync  #mbsync
+      protonmail-bridge
+      #aerc
+      aercUnstable
+      notmuch
+      afew
+      msmtp
     ];
 
     etc."wpa_supplicant.conf" = {
