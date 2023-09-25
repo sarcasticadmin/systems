@@ -44,6 +44,7 @@
             ham-overlay.nixosModules.default.axlistend
             ham-overlay.nixosModules.default.beacond
             ./nix/machines/_common/base.nix
+            ./nix/machines/_common/wifi.nix
             ./nix/machines/mulligan/configuration.nix
           ];
         };
