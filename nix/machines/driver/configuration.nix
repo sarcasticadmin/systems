@@ -67,8 +67,8 @@ in
   #networking.interfaces.enp7s0f4u2.useDHCP = true;
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
+  services.printing.enable = true;
+  services.printing.drivers = [ pkgs.gutenprint ];
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
