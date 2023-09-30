@@ -30,6 +30,11 @@ in
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
+  # remove the annoying experimental warnings
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
   #boot.kernelPatches = [{
   #  name = "packet-radio-protocols";
   #  patch = null;
@@ -66,6 +71,7 @@ in
       screen
       tio
       kermit
+      wwl
     ];
 
     # libax25, etc. are set to assume the common config path
