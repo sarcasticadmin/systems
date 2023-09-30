@@ -71,6 +71,7 @@ in
       screen
       tio
       kermit
+      wwl
     ];
 
     # libax25, etc. are set to assume the common config path
