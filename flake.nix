@@ -24,7 +24,7 @@
     , nixpkgs
     , nixpkgs-unstable
     , ham-overlay
-    }: {
+    }@inputs: {
       nixosConfigurations = {
         cola = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -35,6 +35,7 @@
         };
         driver = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [ ./nix/machines/driver/configuration.nix ];
         };
         mulligan = nixpkgs.lib.nixosSystem {
