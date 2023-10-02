@@ -11,6 +11,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     ham-overlay = {
       url = "github:sarcasticadmin/ham-overlay";
       # Make sure to set to the specific input of the remote flake
@@ -21,6 +22,7 @@
   outputs =
     { self
     , nixpkgs
+    , nixpkgs-unstable
     , ham-overlay
     }: {
       nixosConfigurations = {
