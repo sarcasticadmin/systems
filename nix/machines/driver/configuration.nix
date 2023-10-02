@@ -35,6 +35,27 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  #boot.kernelPackages = (pkgs.linuxPackagesFor pkgs.linux).extend (self: super: {
+  #  rtw89 = self.rtw88.overrideAttrs (_: {
+  #    pname = "rtw89";
+  #    version = "unstable";
+  #    src = pkgs.fetchFromGitHub {
+  #      owner = "lwfinger";
+  #      repo = "rtw89";
+  #      rev = "12837647e34f07e117d90b25708a4f8baa772f50";
+  #      sha256 = "sha256-of+u/S53AuBJ5UFVKwBmOPnWGnhMenLAbIMAK+a7pSc=";
+  #    };
+  #  });
+  #});
+
+  #boot.kernelModules = [
+  #  "rtw89"
+  #];
+
+  #boot.extraModulePackages = [ config.boot.kernelPackages.rtw89 ];
+
   networking.hostName = "driver"; # Define your hostname.
   # Need to be set for ZFS or else leads to:
   # Failed assertions:
