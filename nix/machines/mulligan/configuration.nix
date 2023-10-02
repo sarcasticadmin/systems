@@ -76,16 +76,16 @@ in
 
     # libax25, etc. are set to assume the common config path
     # TODO: Definitely need to come up with a beter way to deal with this
-    etc."ax25/axports" = {
-      text = ''
-        # me callsign speed paclen window description
-        #
-        wl2k km6lbu-6 57600 255 7 Winlink
-      '';
+    #etc."ax25/axports" = {
+    #  text = ''
+    #    # me callsign speed paclen window description
+    #    #
+    #    wl2k km6lbu-6 57600 255 7 Winlink
+    #  '';
 
       # The UNIX file mode bits
-      mode = "0644";
-    };
+    # mode = "0644";
+    #};
 
   };
 
