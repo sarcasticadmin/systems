@@ -105,7 +105,8 @@ in
       tailscale
       android-udev-rules
       vagrant
-      isync  #mbsync
+      beeper
+      isync #mbsync
       protonmail-bridge
       #aerc
       aercUnstable
