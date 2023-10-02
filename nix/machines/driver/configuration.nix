@@ -27,6 +27,8 @@ in
     experimental-features = nix-command flakes
   '';
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # enabled apropos and "man -K" searching
   # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
   documentation.man.generateCaches = true;
