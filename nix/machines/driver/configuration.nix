@@ -71,9 +71,12 @@ in
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
-  # Enable sound.
+  # Enable pipewire for sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
+  services.pipewire.enable = true;
+  services.pipewire.alsa.enable = true;
+  services.pipewire.pulse.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
@@ -108,6 +111,8 @@ in
       android-udev-rules
       vagrant
       beeper
+      pavucontrol
+      pulsemixer
       isync #mbsync
       protonmail-bridge
       #aerc
