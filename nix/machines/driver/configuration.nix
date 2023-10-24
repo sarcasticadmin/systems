@@ -5,6 +5,11 @@
 { config, pkgs, inputs, ... }:
 let
   aercUnstable = pkgs.callPackage ./aerc { };
+
+  pkgs-unstable = import inputs.nixpkgs-unstable {
+    system = "x86_64-linux";
+    config = { allowUnfree = true; };
+  };
 in
 {
   imports =
@@ -110,7 +115,7 @@ in
       tailscale
       android-udev-rules
       vagrant
-      beeper
+      pkgs-unstable.beeper
       pavucontrol
       pulsemixer
       isync #mbsync
