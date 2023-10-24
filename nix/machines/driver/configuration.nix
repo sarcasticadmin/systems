@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 let
   aercUnstable = pkgs.callPackage ./aerc { };
 in
@@ -26,6 +26,8 @@ in
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # enabled apropos and "man -K" searching
   # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
@@ -69,9 +71,12 @@ in
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
-  # Enable sound.
+  # Enable pipewire for sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
+  services.pipewire.enable = true;
+  services.pipewire.alsa.enable = true;
+  services.pipewire.pulse.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
@@ -106,6 +111,8 @@ in
       android-udev-rules
       vagrant
       beeper
+      pavucontrol
+      pulsemixer
       isync #mbsync
       protonmail-bridge
       #aerc

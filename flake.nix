@@ -11,6 +11,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     ham-overlay = {
       url = "github:sarcasticadmin/ham-overlay";
       # Make sure to set to the specific input of the remote flake
@@ -21,8 +22,9 @@
   outputs =
     { self
     , nixpkgs
+    , nixpkgs-unstable
     , ham-overlay
-    }: {
+    }@inputs: {
       nixosConfigurations = {
         cola = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -33,6 +35,7 @@
         };
         driver = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [ ./nix/machines/driver/configuration.nix ];
         };
         mulligan = nixpkgs.lib.nixosSystem {
