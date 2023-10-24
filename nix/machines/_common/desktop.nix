@@ -51,6 +51,7 @@ in
     gomuks # matrix
     zoom-us
     zathura # simple pdf viewer
+    alacritty
     obsidian
     shiori
     xsel
