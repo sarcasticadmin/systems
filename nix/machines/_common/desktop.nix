@@ -22,6 +22,11 @@ let
         url = "https://addons.mozilla.org/firefox/downloads/file/4158802/zoom_new_scheduler-2.1.47.xpi";
         sha256 = "sha256-v8fDftZS8Pjq9oz2fiJNeZTQGyQepF4OJUQpNuI7n/0=";
       })
+      (pkgs.fetchFirefoxAddon {
+        name = "darkReader";
+        url = "https://addons.mozilla.org/firefox/downloads/file/4175386/darkreader-4.9.67.xpi";
+        sha256 = "sha256-EooVHwSvd0RjRI/hzblE9sUJX7F5kfgtmuw8jEUTMI4=";
+      })
     ];
 
     # https://github.com/mozilla/policy-templates
