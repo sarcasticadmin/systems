@@ -14,7 +14,6 @@ in
       ../_common/desktop.nix
       ../_common/base.nix
       # Import nix-garage
-      ./nix-garage-overlay.nix
       ./home.nix
     ];
 
