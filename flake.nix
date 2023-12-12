@@ -86,6 +86,15 @@
           # Example how to pass an arg to configuration.nix:
           #specialArgs = { hostname = "staging"; };
         };
+        router1 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            #{ disko.devices.disk.disk1.device = "/dev/vda"; }
+            ./nix/machines/router1/configuration.nix
+          ];
+          specialArgs = { inherit inputs; };
+        };
       };
     };
 }
