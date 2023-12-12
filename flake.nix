@@ -17,6 +17,10 @@
       # Make sure to set to the specific input of the remote flake
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -24,6 +28,7 @@
     , nixpkgs
     , nixpkgs-unstable
     , ham-overlay
+    , disko
     }@inputs: {
       nixosConfigurations = {
         cola = nixpkgs.lib.nixosSystem {
@@ -63,6 +68,14 @@
             ./nix/isos/tinfoil/configuration.nix
           ];
         };
+        simpleIso = nixpkgs.lib.nixosSystem {
+          # nix build -L .#nixosConfigurations.simpleIso.config.system.build.isoImage
+          system = "x86_64-linux";
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ./nix/isos/simple/configuration.nix
+          ];
+        };
         sidekick = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./nix/machines/sidekick/configuration.nix ];
@@ -72,6 +85,15 @@
           modules = [ ./nix/machines/sign/configuration.nix ];
           # Example how to pass an arg to configuration.nix:
           #specialArgs = { hostname = "staging"; };
+        };
+        router1 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            #{ disko.devices.disk.disk1.device = "/dev/vda"; }
+            ./nix/machines/router1/configuration.nix
+          ];
+          specialArgs = { inherit inputs; };
         };
       };
     };

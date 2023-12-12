@@ -120,6 +120,7 @@ in
       notmuch
       afew
       msmtp
+      tio
     ];
 
     etc."wpa_supplicant.conf" = {
