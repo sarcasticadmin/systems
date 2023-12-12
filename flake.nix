@@ -17,6 +17,10 @@
       # Make sure to set to the specific input of the remote flake
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -24,6 +28,7 @@
     , nixpkgs
     , nixpkgs-unstable
     , ham-overlay
+    , disko
     }@inputs: {
       nixosConfigurations = {
         cola = nixpkgs.lib.nixosSystem {
