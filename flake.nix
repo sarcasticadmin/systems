@@ -56,6 +56,21 @@
             ./nix/machines/mulligan/configuration.nix
           ];
         };
+        oddball = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
+            ham-overlay.nixosModules.default.ax25d
+            ham-overlay.nixosModules.default.mheardd
+            ham-overlay.nixosModules.default.axlistend
+            ham-overlay.nixosModules.default.beacond
+            ./nix/machines/_common/base.nix
+            ./nix/machines/_common/wifi.nix
+            ./nix/machines/_common/desktop.nix
+            ./nix/machines/oddball/configuration.nix
+          ];
+        };
         rufio = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./nix/machines/rufio/configuration.nix ];
