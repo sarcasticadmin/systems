@@ -1,5 +1,5 @@
 # This config is only to contain x11 and gui pkgs
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   # Nix firefox addons only work with the firefox-esr package.
@@ -90,9 +90,15 @@ in
         i3status # default i3 status bar
         i3lock # default + simple lock that matches my config
       ];
+      configFile = "${inputs.self.packages.${pkgs.system}.dotfiles}/i3/.i3/config";
     };
 
     # Enable touchpad support (enabled default in most desktopManager).
     # libinput.enable = true;
   };
+
+  environment.etc."i3status.conf" = {
+    source = "${inputs.self.packages.${pkgs.system}.dotfiles}/workstation/.i3status.conf";
+  };
+
 }

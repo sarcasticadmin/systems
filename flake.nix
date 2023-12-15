@@ -30,6 +30,17 @@
     , ham-overlay
     , disko
     }@inputs: {
+
+      packages.x86_64-linux =
+        let
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+          };
+        in
+        {
+          dotfiles = pkgs.callPackage ./nix/pkgs/dotfiles.nix { };
+        };
+
       nixosConfigurations = {
         cola = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -58,6 +69,7 @@
         };
         oddball = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
             disko.nixosModules.disko
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
@@ -65,6 +77,7 @@
             ham-overlay.nixosModules.default.mheardd
             ham-overlay.nixosModules.default.axlistend
             ham-overlay.nixosModules.default.beacond
+            ./nix/machines/_common/users.nix
             ./nix/machines/_common/base.nix
             ./nix/machines/_common/wifi.nix
             ./nix/machines/_common/desktop.nix

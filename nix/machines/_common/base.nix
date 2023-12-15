@@ -8,6 +8,7 @@ in
 {
   # install Nebulaworks packages
   environment.systemPackages = with pkgs; [
+    bc
     binutils
     btop
     cachix
