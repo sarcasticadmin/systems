@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 let
   UdevRulesNinoTNC = pkgs.writeTextFile {
@@ -15,6 +15,7 @@ in
     [
       ./hardware-configuration.nix
       ./disko.nix
+      ./home.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
