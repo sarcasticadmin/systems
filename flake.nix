@@ -30,6 +30,17 @@
     , ham-overlay
     , disko
     }@inputs: {
+
+      packages.x86_64-linux =
+        let
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+          };
+        in
+        {
+          dotfiles = pkgs.callPackage ./nix/pkgs/dotfiles.nix { };
+        };
+
       nixosConfigurations = {
         cola = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
