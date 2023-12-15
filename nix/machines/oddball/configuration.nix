@@ -18,6 +18,10 @@ in
       ./home.nix
     ];
 
+  system.stateVersion = "23.05";
+
+  networking.hostName = "oddball";
+
   nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot UEFI boot loader
