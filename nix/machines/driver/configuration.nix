@@ -11,9 +11,6 @@ in
   imports =
     [
       ./hardware-configuration.nix
-      ../_common/desktop.nix
-      ../_common/base.nix
-      # Import nix-garage
       ./home.nix
     ];
 
@@ -78,14 +75,6 @@ in
   services.pipewire.alsa.enable = true;
   services.pipewire.pulse.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rherna = {
-    isNormalUser = true;
-    uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" "docker" "plugdev" "libvirtd" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
-  };
-
   users.groups.plugdev = { };
 
   # List packages installed in system profile. To search, run:
@@ -111,6 +100,7 @@ in
       android-udev-rules
       vagrant
       pkgs-unstable.beeper
+      pkgs-unstable.prusa-slicer
       pavucontrol
       pulsemixer
       isync #mbsync
