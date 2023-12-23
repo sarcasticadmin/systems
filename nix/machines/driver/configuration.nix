@@ -100,6 +100,7 @@ in
       android-udev-rules
       vagrant
       pkgs-unstable.beeper
+      pkgs-unstable.prusa-slicer
       pavucontrol
       pulsemixer
       isync #mbsync
