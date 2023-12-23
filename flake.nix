@@ -52,7 +52,11 @@
         driver = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
-          modules = [ ./nix/machines/driver/configuration.nix ];
+          modules = [
+            ./nix/machines/_common/desktop.nix
+            ./nix/machines/_common/base.nix
+            ./nix/machines/_common/users.nix
+            ./nix/machines/driver/configuration.nix ];
         };
         mulligan = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

@@ -1,11 +1,19 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 let
-  # Locals
-  dotfiles = pkgs.callPackage ./dotfiles.nix { };
   linker = import ../../lib/generic-linker.nix;
+  dotfiles = inputs.self.packages.${pkgs.system}.dotfiles;
 in
-  # Small example use case
-  linker [{
-  origin = "${dotfiles}/xpdf/.xpdfrc";
-  target = ".xpdfrc";
-}] "/home/rherna"
+linker [
+  {
+    origin = "${dotfiles}/bash/.bashrc";
+    target = ".bashrc";
+  }
+  {
+    origin = "${dotfiles}/bash/.bashrc.d";
+    target = ".bashrc.d";
+  }
+  {
+    origin = "${dotfiles}/tmux/.tmux.conf";
+    target = ".tmux.conf";
+  }
+] "/root"
