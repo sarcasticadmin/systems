@@ -18,6 +18,7 @@ in
     wget
     git
     git-lfs
+    gptfdisk #sgdisk, sfdisk, etc.
     ldns
     tmux
     silver-searcher
