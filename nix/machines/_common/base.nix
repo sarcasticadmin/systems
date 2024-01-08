@@ -10,6 +10,7 @@ in
   environment.systemPackages = with pkgs; [
     bc
     binutils
+    bc
     btop
     cachix
     dig
