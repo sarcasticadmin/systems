@@ -4,7 +4,7 @@
   users.users.rherna = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" ]
+    extraGroups = [ "wheel" "dialout" ]
       ++ lib.optional config.virtualisation.libvirtd.enable "libvirtd"
       ++ lib.optional config.virtualisation.docker.enable "docker"
       ++ lib.optionals config.sound.enable [ "audio" "sound" ]
