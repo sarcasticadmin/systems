@@ -111,6 +111,7 @@ in
       afew
       msmtp
       tio
+      xosd
     ];
 
     etc."wpa_supplicant.conf" = {
