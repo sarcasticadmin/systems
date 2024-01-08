@@ -10,6 +10,7 @@ in
   environment.systemPackages = with pkgs; [
     bc
     binutils
+    bc
     btop
     cachix
     dig
@@ -18,6 +19,7 @@ in
     wget
     git
     git-lfs
+    gptfdisk #sgdisk, sfdisk, etc.
     ldns
     tmux
     silver-searcher
