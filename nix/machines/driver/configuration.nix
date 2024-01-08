@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 let
   aercUnstable = pkgs.callPackage ./aerc { };
 
@@ -185,6 +185,36 @@ in
         EnableEscapeCommandline yes
     '';
   };
+
+  programs.light.enable = true;
+  systemd.services."actkbd@" =
+    {
+      # Not great but allows actkbd to be able to access the display and display vars easily
+      serviceConfig.User = lib.mkForce "rherna";
+    };
+
+  services.actkbd =
+  let
+    osd_bar = "(export DISPLAY=:0.0; /run/current-system/sw/bin/osd_cat -A center -p bottom -o 120 -f -*-*-bold-*-*-*-36-120-*-*-*-*-*-* -c green -s 1 -d 2 -w -b percentage -P $(/run/current-system/sw/bin/light) -T brightness &)";
+    #osd_bar = "(export DISPLAY=:0.0; /run/current-system/sw/bin/osd_cat -A center -p bottom -o 120 -f -*-*-bold-*-*-*-36-120-*-*-*-*-*-* -c green -d 1 -s 1 -a 0 -b percentage -P $(/run/current-system/sw/bin/light) -T brightness > /tmp/brightdown.log 2>&1)";
+  in
+  {
+    enable = true;
+    # Check key mappings:
+    # Get event<num>: cat /proc/bus/input/devices | grep "Name\|Handlers"
+    # Watch events: actkbd -n -s -d /dev/input/event<num>
+    # F1-F4 = /dev/input/event0
+    # F5-F8 = /dev/input/event2
+    # F9-F12 = /dev/input/event6
+    # T14 Gen 2
+    # F5-F6 = /dev/input/event5
+    # F7-F12 = /dev/input/event10
+    bindings = [
+      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10; ${osd_bar}"; }
+      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10; ${osd_bar}"; }
+    ];
+  };
+
   # List services that you want to enable:
 
   # Open ports in the firewall.
