@@ -2,8 +2,6 @@
 { config, pkgs, inputs, ... }:
 
 let
-  # Nix firefox addons only work with the firefox-esr package.
-  # https://github.com/NixOS/nixpkgs/blob/master/doc/builders/packages/firefox.section.md
   myFirefox = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
     cfg = { smartcardSupport = true; };
 
@@ -50,27 +48,40 @@ in
   ];
 
 
-   programs.firefox = {
-      enable = true;
-      package = myFirefox;
-      policies = {
+  programs.firefox = {
+    enable = true;
+    package = myFirefox;
+    policies = {
+      # src: https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265/17
       ExtensionSettings = with builtins;
-        let extension = shortId: uuid: {
-          name = uuid;
-          value = {
-            install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/${shortId}/latest.xpi";
-            installation_mode = "normal_installed";
+        let
+          extension = shortId: uuid: {
+            name = uuid;
+            value = {
+              install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/${shortId}/latest.xpi";
+              installation_mode = "normal_installed";
+            };
           };
-        };
-        in listToAttrs [
+        in
+        listToAttrs [
+          # To add additional extensions, find it on addons.mozilla.org, find
+          # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
+          # Then, download the XPI by filling it in to the install_url template, unzip it,
+          # run `jq .browser_specific_settings.gecko.id manifest.json` or
+          # `jq .applications.gecko.id manifest.json` to get the UUID
           (extension "ublock-origin" "uBlock0@raymondhill.net")
           (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
+          (extension "darkreader" "addon@darkreader.org")
+          (extension "user-agent-string-switcher" "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}")
         ];
-        # To add additional extensions, find it on addons.mozilla.org, find
-        # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
-        # Then, download the XPI by filling it in to the install_url template, unzip it,
-        # run `jq .browser_specific_settings.gecko.id manifest.json` or
-        # `jq .applications.gecko.id manifest.json` to get the UUID
+    };
+    preferences = {
+      "browser.shell.checkDefaultBrowser" = false;
+      "browser.tabs.firefox-view.ui-state.tab-pickup.open" = false;
+      "browser.toolbars.bookmarks.visibility" = "newtab"; # never,always are also options
+      "app.update.auto" = false;
+      "extensions.pocket.enabled" = false;
+      "signon.rememberSignons" = false; # dont prompt to save credentials to browser
     };
   };
 
@@ -103,5 +114,4 @@ in
   environment.etc."i3status.conf" = {
     source = "${inputs.self.packages.${pkgs.system}.dotfiles}/workstation/.i3status.conf";
   };
-
 }
