@@ -5,6 +5,10 @@ let
 in
 linker [
   {
+    origin = "${dotfiles}/bash/.bash_profile";
+    target = ".bash_profile";
+  }
+  {
     origin = "${dotfiles}/bash/.bashrc";
     target = ".bashrc";
   }

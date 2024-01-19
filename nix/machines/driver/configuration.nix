@@ -240,6 +240,8 @@ in
     libvirtd.enable = true;
   };
 
+  services.lldpd.enable = true;
+
   systemd.services.zfs-scrub.unitConfig.ConditionACPower = true;
 
   # dont hiberate/sleep by default
