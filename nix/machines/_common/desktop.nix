@@ -2,37 +2,8 @@
 { config, pkgs, inputs, ... }:
 
 let
-  # Nix firefox addons only work with the firefox-esr package.
-  # https://github.com/NixOS/nixpkgs/blob/master/doc/builders/packages/firefox.section.md
   myFirefox = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
     cfg = { smartcardSupport = true; };
-    nixExtensions = [
-      (pkgs.fetchFirefoxAddon {
-        name = "ublock"; # Has to be unique!
-        url = "https://addons.mozilla.org/firefox/downloads/file/4171020/ublock_origin-1.52.2.xpi"; # Get this from about:addons
-        sha256 = "sha256-6O4/nVl6bULbnXP+h8HVId40B1X9i/3WnkFiPt/gltY=";
-      })
-      (pkgs.fetchFirefoxAddon {
-        name = "bitwarden";
-        url = "https://addons.mozilla.org/firefox/downloads/file/4170561/bitwarden_password_manager-2023.9.1.xpi";
-        sha256 = "sha256-RtT+EOo6F1empMDXKPP3Zdk4g/dCo+u3PzauuA7sVak=";
-      })
-      (pkgs.fetchFirefoxAddon {
-        name = "zoomExtension";
-        url = "https://addons.mozilla.org/firefox/downloads/file/4158802/zoom_new_scheduler-2.1.47.xpi";
-        sha256 = "sha256-v8fDftZS8Pjq9oz2fiJNeZTQGyQepF4OJUQpNuI7n/0=";
-      })
-      (pkgs.fetchFirefoxAddon {
-        name = "darkReader";
-        url = "https://addons.mozilla.org/firefox/downloads/file/4175386/darkreader-4.9.67.xpi";
-        sha256 = "sha256-EooVHwSvd0RjRI/hzblE9sUJX7F5kfgtmuw8jEUTMI4=";
-      })
-      (pkgs.fetchFirefoxAddon {
-        name = "userAgent";
-        url = "https://addons.mozilla.org/firefox/downloads/file/4098688/user_agent_string_switcher-0.5.0.xpi";
-        sha256 = "sha256-ncjaPIxG1PBNEv14nGNQH6ai9QL4WbKGk5oJDbY+rjM=";
-      })
-    ];
 
     # https://github.com/mozilla/policy-templates
     extraPolicies = {
@@ -71,6 +42,49 @@ in
     #imagemagick # dup might be a problem?
   ];
 
+  # due to obsidian we need to permit electron
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
+  ];
+
+
+  programs.firefox = {
+    enable = true;
+    package = myFirefox;
+    policies = {
+      # src: https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265/17
+      ExtensionSettings = with builtins;
+        let
+          extension = shortId: uuid: {
+            name = uuid;
+            value = {
+              install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/${shortId}/latest.xpi";
+              installation_mode = "normal_installed";
+            };
+          };
+        in
+        listToAttrs [
+          # To add additional extensions, find it on addons.mozilla.org, find
+          # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
+          # Then, download the XPI by filling it in to the install_url template, unzip it,
+          # run `jq .browser_specific_settings.gecko.id manifest.json` or
+          # `jq .applications.gecko.id manifest.json` to get the UUID
+          (extension "ublock-origin" "uBlock0@raymondhill.net")
+          (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
+          (extension "darkreader" "addon@darkreader.org")
+          (extension "user-agent-string-switcher" "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}")
+        ];
+    };
+    preferences = {
+      "browser.shell.checkDefaultBrowser" = false;
+      "browser.tabs.firefox-view.ui-state.tab-pickup.open" = false;
+      "browser.toolbars.bookmarks.visibility" = "newtab"; # never,always are also options
+      "app.update.auto" = false;
+      "extensions.pocket.enabled" = false;
+      "signon.rememberSignons" = false; # dont prompt to save credentials to browser
+    };
+  };
+
   services.xserver = {
     enable = true;
 
@@ -100,5 +114,4 @@ in
   environment.etc."i3status.conf" = {
     source = "${inputs.self.packages.${pkgs.system}.dotfiles}/workstation/.i3status.conf";
   };
-
 }
