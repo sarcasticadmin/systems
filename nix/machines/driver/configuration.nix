@@ -95,6 +95,7 @@ in
       gnupg
       pcsclite
       pinentry
+      nmap
       strace
       tailscale
       android-udev-rules
