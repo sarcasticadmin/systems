@@ -85,6 +85,18 @@ in
     };
   };
 
+  programs.chromium = {
+    enable = true;
+    extraOpts = {
+      "DefaultInsecureContentSetting" = true;
+      "BrowserSignin" = 0;
+      "SyncDisabled" = true;
+      "PasswordManagerEnabled" = false;
+      "SpellcheckEnabled" = true;
+      "DnsOverHttpsMode" = "off";
+    };
+  };
+
   services.xserver = {
     enable = true;
 

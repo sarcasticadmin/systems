@@ -27,6 +27,7 @@ in
     gnumake
     jq
     lsof
+    inetutils # telnet,ftp,etc
     myVim # Custom vim
     nixpkgs-fmt
     openssl
