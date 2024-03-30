@@ -34,6 +34,7 @@ in
       ./hardware-configuration.nix
       ../_common/desktop.nix
       ../_common/base.nix
+      ./disko.nix
     ];
 
   # Necessary in most configurations
@@ -68,7 +69,7 @@ in
   # Need to be set for ZFS or else leads to:
   # Failed assertions:
   # - ZFS requires networking.hostId to be set
-  networking.hostId = "7f702d2b";
+  #networking.hostId = "7f702d2b";
 
   # Enables wireless support via wpa_supplicant
   networking.wireless = {
@@ -222,24 +223,6 @@ in
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # ZFS
-  services.zfs = {
-    autoScrub = {
-      enable = true;
-      interval = "weekly";
-    };
-    autoSnapshot = {
-      enable = true;
-      monthly = 3;
-    };
-  };
-
-  virtualisation = {
-    docker.enable = true;
-    libvirtd.enable = true;
-  };
-
-  systemd.services.zfs-scrub.unitConfig.ConditionACPower = true;
 
   # dont hiberate/sleep by default
   powerManagement.enable = false;

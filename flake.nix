@@ -91,7 +91,10 @@
         rufio = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
-          modules = [ ./nix/machines/rufio/configuration.nix ];
+          modules = [ 
+            disko.nixosModules.disko
+            ./nix/machines/rufio/configuration.nix
+          ];
         };
         tinfoil = nixpkgs.lib.nixosSystem {
           # nix build -L .#nixosConfigurations.tinfoil.config.system.build.isoImage
