@@ -18,6 +18,8 @@ in
       ./home.nix
     ];
 
+  security.sudo.wheelNeedsPassword = false;
+
   system.stateVersion = "23.05";
 
   networking.hostName = "oddball";
