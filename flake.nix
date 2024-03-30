@@ -90,6 +90,7 @@
         };
         rufio = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [ ./nix/machines/rufio/configuration.nix ];
         };
         tinfoil = nixpkgs.lib.nixosSystem {
