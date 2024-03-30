@@ -13,33 +13,6 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "zroot/local/root";
-      fsType = "zfs";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/8087-9A70";
-      fsType = "vfat";
-    };
-
-  fileSystems."/nix" =
-    { device = "zroot/local/nix";
-      fsType = "zfs";
-    };
-
-  fileSystems."/home" =
-    { device = "zroot/safe/home";
-      fsType = "zfs";
-    };
-
-  fileSystems."/persist" =
-    { device = "zroot/safe/persist";
-      fsType = "zfs";
-    };
-
-  swapDevices = [ ];
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
