@@ -12,6 +12,7 @@ in
     [
       ./hardware-configuration.nix
       ./home.nix
+      ./wg.nix
     ];
 
   # Necessary in most configurations
@@ -114,6 +115,8 @@ in
       msmtp
       tio
       xosd
+      wireguard-tools
+      ntfs3g
     ];
 
     etc."wpa_supplicant.conf" = {
