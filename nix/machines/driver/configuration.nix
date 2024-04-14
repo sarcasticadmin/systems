@@ -116,6 +116,7 @@ in
       tio
       xosd
       wireguard-tools
+      ntfs3g
     ];
 
     etc."wpa_supplicant.conf" = {
