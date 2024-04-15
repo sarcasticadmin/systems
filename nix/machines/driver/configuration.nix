@@ -85,6 +85,7 @@ in
     systemPackages = with pkgs; [
       awscli2
       cntr
+      freetube
       gh
       glab
       ticker # stocks
