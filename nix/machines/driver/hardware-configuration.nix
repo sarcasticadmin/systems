@@ -11,7 +11,8 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-amd" "amd-pstate" ];
+  boot.kernelParams = [ "initcall_blacklist=acpi_cpufreq_init" "amd_pstate=active" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
