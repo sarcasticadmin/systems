@@ -49,6 +49,17 @@
             ./nix/machines/cola/configuration.nix
           ];
         };
+        dark = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            disko.nixosModules.disko
+            ./nix/machines/_common/users.nix
+            ./nix/machines/_common/base.nix
+            ./nix/machines/dark/config.nix
+          ];
+        };
+
         driver = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
