@@ -85,6 +85,7 @@ in
     systemPackages = with pkgs; [
       awscli2
       cntr
+      direnv
       freetube
       gh
       glab
@@ -99,6 +100,7 @@ in
       pcsclite
       pinentry
       nmap
+      mob
       strace
       tailscale
       android-udev-rules
@@ -106,6 +108,7 @@ in
       pkgs-unstable.beeper
       pkgs-unstable.prusa-slicer
       pavucontrol
+      openscad
       pulsemixer
       isync #mbsync
       protonmail-bridge
@@ -179,6 +182,8 @@ in
     # Make pinentry across multiple terminal windows, seamlessly
     enableSSHSupport = true;
   };
+
+  programs.less.lessopen = lib.mkDefault null;
 
   programs.ssh = {
     extraConfig = ''

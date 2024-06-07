@@ -29,6 +29,8 @@ in
     lsof
     inetutils # telnet,ftp,etc
     myVim # Custom vim
+    neovim
+    ripgrep # needed for nvim telescope
     nixpkgs-fmt
     openssl
     pciutils
