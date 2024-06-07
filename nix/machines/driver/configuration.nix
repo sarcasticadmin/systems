@@ -108,6 +108,7 @@ in
       pkgs-unstable.beeper
       pkgs-unstable.prusa-slicer
       pavucontrol
+      openscad
       pulsemixer
       isync #mbsync
       protonmail-bridge
