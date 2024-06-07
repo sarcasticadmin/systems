@@ -85,6 +85,7 @@ in
     systemPackages = with pkgs; [
       awscli2
       cntr
+      direnv
       freetube
       gh
       glab
@@ -99,6 +100,7 @@ in
       pcsclite
       pinentry
       nmap
+      mob
       strace
       tailscale
       android-udev-rules
