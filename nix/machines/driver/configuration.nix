@@ -183,6 +183,8 @@ in
     enableSSHSupport = true;
   };
 
+  programs.less.lessopen = lib.mkDefault null;
+
   programs.ssh = {
     extraConfig = ''
       Host *
