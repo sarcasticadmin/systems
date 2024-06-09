@@ -98,30 +98,32 @@ in
     };
   };
 
-  services.xserver = {
-    enable = true;
+  services = {
+    xserver = {
+      enable = true;
 
-    desktopManager = {
-      xterm.enable = false;
+      desktopManager = {
+        xterm.enable = false;
+      };
+
+      # This is the way
+      windowManager.i3 = {
+        enable = true;
+        extraPackages = with pkgs; [
+          dmenu # simple launcher
+          i3status # default i3 status bar
+          i3lock # default + simple lock that matches my config
+        ];
+        configFile = "${inputs.self.packages.${pkgs.system}.dotfiles}/i3/.i3/config";
+      };
+
+      # Enable touchpad support (enabled default in most desktopManager).
+      # libinput.enable = true;
     };
 
     displayManager = {
       defaultSession = "none+i3";
     };
-
-    # This is the way
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu # simple launcher
-        i3status # default i3 status bar
-        i3lock # default + simple lock that matches my config
-      ];
-      configFile = "${inputs.self.packages.${pkgs.system}.dotfiles}/i3/.i3/config";
-    };
-
-    # Enable touchpad support (enabled default in most desktopManager).
-    # libinput.enable = true;
   };
 
   environment.etc."i3status.conf" = {
