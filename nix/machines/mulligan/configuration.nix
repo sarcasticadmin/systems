@@ -120,5 +120,6 @@ in
   # Resulting in pat to error with: address already in use error after first connection
   #boot.kernelPackages = pkgs.linuxPackages_6_0;
 
-  services.tlp.enable = true;
+
+  system.stateVersion = config.system.nixos.version;
 }
