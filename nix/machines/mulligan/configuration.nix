@@ -35,24 +35,19 @@ in
     experimental-features = nix-command flakes
   '';
 
-  #boot.kernelPatches = [{
-  #  name = "packet-radio-protocols";
-  #  patch = null;
-  #  extraConfig = ''
-  #    HAMRADIO y
-  #    AX25 y
-  #    AX25_DAMA_SLAVE y
-  #  '';
-  #}];
   boot.kernelPatches = lib.singleton {
     name = "ax25-ham";
     patch = null;
     extraStructuredConfig = with lib.kernel; {
-      HAMRADIO = yes;
-      AX25 = yes;
-      AX25_DAMA_SLAVE = yes;
+      HAMRADIO = lib.kernel.yes;
+      AX25 = lib.kernel.module;
     };
   };
+
+  # After setting the bool for HAMRADIO in the kernel we can set ax25 either in extraStructuredConfig
+  # or via boot.kernelModules to build it as an individual module instead of built in
+  # https://github.com/torvalds/linux/blob/d20f6b3d747c36889b7ce75ee369182af3decb6b/net/ax25/Kconfig#L8
+  #boot.kernelModules = [ "ax25" ];
 
   environment = {
     # Installs all necessary packages for the minimal
@@ -125,5 +120,11 @@ in
   # Resulting in pat to error with: address already in use error after first connection
   #boot.kernelPackages = pkgs.linuxPackages_6_0;
 
-  services.tlp.enable = true;
+  # Enable tlp for stricter governance of power management
+  # Validate status: `sudo tlp-stat -b`
+  services.tlp = {
+    enable = true;
+  };
+
+  system.stateVersion = config.system.nixos.version;
 }
