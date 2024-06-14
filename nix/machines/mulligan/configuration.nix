@@ -120,6 +120,11 @@ in
   # Resulting in pat to error with: address already in use error after first connection
   #boot.kernelPackages = pkgs.linuxPackages_6_0;
 
+  # Enable tlp for stricter governance of power management
+  # Validate status: `sudo tlp-stat -b`
+  services.tlp = {
+    enable = true;
+  };
 
   system.stateVersion = config.system.nixos.version;
 }
