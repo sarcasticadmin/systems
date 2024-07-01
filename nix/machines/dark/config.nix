@@ -1,5 +1,8 @@
 { config, pkgs, inputs, lib, ... }:
-
+let
+  # glfw libwayland-client error
+  mySdrpp = pkgs.sdrpp.override { sdrplay_source = true; };
+in
 {
   imports =
     [
@@ -37,6 +40,7 @@
       tio
       firefox
       neofetch
+      mySdrpp
     ];
     gnome.excludePackages = (with pkgs; [
       gnome-photos
