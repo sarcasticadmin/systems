@@ -1,5 +1,8 @@
 { config, pkgs, inputs, lib, ... }:
-
+let
+  # glfw libwayland-client error
+  mySdrpp = pkgs.sdrpp.override { sdrplay_source = true; };
+in
 {
   imports =
     [
@@ -37,6 +40,12 @@
       tio
       firefox
       neofetch
+      ardopc
+      wsjtx
+      js8call
+      sdrplay
+      mySdrpp
+      fldigi
     ];
     gnome.excludePackages = (with pkgs; [
       gnome-photos
@@ -58,6 +67,8 @@
   services.openssh = {
     enable = true;
   };
+
+  services.sdrplayApi.enable = true;
 
   # conflicts with gnome power-profiles-daemon
   #services.tlp.enable = true;

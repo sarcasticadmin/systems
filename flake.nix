@@ -53,6 +53,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
             disko.nixosModules.disko
             ./nix/machines/_common/users.nix
             ./nix/machines/_common/base.nix
