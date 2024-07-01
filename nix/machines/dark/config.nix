@@ -68,6 +68,8 @@ in
     enable = true;
   };
 
+  services.sdrplayApi.enable = true;
+
   # conflicts with gnome power-profiles-daemon
   #services.tlp.enable = true;
 
