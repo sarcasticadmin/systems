@@ -40,7 +40,12 @@ in
       tio
       firefox
       neofetch
+      ardopc
+      wsjtx
+      js8call
+      sdrplay
       mySdrpp
+      fldigi
     ];
     gnome.excludePackages = (with pkgs; [
       gnome-photos
