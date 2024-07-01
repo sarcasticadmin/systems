@@ -14,17 +14,17 @@ let
     };
   });
 
-  # For now use my fork until merged upstream
+  # Use unstable since there hasn't been a release in year+
   myKismet = pkgs.kismet.overrideAttrs (finalAttrs: previousAttrs: {
     pname = "kismet";
-    version = "2023-08-07_unstable";
+    version = "2024-06-21_unstable";
     src = pkgs.fetchFromGitHub {
-      #owner = "kismetwireless";
-      owner = "sarcasticadmin";
+      owner = "kismetwireless";
       repo = "kismet";
-      rev = "c0b1ab78f0eda395549ed59090ae2cbe44f7d2ed";
-      sha256 = "sha256-8izDUtLbsR09u2rDoWJbB3QMWX6XNqZhs2qpYPugB7U=";
+      rev = "733f2f8824b57e037af46678fc4116c400672758";
+      sha256 = "sha256-bmXk7DrzORSrsVLCQUBuh2yEXLNtCNgl8xL7RRMTpWI=";
     };
+    buildInputs = previousAttrs.buildInputs ++ [ pkgs.mosquitto ];
     #nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [ pkgs.breakpointHook ];
   });
 in
