@@ -148,6 +148,7 @@ in
       hashcat-utils
       hcxtools
       sdrpp
+      john # john the ripper
     ];
 
     etc."wpa_supplicant.conf" = {
