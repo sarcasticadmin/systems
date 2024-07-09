@@ -1,5 +1,5 @@
 # The base toolchain that I expect on a system
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   # Need the pythons in my vims
@@ -7,14 +7,13 @@ let
 in
 {
   # install Nebulaworks packages
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; ([
     bc
     binutils
     bc
     btop
     cachix
     dig
-    dmidecode
     file
     wget
     git
@@ -34,13 +33,15 @@ in
     nixpkgs-fmt
     openssl
     pciutils
-    parted
     shellcheck
     tree
     manix # useful search for nix docs
-    usbutils
     unzip
-  ];
+  ] ++ lib.optionals (!stdenv.isDarwin) [
+    pkgs.dmidecode
+    pkgs.parted
+    pkgs.usbutils
+  ]);
 
   # Purge nano from being the default
   environment.variables = { EDITOR = "vim"; };
