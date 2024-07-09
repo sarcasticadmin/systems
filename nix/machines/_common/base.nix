@@ -7,7 +7,7 @@ let
 in
 {
   # install Nebulaworks packages
-  environment.systemPackages = with pkgs; ([
+  environment.systemPackages = with pkgs; [
     bc
     binutils
     bc
@@ -31,17 +31,17 @@ in
     neovim
     ripgrep # needed for nvim telescope
     nixpkgs-fmt
-    openssl
     pciutils
     shellcheck
     tree
     manix # useful search for nix docs
     unzip
   ] ++ lib.optionals (!stdenv.isDarwin) [
-    pkgs.dmidecode
-    pkgs.parted
-    pkgs.usbutils
-  ]);
+    dmidecode
+    parted
+    usbutils
+    openssl # conflicts with nix-darwin
+  ];
 
   # Purge nano from being the default
   environment.variables = { EDITOR = "vim"; };
