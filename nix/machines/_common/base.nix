@@ -31,7 +31,6 @@ in
     neovim
     ripgrep # needed for nvim telescope
     nixpkgs-fmt
-    openssl
     pciutils
     shellcheck
     tree
@@ -41,6 +40,7 @@ in
     dmidecode
     parted
     usbutils
+    openssl # conflicts with nix-darwin
   ];
 
   # Purge nano from being the default
