@@ -11,6 +11,7 @@ in
     binutils
     bc
     btop
+    coreutils
     cachix
     dig
     file
