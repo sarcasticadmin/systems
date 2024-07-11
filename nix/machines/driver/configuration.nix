@@ -93,6 +93,7 @@ in
       ticker # stocks
       newsboat
       icdiff
+      mosh
       imagemagick
       magic-wormhole
       nixpkgs-review
@@ -187,6 +188,9 @@ in
     # Make pinentry across multiple terminal windows, seamlessly
     enableSSHSupport = true;
   };
+
+  # Mosh server setup with proper setguid
+  programs.mosh.enable = true;
 
   programs.less.lessopen = lib.mkDefault null;
 
