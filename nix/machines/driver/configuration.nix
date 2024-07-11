@@ -86,6 +86,7 @@ in
       awscli2
       cntr
       direnv
+      element-desktop
       freetube
       gh
       glab
