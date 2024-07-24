@@ -129,6 +129,11 @@ in
     };
   };
 
+  users.users.rherna = {
+      # adding extra keys from _common/users.nix
+      openssh.authorizedKeys.keys = [ "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEJ4EITcSl4uGLHg7MGsQg/CaT4+jWfOBfp56xeyRcUnXYPslpATZlkMxfLTetdxi44VdjSl/i96ptofryCf4jQ=" ];
+  };
+
   services.udev.packages = [ pkgs.android-udev-rules ];
   # Enable the OpenSSH daemon.
   services.openssh = {
