@@ -1,16 +1,12 @@
 # Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
-let
-  # Locals
-in
+
 {
   imports =
     [
       ./hardware-configuration.nix
-      ../_common/base.nix
+      ./disko.nix
+      #../_common/base.nix
     ];
 
   # Necessary in most configurations
@@ -26,11 +22,8 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "sidekick"; # Define your hostname.
-  # Need to be set for ZFS or else leads to:
-  # Failed assertions:
-  # - ZFS requires networking.hostId to be set
-  networking.hostId = "7f702d2f";
 
+  security.sudo.wheelNeedsPassword = false;
   # Enables wireless support via wpa_supplicant
   networking.wireless.enable = false;
 
@@ -46,41 +39,22 @@ in
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
   networking.dhcpcd.wait = "if-carrier-up";
 
-  # Enable sound
   sound.enable = false;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
-    isNormalUser = true;
-    uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+      # adding extra keys from _common/users.nix
+      openssh.authorizedKeys.keys = [ "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEJ4EITcSl4uGLHg7MGsQg/CaT4+jWfOBfp56xeyRcUnXYPslpATZlkMxfLTetdxi44VdjSl/i96ptofryCf4jQ=" ];
   };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
     systemPackages = with pkgs; [
-      gnupg
-      pcsclite
-      pinentry
     ];
   };
 
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    hostKeys = [
-      {
-        path = "/persist/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-      {
-        path = "/persist/etc/ssh/ssh_host_rsa_key";
-        type = "rsa";
-        bits = 4096;
-      }
-    ];
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
@@ -88,29 +62,5 @@ in
     };
   };
 
-  services.pcscd.enable = true;
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryFlavor = "tty";
-    # Make pinentry across multiple terminal windows, seamlessly
-    enableSSHSupport = true;
-  };
-
-  # ZFS
-  services.zfs = {
-    autoScrub = {
-      enable = true;
-      interval = "weekly";
-    };
-    autoSnapshot = {
-      enable = true;
-      monthly = 3;
-    };
-  };
-
   system.stateVersion = "23.05";
-
 }

@@ -11,33 +11,6 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "zroot/local/root";
-      fsType = "zfs";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0DDE-DB8A";
-      fsType = "vfat";
-    };
-
-  fileSystems."/nix" =
-    { device = "zroot/local/nix";
-      fsType = "zfs";
-    };
-
-  fileSystems."/home" =
-    { device = "zroot/safe/home";
-      fsType = "zfs";
-    };
-
-  fileSystems."/persist" =
-    { device = "zroot/safe/persist";
-      fsType = "zfs";
-    };
-
-  swapDevices = [ ];
-
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
@@ -46,5 +19,4 @@
   # networking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  virtualisation.virtualbox.guest.enable = true;
 }

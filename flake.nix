@@ -103,7 +103,7 @@
         rufio = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
-          modules = [ 
+          modules = [
             disko.nixosModules.disko
             ./nix/machines/rufio/configuration.nix
           ];
@@ -126,7 +126,11 @@
         };
         sidekick = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./nix/machines/sidekick/configuration.nix ];
+          modules = [
+            disko.nixosModules.disko
+            ./nix/machines/_common/users.nix
+            ./nix/machines/sidekick/configuration.nix
+          ];
         };
         sign = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
