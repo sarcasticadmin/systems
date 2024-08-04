@@ -123,6 +123,7 @@ in
       xosd
       wireguard-tools
       ntfs3g
+      chirp
     ];
 
     etc."wpa_supplicant.conf" = {
