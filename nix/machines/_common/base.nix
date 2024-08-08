@@ -6,12 +6,12 @@ let
   myVim = pkgs.vim-full.override { pythonSupport = true; };
 in
 {
-  # install Nebulaworks packages
   environment.systemPackages = with pkgs; [
     bc
     binutils
     bc
     btop
+    coreutils
     cachix
     dig
     file

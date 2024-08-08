@@ -86,12 +86,14 @@ in
       awscli2
       cntr
       direnv
+      element-desktop
       freetube
       gh
       glab
       ticker # stocks
       newsboat
       icdiff
+      mosh
       imagemagick
       magic-wormhole
       nixpkgs-review
@@ -121,6 +123,7 @@ in
       xosd
       wireguard-tools
       ntfs3g
+      chirp
     ];
 
     etc."wpa_supplicant.conf" = {
@@ -186,6 +189,9 @@ in
     # Make pinentry across multiple terminal windows, seamlessly
     enableSSHSupport = true;
   };
+
+  # Mosh server setup with proper setguid
+  programs.mosh.enable = true;
 
   programs.less.lessopen = lib.mkDefault null;
 
