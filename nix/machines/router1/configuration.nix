@@ -45,10 +45,10 @@
     # replicates the default behaviour.
     useDHCP = false;
     vlans = {
-      vlan44 = { id=44; interface="enp3s0"; };
-      vlan45 = { id=45; interface="enp3s0"; };
-      vlan46 = { id=46; interface="enp3s0"; };
-      vlan47 = { id=47; interface="enp3s0"; };
+      vlan44 = { id=44; interface="enp2s0"; };
+      vlan45 = { id=45; interface="enp2s0"; };
+      vlan46 = { id=46; interface="enp2s0"; };
+      vlan47 = { id=47; interface="enp2s0"; };
     };
 
     interfaces = {
@@ -56,11 +56,8 @@
       enp1s0 = {
        useDHCP = true;
       };
-      enp2s0 = {
-        useDHCP = false;
-      };
       # The trunk
-      #enp3s0 = {
+      #enp2s0 = {
       # useDHCP = false;
       #};
       vlan44 = {
@@ -88,7 +85,7 @@
         }];
       };
       # Modem
-      enp4s0 = {
+      enp3s0 = {
        useDHCP = true;
       };
     };
@@ -113,7 +110,7 @@
       ruleset = ''
         flush ruleset
 
-        define nic_inet = enp4s0
+        define nic_inet = enp3s0
         define nic_lan = vlan44
         define nic_wifi = vlan45
         define nic_wifi_guest = vlan46
