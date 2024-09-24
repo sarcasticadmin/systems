@@ -18,6 +18,14 @@ in
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
 
+  # set nixpkgs to inputs.nixpkgs for `nix shell || run`
+  nix.registry = {
+    nixpkgs.to = {
+      type = "path";
+      path = inputs.nixpkgs;
+    };
+  };
+
   nix.settings.trusted-users = [ "rherna" ];
 
   # remove the annoying experimental warnings
