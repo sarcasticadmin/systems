@@ -87,6 +87,8 @@ in
 
   users.groups.plugdev = { };
 
+  # allowed whitelist of insecure pkgs
+  nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
