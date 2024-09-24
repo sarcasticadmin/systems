@@ -18,6 +18,14 @@ in
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
 
+  # set nixpkgs to inputs.nixpkgs for `nix shell || run`
+  nix.registry = {
+    nixpkgs.to = {
+      type = "path";
+      path = inputs.nixpkgs;
+    };
+  };
+
   nix.settings.trusted-users = [ "rherna" ];
 
   # remove the annoying experimental warnings
@@ -79,6 +87,8 @@ in
 
   users.groups.plugdev = { };
 
+  # allowed whitelist of insecure pkgs
+  nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {

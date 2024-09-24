@@ -27,6 +27,7 @@ in
     arandr # ui xrandr tool for interacting the multimonitors
     chromium
     exfat
+    fend # calculate all the things
     scrot # screenshots
     feh # set wallpaper
     gomuks # matrix
@@ -42,12 +43,6 @@ in
     xorg.xmodmap # util for modding keymaps and pointer button mappings in Xorg
     #imagemagick # dup might be a problem?
   ];
-
-  # due to obsidian we need to permit electron
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
-
 
   programs.firefox = {
     enable = true;

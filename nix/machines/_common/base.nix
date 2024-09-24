@@ -31,6 +31,7 @@ in
     neovim
     ripgrep # needed for nvim telescope
     nixpkgs-fmt
+    nix-tree
     pciutils
     shellcheck
     tree
