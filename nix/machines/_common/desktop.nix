@@ -44,12 +44,6 @@ in
     #imagemagick # dup might be a problem?
   ];
 
-  # due to obsidian we need to permit electron
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
-
-
   programs.firefox = {
     enable = true;
     package = myFirefox;
