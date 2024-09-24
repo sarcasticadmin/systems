@@ -27,6 +27,7 @@ in
     arandr # ui xrandr tool for interacting the multimonitors
     chromium
     exfat
+    fend # calculate all the things
     scrot # screenshots
     feh # set wallpaper
     gomuks # matrix

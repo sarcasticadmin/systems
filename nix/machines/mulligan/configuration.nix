@@ -57,6 +57,7 @@ in
       aprx
       ax25-tools
       ax25-apps
+      fend
       tncattach
       libax25
       hamlib_4
