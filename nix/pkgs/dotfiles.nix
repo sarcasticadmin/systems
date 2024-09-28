@@ -1,8 +1,10 @@
 { lib, stdenvNoCC, fetchFromGitHub }:
-
-stdenvNoCC.mkDerivation rec {
+let
   pname = "sarcasticadmin-dotfiles";
   version = "2024.9.0";
+in
+stdenvNoCC.mkDerivation {
+  inherit pname version;
 
   src = fetchFromGitHub {
     owner = "sarcasticadmin";
