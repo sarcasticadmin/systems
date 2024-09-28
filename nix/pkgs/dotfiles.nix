@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "sarcasticadmin-dotfiles";
-  version = "2023.12.0";
+  version = "2024.9.0";
 
   src = fetchFromGitHub {
     owner = "sarcasticadmin";
     repo = "dotfiles";
     rev = "${version}";
-    hash = "sha256-0C4fhZ6KkrjotGyDr8m9BJLW0V46F65rXZsS87jOw1Q=";
+    hash = "sha256-V8yzDrRZE6vRMLTB/LnUQ8Rc/M3pysW6c98qkQNBdnk=";
   };
 
   phases = "unpackPhase patchPhase installPhase";
