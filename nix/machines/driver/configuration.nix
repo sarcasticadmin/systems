@@ -13,6 +13,7 @@ in
       ./hardware-configuration.nix
       ./home.nix
       ./wg.nix
+      ./nvim.nix
     ];
 
   # Necessary in most configurations
