@@ -25,6 +25,10 @@ in
       type = "path";
       path = inputs.nixpkgs;
     };
+    nixpkgs-unstable.to = {
+      type = "path";
+      path = inputs.nixpkgs-unstable;
+    };
   };
 
   nix.settings.trusted-users = [ "rherna" ];
