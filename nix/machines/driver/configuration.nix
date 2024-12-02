@@ -83,8 +83,7 @@ in
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
-  # Enable pipewire for sound.
-  sound.enable = true;
+
   hardware.pulseaudio.enable = false;
   services.pipewire.enable = true;
   services.pipewire.alsa.enable = true;
