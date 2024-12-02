@@ -119,7 +119,7 @@ in
       strace
       tailscale
       android-udev-rules
-      vagrant
+      #vagrant  # broken as of 24.11
       pkgs-unstable.beeper
       pkgs-unstable.prusa-slicer
       pavucontrol
