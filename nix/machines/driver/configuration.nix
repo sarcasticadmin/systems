@@ -13,6 +13,7 @@ in
       ./hardware-configuration.nix
       ./home.nix
       ./wg.nix
+      ./nvim.nix
     ];
 
   # Necessary in most configurations
@@ -23,6 +24,10 @@ in
     nixpkgs.to = {
       type = "path";
       path = inputs.nixpkgs;
+    };
+    nixpkgs-unstable.to = {
+      type = "path";
+      path = inputs.nixpkgs-unstable;
     };
   };
 
@@ -42,7 +47,6 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   networking.hostName = "driver"; # Define your hostname.
   # Need to be set for ZFS or else leads to:
@@ -78,8 +82,7 @@ in
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
-  # Enable pipewire for sound.
-  sound.enable = true;
+
   hardware.pulseaudio.enable = false;
   services.pipewire.enable = true;
   services.pipewire.alsa.enable = true;
@@ -116,7 +119,7 @@ in
       strace
       tailscale
       android-udev-rules
-      vagrant
+      #vagrant  # broken as of 24.11
       pkgs-unstable.beeper
       pkgs-unstable.prusa-slicer
       pavucontrol
