@@ -109,7 +109,7 @@ in
       mosh
       imagemagick
       magic-wormhole
-      nixpkgs-review
+      pkgs-unstable.nixpkgs-review
       # hardware key
       gnupg
       pcsclite
