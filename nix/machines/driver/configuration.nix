@@ -121,6 +121,7 @@ in
       android-udev-rules
       #vagrant  # broken as of 24.11
       pkgs-unstable.beeper
+      pkgs-unstable.signal-desktop-bin
       pkgs-unstable.prusa-slicer
       pavucontrol
       openscad
