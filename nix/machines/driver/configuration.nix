@@ -103,7 +103,7 @@ in
       freetube
       gh
       glab
-      ticker # stocks
+      pkgs-unstable.ticker # stocks
       newsboat
       icdiff
       mosh
