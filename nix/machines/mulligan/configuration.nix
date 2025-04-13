@@ -35,25 +35,13 @@ in
     experimental-features = nix-command flakes
   '';
 
-  boot.kernelPatches = lib.singleton {
-    name = "ax25-ham";
-    patch = null;
-    extraStructuredConfig = with lib.kernel; {
-      HAMRADIO = lib.kernel.yes;
-      AX25 = lib.kernel.module;
-    };
-  };
-
-  # After setting the bool for HAMRADIO in the kernel we can set ax25 either in extraStructuredConfig
-  # or via boot.kernelModules to build it as an individual module instead of built in
-  # https://github.com/torvalds/linux/blob/d20f6b3d747c36889b7ce75ee369182af3decb6b/net/ax25/Kconfig#L8
-  #boot.kernelModules = [ "ax25" ];
+  boot.kernelPackages = pkgs.linuxPackages_ham;
 
   environment = {
     # Installs all necessary packages for the minimal
     systemPackages = with pkgs; [
       alsa-utils # Soundcard utils
-      ardopc
+      #ardopc
       aprx
       ax25-tools
       ax25-apps
@@ -67,7 +55,7 @@ in
       screen
       tio
       kermit
-      wwl
+      #wwl
     ];
 
     # libax25, etc. are set to assume the common config path
@@ -127,5 +115,6 @@ in
     enable = true;
   };
 
-  system.stateVersion = config.system.nixos.version;
+  #system.stateVersion = config.system.nixos.version;
+  system.stateVersion = "25.05";
 }

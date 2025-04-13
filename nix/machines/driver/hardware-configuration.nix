@@ -46,6 +46,10 @@
       fsType = "zfs";
     };
 
+  # Leverage compressed RAM based block devices named /dev/zram<id>
+  # ref: https://www.kernel.org/doc/Documentation/blockdev/zram.txt
+  zramSwap.enable = true;
+
   swapDevices = [ ];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
