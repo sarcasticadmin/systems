@@ -41,7 +41,7 @@ in
     # Installs all necessary packages for the minimal
     systemPackages = with pkgs; [
       alsa-utils # Soundcard utils
-      ardopc
+      #ardopc
       aprx
       ax25-tools
       ax25-apps
@@ -55,7 +55,7 @@ in
       screen
       tio
       kermit
-      wwl
+      #wwl
     ];
 
     # libax25, etc. are set to assume the common config path
