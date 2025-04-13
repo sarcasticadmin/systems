@@ -70,7 +70,7 @@
             ./nix/machines/_common/users.nix
             ./nix/machines/driver/configuration.nix ];
         };
-        mulligan = nixpkgs.lib.nixosSystem {
+        mulligan = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
