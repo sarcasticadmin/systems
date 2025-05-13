@@ -100,6 +100,16 @@
             ./nix/machines/oddball/configuration.nix
           ];
         };
+        roomservice = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            disko.nixosModules.disko
+            ./nix/machines/_common/users.nix
+            ./nix/machines/_common/base.nix
+            ./nix/machines/roomservice/configuration.nix
+          ];
+        };
         rufio = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
