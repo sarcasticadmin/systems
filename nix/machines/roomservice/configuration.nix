@@ -50,6 +50,8 @@
     # Installs all necessary packages for the minimal
     systemPackages = with pkgs; [
       abcde
+      cdparanoia
+      ncmpc
     ];
 
   };
@@ -58,6 +60,31 @@
   services.openssh = {
     enable = true;
   };
+
+  hardware.pulseaudio.enable = false;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    systemWide = true;
+  };
+
+  services.mpd = {
+    enable = true;
+    musicDirectory = "/tiger/music_enc/";
+    dataDir = "/tiger/music_enc/.mpd";
+    extraConfig = ''
+      audio_output {
+        type "pipewire"
+        name "PipeWire Sound Server"
+      }
+      input {
+        plugin "cdio_paranoia"
+      }
+    '';
+  };
+
+  systemd.services.mpd.serviceConfig.SupplementaryGroups = [ "pipewire" ];
 
   services.tlp.enable = true;
 }
