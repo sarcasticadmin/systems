@@ -84,9 +84,12 @@ in
   services.printing.drivers = [ pkgs.gutenprint ];
 
   hardware.pulseaudio.enable = false;
-  services.pipewire.enable = true;
-  services.pipewire.alsa.enable = true;
-  services.pipewire.pulse.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    systemWide = true;
+  };
 
   users.groups.plugdev = { };
 

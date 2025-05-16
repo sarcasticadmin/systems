@@ -39,6 +39,7 @@
         in
         {
           dotfiles = pkgs.callPackage ./nix/pkgs/dotfiles.nix { };
+          accrip = pkgs.callPackage ./nix/pkgs/accrip/package.nix { };
         };
 
       nixosConfigurations = {
