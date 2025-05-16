@@ -52,6 +52,7 @@
       abcde
       cdparanoia
       ncmpc
+      inputs.self.packages.${pkgs.system}.accrip
     ];
 
   };
