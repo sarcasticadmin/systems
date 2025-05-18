@@ -51,6 +51,7 @@
     systemPackages = with pkgs; [
       abcde
       cdparanoia
+      flac
       ncmpc
       inputs.self.packages.${pkgs.system}.accrip
     ];
