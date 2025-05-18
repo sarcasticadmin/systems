@@ -27,6 +27,8 @@
   boot.loader.systemd-boot.enable = true;
 
   boot.zfs.extraPools = [ "tiger" ];
+  # Ignore any datasets that are encrypted
+  boot.zfs.requestEncryptionCredentials = [];
 
   # Need to be set for ZFS or else leads to:
   # Failed assertions:
