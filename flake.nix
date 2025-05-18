@@ -39,6 +39,7 @@
         in
         {
           dotfiles = pkgs.callPackage ./nix/pkgs/dotfiles.nix { };
+          accrip = pkgs.callPackage ./nix/pkgs/accrip/package.nix { };
         };
 
       nixosConfigurations = {
@@ -98,6 +99,16 @@
             ./nix/machines/_common/wifi.nix
             ./nix/machines/_common/desktop.nix
             ./nix/machines/oddball/configuration.nix
+          ];
+        };
+        roomservice = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            disko.nixosModules.disko
+            ./nix/machines/_common/users.nix
+            ./nix/machines/_common/base.nix
+            ./nix/machines/roomservice/configuration.nix
           ];
         };
         rufio = nixpkgs.lib.nixosSystem {
