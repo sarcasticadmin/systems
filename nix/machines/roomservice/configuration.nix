@@ -26,6 +26,8 @@
   # Disko needs this for UEFI
   boot.loader.systemd-boot.enable = true;
 
+  boot.zfs.extraPools = [ "tiger" ];
+
   # Need to be set for ZFS or else leads to:
   # Failed assertions:
   # - ZFS requires networking.hostId to be set
