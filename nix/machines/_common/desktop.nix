@@ -39,7 +39,7 @@ in
     xsel
     viewnior
     mpv
-    xournal # pdf annotations
+    xournalpp # pdf annotations
     xorg.xmodmap # util for modding keymaps and pointer button mappings in Xorg
     #imagemagick # dup might be a problem?
   ];
@@ -120,6 +120,9 @@ in
       defaultSession = "none+i3";
     };
   };
+
+  # required as of 25.05 since PAM services for i3lock now default to disabled
+  programs.i3lock.enable = true;
 
   environment.etc."i3status.conf" = {
     source = "${inputs.self.packages.${pkgs.system}.dotfiles}/workstation/.i3status.conf";
