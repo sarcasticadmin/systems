@@ -83,7 +83,7 @@ in
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -310,5 +310,5 @@ in
     };
   };
 
-  system.stateVersion = config.system.nixos.version;
+  system.stateVersion = config.system.nixos.release;
 }
