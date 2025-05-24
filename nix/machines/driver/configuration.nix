@@ -88,7 +88,6 @@ in
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
-    systemWide = true;
   };
 
   users.groups.plugdev = { };
