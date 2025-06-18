@@ -140,6 +140,7 @@ in
       wireguard-tools
       ntfs3g
       chirp
+      cc-tool # TI CC Debugger
     ];
 
     etc."wpa_supplicant.conf" = {
@@ -153,7 +154,10 @@ in
       openssh.authorizedKeys.keys = [ "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEJ4EITcSl4uGLHg7MGsQg/CaT4+jWfOBfp56xeyRcUnXYPslpATZlkMxfLTetdxi44VdjSl/i96ptofryCf4jQ=" ];
   };
 
-  services.udev.packages = [ pkgs.android-udev-rules ];
+  services.udev.packages = with pkgs; [
+    android-udev-rules
+    cc-tool # TI CC Debugger
+  ];
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
