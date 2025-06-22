@@ -1,13 +1,24 @@
+{ pkgs, ... }:
 {
-  # Enables wireless support via wpa_supplicant
-  networking.wireless.enable = true;
-  # Option is misleading but we dont want it
-  networking.wireless.userControlled.enable = false;
-  # Allow configuring networks "imperatively"
-  networking.wireless.allowAuxiliaryImperativeNetworks = true;
-
-  environment.etc."wpa_supplicant.conf" = {
-    source = "/persist/etc/wpa_supplicant.conf";
-    mode = "symlink";
+  networking.wireless.iwd = {
+    enable = true;
+    settings = {
+      Settings = {
+        AutoConnect = false;
+      };
+    };
   };
+
+  environment.systemPackages = with pkgs; [
+    impala
+  ];
+
+  fonts = {
+    packages = with pkgs; [
+      # impala needs symbols
+      # https://github.com/pythops/impala/issues/8
+      nerd-fonts.symbols-only
+    ];
+  };
+
 }

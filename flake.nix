@@ -69,6 +69,7 @@
             ./nix/machines/_common/desktop.nix
             ./nix/machines/_common/base.nix
             ./nix/machines/_common/users.nix
+            ./nix/machines/_common/wifi.nix
             ./nix/machines/driver/configuration.nix ];
         };
         mulligan = nixpkgs-unstable.lib.nixosSystem {
