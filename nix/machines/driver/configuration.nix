@@ -54,13 +54,6 @@ in
   # - ZFS requires networking.hostId to be set
   networking.hostId = "6f602d2b";
 
-  # Enables wireless support via wpa_supplicant
-  networking.wireless.enable = true;
-  # Option is misleading but we dont want it
-  networking.wireless.userControlled.enable = false;
-  # Allow configuring networks "imperatively"
-  networking.wireless.allowAuxiliaryImperativeNetworks = true;
-
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
@@ -74,7 +67,7 @@ in
   networking.dhcpcd.wait = "if-carrier-up";
   networking.interfaces.enp2s0f0.useDHCP = true;
   networking.interfaces.enp5s0.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
+  networking.interfaces.wlan0.useDHCP = true;
 
   # Leave commented until tether is needed
   #networking.interfaces.enp7s0f4u2.useDHCP = true;
@@ -142,11 +135,6 @@ in
       chirp
       cc-tool # TI CC Debugger
     ];
-
-    etc."wpa_supplicant.conf" = {
-      source = "/persist/etc/wpa_supplicant.conf";
-      mode = "symlink";
-    };
   };
 
   users.users.rherna = {
