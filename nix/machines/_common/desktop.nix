@@ -127,4 +127,9 @@ in
   environment.etc."i3status.conf" = {
     source = "${inputs.self.packages.${pkgs.system}.dotfiles}/workstation/.i3status.conf";
   };
+
+  # good baseline of fonts
+  fonts = {
+    enableDefaultPackages = true;
+  };
 }
