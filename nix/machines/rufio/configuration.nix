@@ -107,6 +107,7 @@ in
     uid = 1000;
     extraGroups = [ "wheel" "audio" "sound" "docker" "plugdev" "libvirtd" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+    initialHashedPassword = "$6$yOjsY1t3c1l5OHyP$flrfkFAwmZG6ZJKVE.t3.IlkW0cQzzTH3E6lWc2.ccHezDwnpSgrERllJx4UGQuBrWp2u1LiZZgziWW3F/CYs/";
   };
 
   users.groups.plugdev = { };
