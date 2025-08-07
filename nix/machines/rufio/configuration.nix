@@ -110,6 +110,10 @@ in
     pulse.enable = true;
   };
 
+  nixpkgs.config.permittedInsecurePackages = [
+                "olm-3.2.16"
+              ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
     isNormalUser = true;
