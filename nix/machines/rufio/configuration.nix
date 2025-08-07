@@ -70,34 +70,21 @@ in
   # Failed assertions:
   # - ZFS requires networking.hostId to be set
   #networking.hostId = "7f702d2b";
-
-  # Enables wireless support via wpa_supplicant
-  networking.wireless = {
-    enable = true;
-    # Limit wpa_supplicant to specific interface
-    interfaces = [ "wlp3s0" ];
-    # Option is misleading but we dont want it
-    userControlled.enable = false;
-    # Allow configuring networks "imperatively"
-    allowAuxiliaryImperativeNetworks = true;
-  };
-
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
   # dhcpcd will conflict with interfaces being put into monitoring mode
   networking.useDHCP = false;
 
-  # Explicitly set interfaces we need dhcp on
-  networking.interfaces.enp0s25.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
-
-  # Tether to android
-  networking.interfaces.enp0s20u2.useDHCP = true;
-
   # Make sure that dhcpcd doesnt timeout when interfaces are down
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
   networking.dhcpcd.wait = "if-carrier-up";
+  # Explicitly set interfaces we need dhcp on
+  networking.interfaces.enp0s25.useDHCP = true;
+  networking.interfaces.wlan0.useDHCP = true;
+
+  # Tether to android
+  networking.interfaces.enp0s20u2.useDHCP = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -158,11 +145,6 @@ in
       sdrpp
       john # john the ripper
     ];
-
-    etc."wpa_supplicant.conf" = {
-      source = "/persist/etc/wpa_supplicant.conf";
-      mode = "symlink";
-    };
   };
 
   # Enable the OpenSSH daemon.
