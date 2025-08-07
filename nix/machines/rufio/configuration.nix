@@ -17,12 +17,12 @@ let
   # Use unstable since there hasn't been a release in year+
   myKismet = pkgs.kismet.overrideAttrs (finalAttrs: previousAttrs: {
     pname = "kismet";
-    version = "2024-08-05_unstable";
+    version = "2025-08-06_unstable";
     src = pkgs.fetchFromGitHub {
       owner = "kismetwireless";
       repo = "kismet";
-      rev = "284a9943285d4bb6f688eae8087c9d5fcd97ea24";
-      sha256 = "sha256-pgkxCVu/I5WUSa0qp83uBaWcXjjwxEZws7R8uifbt0Q=";
+      rev = "62599e6ee19b149fb98ca75e7d9a91dbd90a45b9";
+      sha256 = "sha256-oYj7ysGxJbSCg8SboCtD8iIRBlrDrRpcZf0UCc3pATc=";
     };
     buildInputs = previousAttrs.buildInputs ++ [ pkgs.mosquitto pkgs.rtl-sdr-librtlsdr ];
     #nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [ pkgs.breakpointHook ];
