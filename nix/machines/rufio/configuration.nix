@@ -17,12 +17,12 @@ let
   # Use unstable since there hasn't been a release in year+
   myKismet = pkgs.kismet.overrideAttrs (finalAttrs: previousAttrs: {
     pname = "kismet";
-    version = "2024-08-05_unstable";
+    version = "2025-08-06_unstable";
     src = pkgs.fetchFromGitHub {
       owner = "kismetwireless";
       repo = "kismet";
-      rev = "284a9943285d4bb6f688eae8087c9d5fcd97ea24";
-      sha256 = "sha256-pgkxCVu/I5WUSa0qp83uBaWcXjjwxEZws7R8uifbt0Q=";
+      rev = "62599e6ee19b149fb98ca75e7d9a91dbd90a45b9";
+      sha256 = "sha256-oYj7ysGxJbSCg8SboCtD8iIRBlrDrRpcZf0UCc3pATc=";
     };
     buildInputs = previousAttrs.buildInputs ++ [ pkgs.mosquitto pkgs.rtl-sdr-librtlsdr ];
     #nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [ pkgs.breakpointHook ];
@@ -70,41 +70,36 @@ in
   # Failed assertions:
   # - ZFS requires networking.hostId to be set
   #networking.hostId = "7f702d2b";
-
-  # Enables wireless support via wpa_supplicant
-  networking.wireless = {
-    enable = true;
-    # Limit wpa_supplicant to specific interface
-    interfaces = [ "wlp3s0" ];
-    # Option is misleading but we dont want it
-    userControlled.enable = false;
-    # Allow configuring networks "imperatively"
-    allowAuxiliaryImperativeNetworks = true;
-  };
-
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
   # dhcpcd will conflict with interfaces being put into monitoring mode
   networking.useDHCP = false;
 
-  # Explicitly set interfaces we need dhcp on
-  networking.interfaces.enp0s25.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
-
-  # Tether to android
-  networking.interfaces.enp0s20u2.useDHCP = true;
-
   # Make sure that dhcpcd doesnt timeout when interfaces are down
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
   networking.dhcpcd.wait = "if-carrier-up";
+  # Explicitly set interfaces we need dhcp on
+  networking.interfaces.enp0s25.useDHCP = true;
+  networking.interfaces.wlan0.useDHCP = true;
+
+  # Tether to android
+  networking.interfaces.enp0s20u2.useDHCP = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  services.pulseaudio.enable = false;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
+
+  nixpkgs.config.permittedInsecurePackages = [
+                "olm-3.2.16"
+              ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
@@ -112,6 +107,7 @@ in
     uid = 1000;
     extraGroups = [ "wheel" "audio" "sound" "docker" "plugdev" "libvirtd" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+    initialHashedPassword = "$6$yOjsY1t3c1l5OHyP$flrfkFAwmZG6ZJKVE.t3.IlkW0cQzzTH3E6lWc2.ccHezDwnpSgrERllJx4UGQuBrWp2u1LiZZgziWW3F/CYs/";
   };
 
   users.groups.plugdev = { };
@@ -150,11 +146,6 @@ in
       sdrpp
       john # john the ripper
     ];
-
-    etc."wpa_supplicant.conf" = {
-      source = "/persist/etc/wpa_supplicant.conf";
-      mode = "symlink";
-    };
   };
 
   # Enable the OpenSSH daemon.

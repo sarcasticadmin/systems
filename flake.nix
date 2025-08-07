@@ -118,6 +118,7 @@
           modules = [ 
             disko.nixosModules.disko
             ./nix/machines/rufio/configuration.nix
+            ./nix/machines/_common/wifi.nix
           ];
         };
         tinfoil = nixpkgs.lib.nixosSystem {
