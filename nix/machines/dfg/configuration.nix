@@ -29,11 +29,12 @@
   # dhcpcd will conflict with interfaces being put into monitoring mode
   networking.useDHCP = true;
 
+  boot.kernelModules = [ "ax25" ];
   services.ax25 = {
     axports = { 
       w2lk = {
         enable = true;
-        buad = 57600;
+        baud = 57600;
         callsign = "KM6LBU-11";
         tty = "/dev/ttyACM0";
         kissParams = "-t 300 -l 10 -s 12 -r 80 -f n";
@@ -42,7 +43,7 @@
     axlisten = {
       enable = true;
     };
-  }
+  };
   # Make sure that dhcpcd doesnt timeout when interfaces are down
   # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
   networking.dhcpcd.wait = "if-carrier-up";

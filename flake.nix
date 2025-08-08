@@ -81,6 +81,7 @@
             #ham-overlay.nixosModules.default.mheardd
             #ham-overlay.nixosModules.default.axlistend
             #ham-overlay.nixosModules.default.beacond
+            disko.nixosModules.disko
             ./nix/machines/_common/base.nix
             ./nix/machines/_common/users.nix
             ./nix/machines/dfg/configuration.nix
