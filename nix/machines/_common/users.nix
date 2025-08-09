@@ -11,7 +11,11 @@
       ++ lib.optional config.services.actkbd.enable "input"
       ++ lib.optionals config.services.pipewire.enable [ "audio" "sound" ]
       ++ lib.optional (lib.hasAttrByPath [ "plugdev" ] config.users.groups) "plugdev";
-      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIN+52twMZRbutTd69etElbuwdflkNkfn6KiHqVoaK3D rherna@rufio"
+      ];
+
     initialHashedPassword = "$6$yOjsY1t3c1l5OHyP$flrfkFAwmZG6ZJKVE.t3.IlkW0cQzzTH3E6lWc2.ccHezDwnpSgrERllJx4UGQuBrWp2u1LiZZgziWW3F/CYs/";
   };
 }

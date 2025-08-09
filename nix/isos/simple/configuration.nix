@@ -26,7 +26,10 @@
   services.getty.helpLine = "The 'root' account has an empty password.";
   users.extraUsers.root = {
     initialHashedPassword = "";
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIN+52twMZRbutTd69etElbuwdflkNkfn6KiHqVoaK3D rherna@rufio" #temp
+    ];
   };
 
   networking.firewall.enable = false;
