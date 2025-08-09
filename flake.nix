@@ -3,6 +3,7 @@
     extra-experimental-features = "nix-command flakes";
     extra-substituters = [
       "https://sarcasticadmin-systems.cachix.org"
+      "https://cache.nixos.lv?priority=10"
     ];
     extra-trusted-public-keys = [
       "sarcasticadmin-systems.cachix.org-1:K6fNUgpf4HtKZLt+HoJBBNzLnt8xHm/aoKbTH2U2SfA="
