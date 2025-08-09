@@ -62,6 +62,8 @@
   # $ nix search wget
   environment = {
     systemPackages = with pkgs; [
+      inputs.radcat.packages.${pkgs.system}.uronode
+      inputs.radcat.packages.${pkgs.system}.axmail
     ];
   };
 

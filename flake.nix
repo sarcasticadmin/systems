@@ -13,6 +13,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    radcat = {
+      url = "github:radiocatalog/radiopkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     ham-overlay = {
       url = "github:sarcasticadmin/ham-overlay";
       # Make sure to set to the specific input of the remote flake
@@ -29,6 +33,7 @@
     , nixpkgs
     , nixpkgs-unstable
     , ham-overlay
+    , radcat
     , disko
     }@inputs: {
 
@@ -75,6 +80,7 @@
           };
         dfg = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
             #ham-overlay.nixosModules.default.ax25d
