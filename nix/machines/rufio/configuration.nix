@@ -51,15 +51,15 @@ in
   # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
   documentation.man.generateCaches = true;
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    rtl8812au # Realtek usb adapter 0bda:8812
-  ];
+  #boot.extraModulePackages = with config.boot.kernelPackages; [
+  #  rtl8812au # Realtek usb adapter 0bda:8812
+  #];
 
   # Disable scatter-gather so kernel doesnt crash for mediatek cards
   #   confirm via: cat /sys/modules/mt76_usb/parameters/disable_usb (should result in Y
-  boot.extraModprobeConfig = ''
-  options mt76-usb disable_usb_sg=1
-  '';
+  #boot.extraModprobeConfig = ''
+  #options mt76-usb disable_usb_sg=1
+  #'';
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -129,22 +129,24 @@ in
       pcsclite
       pinentry
       strace
-      tailscale
-      vagrant
+      #tailscale
+      #vagrant
       proxmark3-rrg
-      aircrack-ng
-      myKismet
-      wifite2
-      myReaverwps-t6x
-      wireshark
-      tshark
+      #aircrack-ng
+      #myKismet
+      #wifite2
+      #myReaverwps-t6x
+      #wireshark
+      #tshark
       tcpdump
-      yt-dlp
-      hashcat
-      hashcat-utils
-      hcxtools
-      sdrpp
-      john # john the ripper
+      #yt-dlp
+      #hashcat
+      #hashcat-utils
+      #hcxtools
+      #sdrpp
+      #john # john the ripper
+      ax25-tools
+      ax25-apps
     ];
   };
 
@@ -206,6 +208,23 @@ in
         EnableEscapeCommandline yes
     '';
   };
+
+  boot.kernelModules = [ "ax25" "kvm-intel" ];
+  services.ax25 = {
+    axports = {
+      w2lk = {
+        enable = true;
+        baud = 57600;
+        callsign = "KM6LBU-5";
+        tty = "/dev/ttyACM0";
+        kissParams = "-t 300 -l 10 -s 12 -r 80 -f n";
+      };
+    };
+    axlisten = {
+      enable = true;
+    };
+  };
+
   # List services that you want to enable:
 
   # Open ports in the firewall.
