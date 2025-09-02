@@ -134,6 +134,7 @@ in
       ntfs3g
       chirp
       cc-tool # TI CC Debugger
+      inputs.self.packages.${pkgs.system}.cm108
     ];
   };
 
@@ -145,6 +146,7 @@ in
   services.udev.packages = with pkgs; [
     android-udev-rules
     cc-tool # TI CC Debugger
+    direwolf
   ];
   # Enable the OpenSSH daemon.
   services.openssh = {

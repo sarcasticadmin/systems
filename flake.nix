@@ -40,6 +40,7 @@
         {
           dotfiles = pkgs.callPackage ./nix/pkgs/dotfiles.nix { };
           accrip = pkgs.callPackage ./nix/pkgs/accrip/package.nix { };
+          cm108 = pkgs.callPackage ./nix/pkgs/cm108.nix { };
         };
 
       nixosConfigurations = {
