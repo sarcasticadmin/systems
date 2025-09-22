@@ -74,6 +74,12 @@ in
     #interfaces.enp7s0f4u2.useDHCP = true;
   };
 
+  # The notion of "online" is a broken concept
+  # also cant guarantee that laptop will always have a connection
+  # https://github.com/systemd/systemd/blob/e1b45a756f71deac8c1aa9a008bd0dab47f64777/NEWS#L13
+  # https://github.com/NixOS/nixpkgs/issues/247608
+  systemd.network.wait-online.enable = false;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
