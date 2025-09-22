@@ -48,29 +48,28 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "driver"; # Define your hostname.
-  # Need to be set for ZFS or else leads to:
-  # Failed assertions:
-  # - ZFS requires networking.hostId to be set
-  networking.hostId = "6f602d2b";
+  networking = {
+    hostName = "driver"; # Define your hostname.
+    # Need to be set for ZFS or else leads to:
+    # Failed assertions:
+    # - ZFS requires networking.hostId to be set
+    hostId = "6f602d2b";
 
-  # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
+    # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+    # Per-interface useDHCP will be mandatory in the future, so this generated config
+    # replicates the default behaviour.
+    useDHCP = false;
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
+    # Make sure that dhcpcd doesnt timeout when interfaces are down
+    # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
+    dhcpcd.wait = "if-carrier-up";
+    interfaces.enp2s0f0.useDHCP = true;
+    interfaces.enp5s0.useDHCP = true;
+    interfaces.wlan0.useDHCP = true;
 
-  # Make sure that dhcpcd doesnt timeout when interfaces are down
-  # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
-  networking.dhcpcd.wait = "if-carrier-up";
-  networking.interfaces.enp2s0f0.useDHCP = true;
-  networking.interfaces.enp5s0.useDHCP = true;
-  networking.interfaces.wlan0.useDHCP = true;
-
-  # Leave commented until tether is needed
-  #networking.interfaces.enp7s0f4u2.useDHCP = true;
+    # Leave commented until tether is needed
+    #interfaces.enp7s0f4u2.useDHCP = true;
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -247,12 +246,6 @@ in
   };
 
   # List services that you want to enable:
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # ZFS
   services.zfs = {
