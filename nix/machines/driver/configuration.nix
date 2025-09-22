@@ -55,6 +55,9 @@ in
     # - ZFS requires networking.hostId to be set
     hostId = "6f602d2b";
 
+    # use systemd.networkd full stop
+    useNetworkd = true;
+
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
