@@ -130,6 +130,14 @@
             ./nix/isos/tinfoil/configuration.nix
           ];
         };
+        tv = nixpkgs.lib.nixosSystem {
+          # nix build -L .#nixosConfigurations.tinfoil.config.system.build.isoImage
+          system = "x86_64-linux";
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ./nix/isos/tv/configuration.nix
+          ];
+        };
         simpleIso = nixpkgs.lib.nixosSystem {
           # nix build -L .#nixosConfigurations.simpleIso.config.system.build.isoImage
           system = "x86_64-linux";

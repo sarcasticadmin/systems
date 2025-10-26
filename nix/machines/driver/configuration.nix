@@ -29,6 +29,11 @@ in
       type = "path";
       path = inputs.nixpkgs-unstable;
     };
+    nixpkgs-master.to = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+    };
   };
 
   nix.settings.trusted-users = [ "rherna" ];
