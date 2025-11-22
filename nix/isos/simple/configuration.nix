@@ -22,6 +22,8 @@
   # Enables the smart card mode of the Yubikey
   services.pcscd.enable = true;
 
+  services.fwupd.enable = true;
+
   # Sets the root user to have an empty password
   services.getty.helpLine = "The 'root' account has an empty password.";
   users.extraUsers.root = {
