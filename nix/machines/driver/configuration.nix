@@ -108,7 +108,7 @@ in
       cntr
       direnv
       element-desktop
-      freetube
+      pkgs-unstable.freetube
       gh
       glab
       pkgs-unstable.ticker # stocks
