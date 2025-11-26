@@ -35,8 +35,6 @@ in
     experimental-features = nix-command flakes
   '';
 
-  boot.kernelPackages = pkgs.linuxPackages_ham;
-
   environment = {
     # Installs all necessary packages for the minimal
     systemPackages = with pkgs; [
@@ -57,41 +55,24 @@ in
       kermit
       #wwl
     ];
-
-    # libax25, etc. are set to assume the common config path
-    # TODO: Definitely need to come up with a beter way to deal with this
-    etc."ax25/axports" = {
-      text = ''
-        # me callsign speed paclen window description
-        #
-        wl2k km6lbu-6 57600 255 7 Winlink
-      '';
-
-      # The UNIX file mode bits
-      mode = "0644";
-    };
-
   };
 
   services.udev.packages = [ UdevRulesNinoTNC ];
 
-  #boot.initrd.extraUdevRulesCommands =
-  #  ''
-  #    cat <<'EOF' > $out/99-other.rules
-  #    ${config.boot.initrd.services.udev.rules}
-  #    EOF
-  #  '';
+  services.ax25.axports.wl2k = {
+    enable = true;
+    baud = 57600;
+    tty = "/dev/ninotnc";
+    callsign = "KM6LBU-6";
+    description = "ninotnc";
+  };
+
+  services.ax25.axlisten = {
+    enable = true;
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh = {
-    enable = true;
-  };
-
-  services.ax25d = {
-    enable = true;
-  };
-
-  services.mheardd = {
     enable = true;
   };
 
@@ -100,14 +81,6 @@ in
   #  interval = 5;
   #  message = "hello this is rob";
   #};
-
-  services.axlistend = {
-    enable = true;
-  };
-
-  # Bug in kernels ~5.4<5.19
-  # Resulting in pat to error with: address already in use error after first connection
-  #boot.kernelPackages = pkgs.linuxPackages_6_0;
 
   # Enable tlp for stricter governance of power management
   # Validate status: `sudo tlp-stat -b`
