@@ -1,6 +1,9 @@
 { pkgs, lib, config, ... }:
 
 {
+  # allow me to remote nixos-rebuild switch
+  nix.settings.trusted-users = [ "rherna" ];
+
   users.users.rherna = {
     isNormalUser = true;
     uid = 1000;
