@@ -148,6 +148,8 @@ in
       chirp
       cc-tool # TI CC Debugger
       inputs.self.packages.${pkgs.system}.cm108
+      inputs.self.packages.${pkgs.system}.accrip
+      inputs.self.packages.${pkgs.system}.myabcde
     ];
   };
 
