@@ -30,48 +30,32 @@
         sha256 = "sha256-gwdlCsJrmBPypOOkLCBNF/5/XdrvYBjVc718BsMkgfA=";
       };
      };
-    git-rebase-auto-diff = pkgs.vimUtils.buildVimPlugin {
-      pname = "git-rebase-auto-diff";
-      version = "2023-08-14";
+    vibrantink2 = pkgs.vimUtils.buildVimPlugin {
+      pname = "vibrantink2.vim";
+      version = "2021-11-02";
       src = pkgs.fetchFromGitHub {
-        owner = "yutkat";
-        repo = "git-rebase-auto-diff.nvim";
-        rev = "ad95f18cb85c24ddc0b48bf190bc313dfc58e2d6";
-        sha256 = "sha256-5g9VTpG1s9+/lojvRPRknLCzx2EguWUDl3u9unWxo6w=";
+        owner = "afair";
+        repo = "vibrantink2";
+        rev = "a6ec4aa432a16a0e10d5ee274a35e88fc65d00d0";
+        sha256 = "sha256-oANeUx4uXtkG3VxYhn+8W63Yvz5g9ISrL9JXsJxFMB4=";
       };
      };
   in
   pkgs.neovim.override {
       vimAlias = true;
-      #extraConfig = ''
-      #  " your custom vimrc
-      #  set nocompatible
-      #  set backspace=indent,eol,start
-      #  " ...
-      #'';
       configure = {
         packages.myVimPackage = with pkgs.vimPlugins; {
-         # we must include c, lua, vimdoc, vim to correct for the error:
-         # query: invalid node type
-         # ref: https://github.com/NixOS/nixpkgs/issues/282927
          start = [
-           #{
-           #  plugin = git-rebase-auto-diff;
-	   #  type = "lua";
-	   #  config = ''
-           #    lua << EOF
-#require('git-rebase-auto-diff').setup()
-#EOF
-#             '';
-#	   }
-           telescope-nvim
-	   icansee
-	   vibrantink
-           {
-             plugin = pkgs.vimPlugins.nvim-lspconfig;
-             type = "lua";
-             config = ''
-	       lua << EOF
+            telescope-nvim
+            icansee
+            vibrantink
+            vibrantink2
+            SpaceCamp
+            {
+              plugin = pkgs.vimPlugins.nvim-lspconfig;
+              type = "lua";
+              config = ''
+                lua << EOF
 local lspconfig = require'lspconfig'
 lspconfig.nixd.setup{}
 lspconfig.rust_analyzer.setup {
@@ -92,65 +76,111 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 });
 EOF
-             '';
-           }
-           {
-             plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [ p.c p.lua p.vimdoc p.vim p.java p.terraform p.hcl p.rust ]);
-             type = "lua";
-	     #packadd! nvim-treesitter.lua
-             config = ''
-	       lua << EOD
+              '';
+            }
+            {
+
+              plugin = pkgs.vimPlugins.vim-better-whitespace;
+              type = "lua";
+              config = ''
+                lua << EOF
+vim.g.better_whitespace_ctermcolor = "lightgrey"
+vim.g.strip_whitespace_on_save = 1
+vim.g.strip_only_modified_lines = 1
+vim.g.strip_whitespace_confirm = 0
+EOF
+              '';
+            }
+            {
+              # we must include c, lua, vimdoc, vim to correct for the error:
+              # query: invalid node type
+              # ref: https://github.com/NixOS/nixpkgs/issues/282927
+              plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+                p.bash
+                p.c
+                p.go
+                p.hcl
+                p.java
+                p.lua
+                p.nix
+                p.perl
+                p.rust
+                p.terraform
+                p.vim
+                p.vimdoc
+              ]);
+              type = "lua";
+              config = ''
+	        lua << EOD
 require('nvim-treesitter.configs').setup {
   highlight = { enable = true},
   indent = { enable = true}
 }
 EOD
-             '';
-           }
-	  ];
+              '';
+            }
+          ];
         };
 	customRC = ''
-          set splitbelow
-          set guicursor=n-v-c-i:block
-          set backspace=2
-          set mouse=
-          set softtabstop=2 shiftwidth=2 expandtab
-          "set autoindent
-          "set smartindent
+          lua << EOF
+-- vim.opt if for things you would set in vimscript. vim.g is for things you'd let
+vim.opt.splitbelow = true
+vim.opt.guicursor = 'n-v-c-i:block'
+-- equivalent of set backspace=2
+vim.opt.backspace = {'indent', 'eol', 'start'}
+vim.opt.mouse = ""
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
-          " this broke colorschemes for me in nvim 0.10.0+
-          " https://www.reddit.com/r/neovim/comments/1d66jlw/comment/l6qdrx7/
-          set notermguicolors
+-- put the lsp signs inline with the numbers
+vim.opt.number = true
+vim.opt.signcolumn = "number"
 
-          autocmd BufEnter * colorscheme vibrantink
-          autocmd BufEnter *.nix colorscheme vibrantink
-          autocmd BufEnter *.py colorscheme icansee
-	  autocmd BufEnter *.rb colorscheme icansee
-	  autocmd BufEnter *.tf* colorscheme icansee
-	  autocmd BufEnter *.go colorscheme icansee
-	  autocmd BufEnter *.rego colorscheme icansee
+-- this broke colorschemes for me in nvim 0.10.0+
+-- https://www.reddit.com/r/neovim/comments/1d66jlw/comment/l6qdrx7/
+vim.opt.termguicolors = false
 
-          " Set leader key to space
-          let mapleader=" "
+-- autocmd BufEnter * colorscheme vibrantink
+-- autocmd BufEnter *.nix colorscheme vibrantink
+-- autocmd BufEnter *.py colorscheme icansee
+-- autocmd BufEnter *.rb colorscheme icansee
+-- autocmd BufEnter *.tf* colorscheme icansee
+-- autocmd BufEnter *.go colorscheme icansee
+-- autocmd BufEnter *.rego colorscheme icansee
 
-	  " Find files using Telescope command-line sugar.
-	  nnoremap <leader>ff <cmd>Telescope find_files<cr>
-	  nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-	  nnoremap <leader>fb <cmd>Telescope buffers<cr>
-	  nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+-- :lua vim.cmd.colorscheme() to see current colorscheme
+-- :lua print(vim.bo.filetype) to see current filetype
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("colorscheme vibrantink2")
+  end,
+})
 
-	  " Using Lua functions
-	  nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-	  nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-	  nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-	  nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "python", "terraform" },
+  callback = function()
+    vim.cmd("colorscheme icansee")
+  end,
+})
 
-          " reopening a file at last position unless its an filetype for git
-          " gitcommit and gitrebase are separate fts
-          if has("autocmd") && &ft !~ "^git*"
-            autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-              \| exe "normal! g'\"" | endif
-          endif
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  callback = function()
+    vim.cmd("colorscheme spacecamp")
+  end,
+})
+-- Set leader key to space
+vim.g.mapleader = " "
+
+-- Find files using Telescope
+vim.keymap.set('n', '<Leader>ff', require('telescope.builtin').find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<Leader>fg', require('telescope.builtin').live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<Leader>fb', require('telescope.builtin').buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<Leader>fh', require('telescope.builtin').help_tags, { desc = 'Telescope help tags' })
         '';
       };
     };
