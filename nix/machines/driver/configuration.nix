@@ -1,7 +1,5 @@
 { config, pkgs, inputs, lib, ... }:
 let
-  aercUnstable = pkgs.callPackage ./aerc { };
-
   pkgs-unstable = import inputs.nixpkgs-unstable {
     system = "x86_64-linux";
     config = { allowUnfree = true; };
@@ -136,8 +134,6 @@ in
       pulsemixer
       isync #mbsync
       protonmail-bridge
-      #aerc
-      aercUnstable
       notmuch
       afew
       msmtp
