@@ -51,6 +51,9 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Give me all network logs
+  systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
+
   networking = {
     hostName = "driver"; # Define your hostname.
     # Need to be set for ZFS or else leads to:
