@@ -124,6 +124,7 @@ in
       mob
       strace
       tailscale
+      twingate
       android-udev-rules
       #vagrant  # broken as of 24.11
       pkgs-unstable.beeper
@@ -307,6 +308,8 @@ in
       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
     };
   };
+
+  services.twingate.enable = true;
 
   system.stateVersion = config.system.nixos.release;
 }
