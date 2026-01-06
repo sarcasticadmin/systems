@@ -69,9 +69,6 @@ in
     # replicates the default behaviour.
     useDHCP = false;
 
-    # Make sure that dhcpcd doesnt timeout when interfaces are down
-    # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
-    dhcpcd.wait = "if-carrier-up";
     interfaces.enp2s0f0.useDHCP = true;
     interfaces.enp5s0.useDHCP = true;
     interfaces.wlan0.useDHCP = true;
