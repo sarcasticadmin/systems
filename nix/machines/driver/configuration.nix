@@ -119,7 +119,7 @@ in
       # hardware key
       gnupg
       pcsclite
-      pinentry
+      pinentry-tty
       nmap
       mob
       strace

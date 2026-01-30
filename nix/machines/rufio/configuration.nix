@@ -127,7 +127,7 @@ in
       # hardware key
       gnupg
       pcsclite
-      pinentry
+      pinentry-tty
       strace
       tailscale
       vagrant
