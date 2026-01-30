@@ -307,7 +307,8 @@ in
     };
   };
 
-  services.twingate.enable = true;
+  # dont autostart the VPN
+  services.twingate.enable = false;
 
   system.stateVersion = config.system.nixos.release;
 }
