@@ -51,6 +51,9 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Give me all network logs
+  systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
+
   networking = {
     hostName = "driver"; # Define your hostname.
     # Need to be set for ZFS or else leads to:
@@ -66,9 +69,6 @@ in
     # replicates the default behaviour.
     useDHCP = false;
 
-    # Make sure that dhcpcd doesnt timeout when interfaces are down
-    # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
-    dhcpcd.wait = "if-carrier-up";
     interfaces.enp2s0f0.useDHCP = true;
     interfaces.enp5s0.useDHCP = true;
     interfaces.wlan0.useDHCP = true;
@@ -119,12 +119,12 @@ in
       # hardware key
       gnupg
       pcsclite
-      pinentry
+      pinentry-tty
       nmap
       mob
       strace
       tailscale
-      android-udev-rules
+      twingate
       #vagrant  # broken as of 24.11
       pkgs-unstable.beeper
       pkgs-unstable.signal-desktop-bin
@@ -142,7 +142,7 @@ in
       wireguard-tools
       ntfs3g
       chirp
-      cc-tool # TI CC Debugger
+      pkgs-unstable.cc-tool # TI CC Debugger
       inputs.self.packages.${pkgs.system}.cm108
       inputs.self.packages.${pkgs.system}.accrip
       inputs.self.packages.${pkgs.system}.myabcde
@@ -155,8 +155,7 @@ in
   };
 
   services.udev.packages = with pkgs; [
-    android-udev-rules
-    cc-tool # TI CC Debugger
+    pkgs-unstable.cc-tool # TI CC Debugger
     direwolf
   ];
   # Enable the OpenSSH daemon.
@@ -198,7 +197,7 @@ in
   # Remove warning from tailscale: Strict reverse path filtering breaks Tailscale exit node use and some subnet routing setups
   networking.firewall.checkReversePath = "loose";
 
-  services.logind.extraConfig = "HandleLidSwitch=ignore";
+  services.logind.settings.Login = { HandleLidSwitch = "ignore"; };
 
   # part of gnupg reqs
   services.pcscd.enable = true;
@@ -307,6 +306,9 @@ in
       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
     };
   };
+
+  # dont autostart the VPN
+  services.twingate.enable = false;
 
   system.stateVersion = config.system.nixos.release;
 }
