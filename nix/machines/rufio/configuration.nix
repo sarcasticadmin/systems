@@ -182,7 +182,7 @@ in
 
   networking.firewall.checkReversePath = "loose";
 
-  services.logind.extraConfig = "HandleLidSwitch=ignore";
+  services.logind.settings.Login = { HandleLidSwitch = "ignore"; };
 
   # part of gnupg reqs
   services.pcscd.enable = true;
