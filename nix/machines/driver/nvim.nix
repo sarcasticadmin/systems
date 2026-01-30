@@ -52,21 +52,27 @@
             vibrantink2
             SpaceCamp
             {
+              # plugin needed to configure lsp with things like root file hints, etc.
               plugin = pkgs.vimPlugins.nvim-lspconfig;
               type = "lua";
               config = ''
                 lua << EOF
-local lspconfig = require'lspconfig'
-lspconfig.nixd.setup{}
-lspconfig.rust_analyzer.setup {
-  -- Server-specific settings. See `:help lspconfig-setup`
+vim.lsp.enable("nixd")
+                                                                                                                           -- rust-analyzer
+vim.lsp.config("rust_analyzer", {
   settings = {
-    ['rust-analyzer'] = {},
+    ["rust-analyzer"] = {},
   },
-}
-opts = {
-    inlay_hints = { enabled = true },
-},
+  inlay_hints = {
+    enabled = true,
+  },
+})
+
+vim.lsp.enable("rust_analyzer")
+
+-- enable inlay hints
+vim.lsp.inlay_hint.enable(true)
+
 --ensure that lsp doesnt mess with colorscheme
 --https://www.reddit.com/r/neovim/comments/zjqquc/comment/izwahv7/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 vim.api.nvim_create_autocmd("LspAttach", {
