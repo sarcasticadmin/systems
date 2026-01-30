@@ -142,7 +142,7 @@ in
       wireguard-tools
       ntfs3g
       chirp
-      cc-tool # TI CC Debugger
+      pkgs-unstable.cc-tool # TI CC Debugger
       inputs.self.packages.${pkgs.system}.cm108
       inputs.self.packages.${pkgs.system}.accrip
       inputs.self.packages.${pkgs.system}.myabcde
@@ -155,7 +155,7 @@ in
   };
 
   services.udev.packages = with pkgs; [
-    cc-tool # TI CC Debugger
+    pkgs-unstable.cc-tool # TI CC Debugger
     direwolf
   ];
   # Enable the OpenSSH daemon.
