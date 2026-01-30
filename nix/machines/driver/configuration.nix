@@ -125,7 +125,6 @@ in
       strace
       tailscale
       twingate
-      android-udev-rules
       #vagrant  # broken as of 24.11
       pkgs-unstable.beeper
       pkgs-unstable.signal-desktop-bin
@@ -156,7 +155,6 @@ in
   };
 
   services.udev.packages = with pkgs; [
-    android-udev-rules
     cc-tool # TI CC Debugger
     direwolf
   ];
