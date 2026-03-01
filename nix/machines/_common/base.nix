@@ -42,6 +42,7 @@ in
     parted
     usbutils
     openssl # conflicts with nix-darwin
+    units # gnu-units for unit everyday unit conversions
   ];
 
   # Purge nano from being the default
