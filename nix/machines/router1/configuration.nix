@@ -192,7 +192,7 @@
             jump global
             # your rules for traffic to the firewall here
             # Allow ssh for non inet interfaces to the firewall
-	    iifname != $nic_inet tcp dport 22 ct state new flow table ssh-ftable { ip saddr limit rate 2/minute } accept
+	    iifname != $nic_inet tcp dport 22 accept
             # Allow pinging to firewall
             ip protocol icmp accept
             ip6 nexthdr icmpv6 accept
