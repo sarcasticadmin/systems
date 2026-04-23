@@ -222,6 +222,16 @@
     };
   };
 
+  services.pixiecore = {
+    enable = true;
+    openFirewall = true;
+    dhcpNoBind = true;
+    mode = "boot";
+    kernel = "${inputs.self.nixosConfigurations.simpleNetboot.config.system.build.kernel}/bzImage";
+    initrd = "${inputs.self.nixosConfigurations.simpleNetboot.config.system.build.netbootRamdisk}/initrd";
+    cmdLine = "init=${inputs.self.nixosConfigurations.simpleNetboot.config.system.build.toplevel}/init loglevel=4";
+    debug = true;
+  };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
