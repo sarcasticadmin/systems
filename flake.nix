@@ -167,6 +167,7 @@
           modules = [
             disko.nixosModules.disko
             #{ disko.devices.disk.disk1.device = "/dev/vda"; }
+            ./nix/machines/_common/base.nix
             ./nix/machines/router1/configuration.nix
           ];
           specialArgs = { inherit inputs; };
