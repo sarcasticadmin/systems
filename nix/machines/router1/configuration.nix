@@ -260,19 +260,13 @@
     # TODO: Fix: trace: warning: Text based config is deprecated, dnsmasq now supports `services.dnsmasq.settings` for an attribute-set based config
     dnsmasq = {
       enable = true;
-      servers = [ "8.8.8.8" "8.8.4.4" ];
-      extraConfig = ''
-        domain=local
-        interface=vlan44
-        interface=vlan45
-        interface=vlan46
-        interface=vlan47
-        bind-interfaces
-        dhcp-range=vlan44,192.168.44.100,192.168.44.190,12h
-        dhcp-range=vlan45,192.168.45.100,192.168.45.190,12h
-        dhcp-range=vlan46,192.168.46.100,192.168.46.190,12h
-        dhcp-range=vlan47,192.168.47.100,192.168.47.190,12h
-      '';
+      settings = {
+        server = [ "8.8.8.8" "8.8.4.4" ];
+        domain = "local";
+        interface = ["vlan44" "vlan45" "vlan46" "vlan47"];
+        bind-interfaces = true;
+        dhcp-range = ["vlan44,192.168.44.100,192.168.44.190,12h" "vlan45,192.168.45.100,192.168.45.190,12h" "vlan46,192.168.46.100,192.168.46.190,12h" "vlan47,192.168.47.100,192.168.47.190,12h"];
+      };
     };
   };
 
