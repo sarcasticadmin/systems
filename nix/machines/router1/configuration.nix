@@ -122,6 +122,11 @@
                   ct state invalid drop
                   # DHCP Server
                   iifname != $nic_inet udp dport 67 accept
+                  # pixiecore
+                  iifname != $nic_inet udp dport 68 accept
+                  iifname != $nic_inet udp dport 69 accept
+                  iifname != $nic_inet tcp dport 80 accept
+                  iifname != $nic_inet udp dport 4011 accept
                   # DNS Server
                   iifname != $nic_inet udp dport 53 accept
                   iifname $nic_lan tcp dport 9100 accept
