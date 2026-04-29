@@ -122,6 +122,11 @@
                   ct state invalid drop
                   # DHCP Server
                   iifname != $nic_inet udp dport 67 accept
+                  # pixiecore
+                  iifname != $nic_inet udp dport 68 accept
+                  iifname != $nic_inet udp dport 69 accept
+                  iifname != $nic_inet tcp dport 80 accept
+                  iifname != $nic_inet udp dport 4011 accept
                   # DNS Server
                   iifname != $nic_inet udp dport 53 accept
                   iifname $nic_lan tcp dport 9100 accept
@@ -192,7 +197,7 @@
             jump global
             # your rules for traffic to the firewall here
             # Allow ssh for non inet interfaces to the firewall
-	    iifname != $nic_inet tcp dport 22 ct state new flow table ssh-ftable { ip saddr limit rate 2/minute } accept
+	    iifname != $nic_inet tcp dport 22 accept
             # Allow pinging to firewall
             ip protocol icmp accept
             ip6 nexthdr icmpv6 accept
@@ -222,6 +227,16 @@
     };
   };
 
+  services.pixiecore = {
+    enable = true;
+    openFirewall = true;
+    dhcpNoBind = true;
+    mode = "boot";
+    kernel = "${inputs.self.nixosConfigurations.simpleNetboot.config.system.build.kernel}/bzImage";
+    initrd = "${inputs.self.nixosConfigurations.simpleNetboot.config.system.build.netbootRamdisk}/initrd";
+    cmdLine = "init=${inputs.self.nixosConfigurations.simpleNetboot.config.system.build.toplevel}/init loglevel=4";
+    debug = true;
+  };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rherna = {
@@ -260,19 +275,13 @@
     # TODO: Fix: trace: warning: Text based config is deprecated, dnsmasq now supports `services.dnsmasq.settings` for an attribute-set based config
     dnsmasq = {
       enable = true;
-      servers = [ "8.8.8.8" "8.8.4.4" ];
-      extraConfig = ''
-        domain=local
-        interface=vlan44
-        interface=vlan45
-        interface=vlan46
-        interface=vlan47
-        bind-interfaces
-        dhcp-range=vlan44,192.168.44.100,192.168.44.190,12h
-        dhcp-range=vlan45,192.168.45.100,192.168.45.190,12h
-        dhcp-range=vlan46,192.168.46.100,192.168.46.190,12h
-        dhcp-range=vlan47,192.168.47.100,192.168.47.190,12h
-      '';
+      settings = {
+        server = [ "8.8.8.8" "8.8.4.4" ];
+        domain = "local";
+        interface = ["vlan44" "vlan45" "vlan46" "vlan47"];
+        bind-interfaces = true;
+        dhcp-range = ["vlan44,192.168.44.100,192.168.44.190,12h" "vlan45,192.168.45.100,192.168.45.190,12h" "vlan46,192.168.46.100,192.168.46.190,12h" "vlan47,192.168.47.100,192.168.47.190,12h"];
+      };
     };
   };
 

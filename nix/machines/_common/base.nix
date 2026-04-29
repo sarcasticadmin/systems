@@ -1,5 +1,5 @@
 # The base toolchain that I expect on a system
-{ config, pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 
 let
   # Need the pythons in my vims
@@ -44,6 +44,30 @@ in
     openssl # conflicts with nix-darwin
     units # gnu-units for unit everyday unit conversions
   ];
+
+  # set nixpkgs to inputs.nixpkgs for `nix shell || run`
+  nix.registry = {
+    nixpkgs.to = {
+      type = "path";
+      path = inputs.nixpkgs;
+    };
+    nixpkgs-unstable.to = {
+      type = "path";
+      path = inputs.nixpkgs-unstable;
+    };
+    nixpkgs-master.to = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+    };
+  };
+
+  nix.settings.trusted-users = [ "rherna" ];
+
+  # remove the annoying experimental warnings
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 
   # Purge nano from being the default
   environment.variables = { EDITOR = "vim"; };
