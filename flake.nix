@@ -144,6 +144,14 @@
             ./nix/isos/simple/configuration.nix
           ];
         };
+        simpleNetboot = nixpkgs.lib.nixosSystem {
+          # nix build -L .#nixosConfigurations.simpleIso.config.system.build.isoImage
+          system = "x86_64-linux";
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/netboot/netboot-minimal.nix"
+            ./nix/isos/simple/configuration.nix
+          ];
+        };
         sidekick = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./nix/machines/sidekick/configuration.nix ];
