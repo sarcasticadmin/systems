@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   boot.kernelParams = [ "console=ttyS0,115200n8" ];
   boot.loader.grub.extraConfig = "
@@ -21,6 +21,8 @@
   };
   # Enables the smart card mode of the Yubikey
   services.pcscd.enable = true;
+
+  networking.networkmanager.enable = lib.mkForce false;
 
   services.fwupd.enable = true;
 
