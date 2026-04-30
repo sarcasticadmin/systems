@@ -36,6 +36,7 @@ in
     shellcheck
     tree
     manix # useful search for nix docs
+    zip
     unzip
   ] ++ lib.optionals (!stdenv.isDarwin) [
     dmidecode
