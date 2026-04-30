@@ -7,7 +7,8 @@
       ./disko.nix
     ];
 
-  #boot.supportedFilesystems = ["zfs"];
+  # need to be 6.18 to avoid https://copy.fail/
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
 
   boot = {
     # For now copying from
