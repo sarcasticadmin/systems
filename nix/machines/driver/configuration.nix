@@ -14,6 +14,9 @@ in
       ./nvim.nix
     ];
 
+  # need to be 6.18 to avoid https://copy.fail/
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
+
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
 
