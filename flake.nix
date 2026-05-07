@@ -33,6 +33,7 @@
     , disko
     }@inputs: {
 
+      nixosModules = import ./nix/nixos-modules inputs;
       packages.x86_64-linux =
         let
           pkgs = import nixpkgs {
