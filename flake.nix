@@ -12,6 +12,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
     ham-overlay = {
       url = "github:sarcasticadmin/ham-overlay";
       # Make sure to set to the specific input of the remote flake
@@ -27,10 +28,12 @@
     { self
     , nixpkgs
     , nixpkgs-unstable
+    , nixpkgs-lib
     , ham-overlay
     , disko
     }@inputs: {
 
+      nixosModules = import ./nix/nixos-modules inputs;
       packages.x86_64-linux =
         let
           pkgs = import nixpkgs {
@@ -68,6 +71,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.self.nixosModules.default
             ./nix/machines/_common/desktop.nix
             ./nix/machines/_common/base.nix
             ./nix/machines/_common/users.nix
