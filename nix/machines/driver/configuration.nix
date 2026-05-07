@@ -11,7 +11,6 @@ in
       ./hardware-configuration.nix
       ./home.nix
       ./wg.nix
-      ./nvim.nix
     ];
 
   # need to be 6.18 to avoid https://copy.fail/
@@ -308,6 +307,10 @@ in
       START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
     };
+  };
+
+  sarcasticadmin = {
+    mynvim.enable = true;
   };
 
   # dont autostart the VPN
