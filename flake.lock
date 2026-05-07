@@ -56,6 +56,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1777894051,
+        "narHash": "sha256-gD93nlyAyOZOQ2BG1YE/xPid8eVPrwCD2UBMMjwJ1o4=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "cea90d52f99e874eb11689f4acd7951bcde3b7a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1777954456,
@@ -77,6 +92,7 @@
         "disko": "disko",
         "ham-overlay": "ham-overlay",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-lib": "nixpkgs-lib",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
     }
