@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, ... }:
+{ pkgs, inputs, ... }:
 
 let
   UdevRulesNinoTNC = pkgs.writeTextFile {
@@ -24,8 +24,6 @@ in
 
   networking.hostName = "oddball";
 
-  nixpkgs.config.allowUnfree = true;
-
   # Use the systemd-boot UEFI boot loader
   # Disko needs this for UEFI
   boot.loader.systemd-boot.enable = true;
@@ -41,20 +39,7 @@ in
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
-  # remove the annoying experimental warnings
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
-  boot.kernelPatches = lib.singleton {
-    name = "ax25-ham";
-    patch = null;
-    extraStructuredConfig = with lib.kernel; {
-      HAMRADIO = yes;
-      AX25 = yes;
-      AX25_DAMA_SLAVE = yes;
-    };
-  };
+  boot.kernelModules = [ "ax25" ];
 
   environment = {
     # Installs all necessary packages for the minimal
@@ -92,6 +77,16 @@ in
       mode = "0644";
     };
 
+  };
+
+  sarcasticadmin = {
+    mynvim.enable = true;
+    base.enable = true;
+    users.rherna.enable = true;
+    nix = {
+      inherit (inputs) nixpkgs nixpkgs-unstable;
+      enable = true;
+    };
   };
 
   services.udev.packages = [ UdevRulesNinoTNC ];

@@ -90,14 +90,13 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.self.nixosModules.default
             disko.nixosModules.disko
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
             ham-overlay.nixosModules.default.ax25d
             ham-overlay.nixosModules.default.mheardd
             ham-overlay.nixosModules.default.axlistend
             ham-overlay.nixosModules.default.beacond
-            ./nix/machines/_common/users.nix
-            ./nix/machines/_common/base.nix
             ./nix/machines/_common/wifi.nix
             ./nix/machines/_common/desktop.nix
             ./nix/machines/oddball/configuration.nix
