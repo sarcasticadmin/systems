@@ -60,10 +60,9 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.self.nixosModules.default
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
             disko.nixosModules.disko
-            ./nix/machines/_common/users.nix
-            ./nix/machines/_common/base.nix
             ./nix/machines/dark/config.nix
           ];
         };
