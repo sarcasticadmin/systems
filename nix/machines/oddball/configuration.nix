@@ -57,7 +57,8 @@ in
       screen
       tio
       kermit
-      wwl
+      # TODO: Fix after bumping in ham-overlay
+      #wwl
       wsjtx
       js8call
       fldigi
