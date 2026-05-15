@@ -50,8 +50,9 @@
       nixosConfigurations = {
         cola = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
-            ./nix/machines/_common/base.nix
+            inputs.self.nixosModules.default
             ./nix/machines/cola/configuration.nix
           ];
         };
