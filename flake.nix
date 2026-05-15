@@ -78,10 +78,10 @@
         };
         mulligan = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
-            ./nix/machines/_common/base.nix
-            ./nix/machines/_common/users.nix
+            inputs.self.nixosModules.default
             ./nix/machines/_common/wifi.nix
             ./nix/machines/mulligan/configuration.nix
           ];
