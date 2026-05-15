@@ -30,7 +30,6 @@ in
     fend # calculate all the things
     scrot # screenshots
     feh # set wallpaper
-    gomuks # matrix
     zoom-us
     zathura # simple pdf viewer
     alacritty
