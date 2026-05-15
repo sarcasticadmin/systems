@@ -51,6 +51,7 @@ in
       manix # useful search for nix docs
       zip
       unzip
+      nmap
     ] ++ lib.optionals (!stdenv.isDarwin) [
       dmidecode
       parted
