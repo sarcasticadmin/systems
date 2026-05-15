@@ -33,7 +33,6 @@ in
       tio
       firefox
       neofetch
-      ardopc
       wsjtx
       js8call
       sdrplay

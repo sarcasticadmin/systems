@@ -60,7 +60,6 @@ in
     # Installs all necessary packages for the minimal
     systemPackages = with pkgs; [
       alsa-utils # Soundcard utils
-      ardopc
       aprx
       ax25-tools
       ax25-apps
