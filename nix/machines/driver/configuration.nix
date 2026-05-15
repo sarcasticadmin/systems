@@ -205,6 +205,10 @@ in
     '';
   };
 
+  # TODO: light is deprecated in 26.05
+  #
+  # move video extragroup to desktop
+  users.users.rherna.extraGroups = lib.optional config.programs.light.enable "video";
   programs.light.enable = true;
   systemd.services."actkbd@" =
     {

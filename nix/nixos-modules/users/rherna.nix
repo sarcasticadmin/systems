@@ -20,7 +20,6 @@ in
       extraGroups = [ "wheel" "dialout" ]
         ++ lib.optional config.virtualisation.libvirtd.enable "libvirtd"
         ++ lib.optional config.virtualisation.docker.enable "docker"
-        ++ lib.optional config.programs.light.enable "video"
         ++ lib.optional config.services.actkbd.enable "input"
         ++ lib.optionals config.services.pipewire.enable [ "audio" "sound" ]
         ++ lib.optional (lib.hasAttrByPath [ "plugdev" ] config.users.groups) "plugdev";
