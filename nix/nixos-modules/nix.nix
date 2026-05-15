@@ -61,5 +61,6 @@ in
         trusted-users = [ "@wheel" ];
       };
     };
+    nixpkgs.config.allowUnfree = true;
   };
 }
