@@ -47,7 +47,6 @@ in
       tmux
       screen
       tio
-      kermit
       #wwl
     ];
   };
