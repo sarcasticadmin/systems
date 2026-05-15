@@ -20,8 +20,6 @@
 
   networking.hostName = "roomservice";
 
-  nixpkgs.config.allowUnfree = true;
-
   # Use the systemd-boot UEFI boot loader
   # Disko needs this for UEFI
   boot.loader.systemd-boot.enable = true;
@@ -41,11 +39,6 @@
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
   };
 
-  # remove the annoying experimental warnings
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
   environment = {
     # Installs all necessary packages for the minimal
     systemPackages = with pkgs; [
@@ -56,6 +49,16 @@
       inputs.self.packages.${pkgs.system}.accrip
     ];
 
+  };
+
+  sarcasticadmin = {
+    mynvim.enable = true;
+    base.enable = true;
+    users.rherna.enable = true;
+    nix = {
+      inherit (inputs) nixpkgs nixpkgs-unstable;
+      enable = true;
+    };
   };
 
   # Enable the OpenSSH daemon.
