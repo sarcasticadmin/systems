@@ -165,9 +165,9 @@
         router1 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            inputs.self.nixosModules.default
             disko.nixosModules.disko
             #{ disko.devices.disk.disk1.device = "/dev/vda"; }
-            ./nix/machines/_common/base.nix
             ./nix/machines/router1/configuration.nix
           ];
           specialArgs = { inherit inputs; };
