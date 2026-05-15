@@ -42,13 +42,10 @@ in
     gnome.excludePackages = (with pkgs; [
       gnome-photos
       gnome-tour
-    ]) ++ (with pkgs.gnome; [
       gnome-music
-      epiphany # web browser
-      geary # email reader
-      totem # video player
-      iagno # go game
-      atomix # puzzle game
+      totem
+      geary
+      epiphany
     ]);
   };
 
