@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   imports =
@@ -10,10 +10,6 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -41,6 +37,14 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
+  };
+
+  sarcasticadmin = {
+    base.enable = true;
+    nix = {
+      inherit (inputs) nixpkgs nixpkgs-unstable;
+      enable = true;
+    };
   };
 
   # Configure keymap in X11

@@ -50,8 +50,9 @@
       nixosConfigurations = {
         cola = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
-            ./nix/machines/_common/base.nix
+            inputs.self.nixosModules.default
             ./nix/machines/cola/configuration.nix
           ];
         };
@@ -59,10 +60,9 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.self.nixosModules.default
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
             disko.nixosModules.disko
-            ./nix/machines/_common/users.nix
-            ./nix/machines/_common/base.nix
             ./nix/machines/dark/config.nix
           ];
         };
@@ -73,17 +73,15 @@
           modules = [
             inputs.self.nixosModules.default
             ./nix/machines/_common/desktop.nix
-            ./nix/machines/_common/base.nix
-            ./nix/machines/_common/users.nix
             ./nix/machines/_common/wifi.nix
             ./nix/machines/driver/configuration.nix ];
         };
         mulligan = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
-            ./nix/machines/_common/base.nix
-            ./nix/machines/_common/users.nix
+            inputs.self.nixosModules.default
             ./nix/machines/_common/wifi.nix
             ./nix/machines/mulligan/configuration.nix
           ];
@@ -92,14 +90,13 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.self.nixosModules.default
             disko.nixosModules.disko
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
             ham-overlay.nixosModules.default.ax25d
             ham-overlay.nixosModules.default.mheardd
             ham-overlay.nixosModules.default.axlistend
             ham-overlay.nixosModules.default.beacond
-            ./nix/machines/_common/users.nix
-            ./nix/machines/_common/base.nix
             ./nix/machines/_common/wifi.nix
             ./nix/machines/_common/desktop.nix
             ./nix/machines/oddball/configuration.nix
@@ -109,9 +106,8 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
+            inputs.self.nixosModules.default
             disko.nixosModules.disko
-            ./nix/machines/_common/users.nix
-            ./nix/machines/_common/base.nix
             ./nix/machines/roomservice/configuration.nix
           ];
         };
@@ -130,14 +126,6 @@
           modules = [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
             ./nix/isos/tinfoil/configuration.nix
-          ];
-        };
-        tv = nixpkgs.lib.nixosSystem {
-          # nix build -L .#nixosConfigurations.tinfoil.config.system.build.isoImage
-          system = "x86_64-linux";
-          modules = [
-            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-            ./nix/isos/tv/configuration.nix
           ];
         };
         simpleIso = nixpkgs.lib.nixosSystem {
@@ -169,9 +157,9 @@
         router1 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            inputs.self.nixosModules.default
             disko.nixosModules.disko
             #{ disko.devices.disk.disk1.device = "/dev/vda"; }
-            ./nix/machines/_common/base.nix
             ./nix/machines/router1/configuration.nix
           ];
           specialArgs = { inherit inputs; };

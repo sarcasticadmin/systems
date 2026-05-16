@@ -1,0 +1,29 @@
+{ lib, config, ... }:
+let
+  cfg = config.sarcasticadmin.users.rherna;
+
+  inherit (lib.modules)
+    mkIf
+    ;
+
+  inherit (lib.options)
+    mkEnableOption
+    ;
+in
+{
+  options.sarcasticadmin.users.rherna.enable = mkEnableOption "enable my user";
+
+  config = mkIf cfg.enable {
+    users.users.rherna = {
+      isNormalUser = true;
+      uid = 1000;
+      extraGroups = [ "wheel" "dialout" ]
+        ++ lib.optional config.virtualisation.libvirtd.enable "libvirtd"
+        ++ lib.optional config.virtualisation.docker.enable "docker"
+        ++ lib.optional config.services.actkbd.enable "input"
+        ++ lib.optionals config.services.pipewire.enable [ "audio" "sound" ]
+        ++ lib.optional (lib.hasAttrByPath [ "plugdev" ] config.users.groups) "plugdev";
+      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
+    };
+  };
+}

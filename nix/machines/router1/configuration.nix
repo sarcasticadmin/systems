@@ -240,25 +240,20 @@
   };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rherna = {
-    isNormalUser = true;
-    initialHashedPassword = "$6$RDV8repZHWiiQYDK$LQbzjLQoH6Z/caZ0cb4qsZou9WADc6TPCtWgWub.No7.LbBFcThKyPrizdqy90yZ.ndIeey.r4GYJ303QCuRn/";
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    uid = 1000;
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
-  };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     dnsmasq
-    nmap
-    wget
-    vim
-    tmux
-    git
-    stow
   ];
+
+  sarcasticadmin = {
+    base.enable = true;
+    users.rherna.enable = true;
+    nix = {
+      inherit (inputs) nixpkgs nixpkgs-unstable;
+      enable = true;
+    };
+  };
 
   # Enable the OpenSSH daemon.
   services = {

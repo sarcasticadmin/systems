@@ -19,30 +19,6 @@ in
   # Necessary in most configurations
   nixpkgs.config.allowUnfree = true;
 
-  # set nixpkgs to inputs.nixpkgs for `nix shell || run`
-  nix.registry = {
-    nixpkgs.to = {
-      type = "path";
-      path = inputs.nixpkgs;
-    };
-    nixpkgs-unstable.to = {
-      type = "path";
-      path = inputs.nixpkgs-unstable;
-    };
-    nixpkgs-master.to = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-    };
-  };
-
-  nix.settings.trusted-users = [ "rherna" ];
-
-  # remove the annoying experimental warnings
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # enabled apropos and "man -K" searching
@@ -229,6 +205,10 @@ in
     '';
   };
 
+  # TODO: light is deprecated in 26.05
+  #
+  # move video extragroup to desktop
+  users.users.rherna.extraGroups = lib.optional config.programs.light.enable "video";
   programs.light.enable = true;
   systemd.services."actkbd@" =
     {
@@ -311,6 +291,12 @@ in
 
   sarcasticadmin = {
     mynvim.enable = true;
+    base.enable = true;
+    users.rherna.enable = true;
+    nix = {
+      inherit (inputs) nixpkgs nixpkgs-unstable;
+      enable = true;
+    };
   };
 
   # dont autostart the VPN
