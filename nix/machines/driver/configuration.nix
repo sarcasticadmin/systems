@@ -94,10 +94,6 @@ in
       imagemagick
       magic-wormhole
       pkgs-unstable.nixpkgs-review
-      # hardware key
-      gnupg
-      pcsclite
-      pinentry-tty
       nmap
       mob
       strace
@@ -176,17 +172,6 @@ in
   networking.firewall.checkReversePath = "loose";
 
   services.logind.settings.Login = { HandleLidSwitch = "ignore"; };
-
-  # part of gnupg reqs
-  services.pcscd.enable = true;
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    # Make pinentry across multiple terminal windows, seamlessly
-    enableSSHSupport = true;
-  };
 
   # Mosh server setup with proper setguid
   programs.mosh.enable = true;
@@ -293,6 +278,7 @@ in
     mynvim.enable = true;
     base.enable = true;
     users.rherna.enable = true;
+    hardwareToken.enable = true;
     nix = {
       inherit (inputs) nixpkgs nixpkgs-unstable;
       enable = true;
