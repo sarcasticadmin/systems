@@ -62,5 +62,8 @@ in
       };
     };
     nixpkgs.config.allowUnfree = true;
+
+    # set stateVersion to nixos.release
+    system.stateVersion = config.system.nixos.release;
   };
 }
