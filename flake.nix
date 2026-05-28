@@ -73,7 +73,6 @@
           modules = [
             inputs.self.nixosModules.default
             ./nix/machines/_common/desktop.nix
-            ./nix/machines/_common/wifi.nix
             ./nix/machines/driver/configuration.nix ];
         };
         mulligan = nixpkgs-unstable.lib.nixosSystem {
@@ -82,7 +81,6 @@
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ ham-overlay.overlays.default ]; })
             inputs.self.nixosModules.default
-            ./nix/machines/_common/wifi.nix
             ./nix/machines/mulligan/configuration.nix
           ];
         };
@@ -97,7 +95,6 @@
             ham-overlay.nixosModules.default.mheardd
             ham-overlay.nixosModules.default.axlistend
             ham-overlay.nixosModules.default.beacond
-            ./nix/machines/_common/wifi.nix
             ./nix/machines/_common/desktop.nix
             ./nix/machines/oddball/configuration.nix
           ];
@@ -118,7 +115,6 @@
             inputs.self.nixosModules.default
             disko.nixosModules.disko
             ./nix/machines/rufio/configuration.nix
-            ./nix/machines/_common/wifi.nix
           ];
         };
         tinfoil = nixpkgs.lib.nixosSystem {

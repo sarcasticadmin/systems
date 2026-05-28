@@ -276,6 +276,7 @@ in
       inherit (inputs) nixpkgs nixpkgs-unstable;
       enable = true;
     };
+    wifi.enable = true;
   };
 
   # dont autostart the VPN
