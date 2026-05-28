@@ -86,6 +86,7 @@ in
       inherit (inputs) nixpkgs nixpkgs-unstable;
       enable = true;
     };
+    wifi.enable = true;
   };
 
   services.udev.packages = [ UdevRulesNinoTNC ];
