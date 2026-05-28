@@ -103,7 +103,7 @@ in
       strace
       tailscale
       vagrant
-      proxmark3-rrg
+      proxmark3
       aircrack-ng
       myKismet
       wifite2
