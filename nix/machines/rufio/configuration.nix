@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, inputs, ... }:
 let
   myReaverwps-t6x = pkgs.reaverwps-t6x.overrideAttrs (finalAttrs: previousAttrs: {
@@ -33,19 +29,8 @@ in
     [
       ./hardware-configuration.nix
       ../_common/desktop.nix
-      ../_common/base.nix
       ./disko.nix
     ];
-
-  # Necessary in most configurations
-  nixpkgs.config.allowUnfree = true;
-
-  nix.settings.trusted-users = [ "rherna" ];
-
-  # remove the annoying experimental warnings
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
 
   # enabled apropos and "man -K" searching
   # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
@@ -95,19 +80,6 @@ in
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
-  };
-
-  nixpkgs.config.permittedInsecurePackages = [
-                "olm-3.2.16"
-              ];
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rherna = {
-    isNormalUser = true;
-    uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" "docker" "plugdev" "libvirtd" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
-    initialHashedPassword = "$6$yOjsY1t3c1l5OHyP$flrfkFAwmZG6ZJKVE.t3.IlkW0cQzzTH3E6lWc2.ccHezDwnpSgrERllJx4UGQuBrWp2u1LiZZgziWW3F/CYs/";
   };
 
   users.groups.plugdev = { };
@@ -184,17 +156,6 @@ in
 
   services.logind.settings.Login = { HandleLidSwitch = "ignore"; };
 
-  # part of gnupg reqs
-  services.pcscd.enable = true;
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    # Make pinentry across multiple terminal windows, seamlessly
-    enableSSHSupport = true;
-  };
-
   programs.ssh = {
     extraConfig = ''
       Host *
@@ -206,14 +167,6 @@ in
         EnableEscapeCommandline yes
     '';
   };
-  # List services that you want to enable:
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
 
   # dont hiberate/sleep by default
   powerManagement.enable = false;
@@ -224,12 +177,14 @@ in
   # Enable tlp for stricter governance of power management
   # Validate status: `sudo tlp-stat -b`
   services.tlp.enable = true;
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
 
-}
+  sarcasticadmin = {
+    mynvim.enable = true;
+    base.enable = true;
+    users.rherna.enable = true;
+    hardwareToken.enable = true;
+    nix = {
+      inherit (inputs) nixpkgs nixpkgs-unstable;
+      enable = true;
+    };
+  };}

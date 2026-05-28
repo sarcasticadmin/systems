@@ -115,6 +115,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [ 
+            inputs.self.nixosModules.default
             disko.nixosModules.disko
             ./nix/machines/rufio/configuration.nix
             ./nix/machines/_common/wifi.nix
@@ -146,13 +147,19 @@
         };
         sidekick = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./nix/machines/sidekick/configuration.nix ];
+          modules = [
+            inputs.self.nixosModules.default
+            ./nix/machines/sidekick/configuration.nix
+          ];
+          specialArgs = { inherit inputs; };
         };
         sign = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./nix/machines/sign/configuration.nix ];
-          # Example how to pass an arg to configuration.nix:
-          #specialArgs = { hostname = "staging"; };
+          modules = [
+            ./nix/machines/sign/configuration.nix
+            inputs.self.nixosModules.default
+          ];
+          specialArgs = { inherit inputs; };
         };
         router1 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

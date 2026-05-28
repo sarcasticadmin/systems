@@ -91,7 +91,4 @@ in
   services.tlp = {
     enable = true;
   };
-
-  #system.stateVersion = config.system.nixos.version;
-  system.stateVersion = "25.05";
 }

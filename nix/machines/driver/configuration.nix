@@ -16,9 +16,6 @@ in
   # need to be 6.18 to avoid https://copy.fail/
   boot.kernelPackages = pkgs.linuxPackages_6_18;
 
-  # Necessary in most configurations
-  nixpkgs.config.allowUnfree = true;
-
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # enabled apropos and "man -K" searching
@@ -74,8 +71,6 @@ in
 
   users.groups.plugdev = { };
 
-  # allowed whitelist of insecure pkgs
-  nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
@@ -175,8 +170,6 @@ in
 
   # Mosh server setup with proper setguid
   programs.mosh.enable = true;
-
-  programs.less.lessopen = lib.mkDefault null;
 
   programs.ssh = {
     extraConfig = ''
@@ -287,6 +280,4 @@ in
 
   # dont autostart the VPN
   services.twingate.enable = false;
-
-  system.stateVersion = config.system.nixos.release;
 }

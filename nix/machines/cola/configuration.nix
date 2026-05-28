@@ -1,9 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { inputs, pkgs, ... }:
-
 {
   imports =
     [
@@ -41,6 +36,7 @@
 
   sarcasticadmin = {
     base.enable = true;
+    users.rherna.enable = true;
     nix = {
       inherit (inputs) nixpkgs nixpkgs-unstable;
       enable = true;
@@ -52,17 +48,6 @@
     layout = "us";
     xkbVariant = "";
   };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.user = {
-    isNormalUser = true;
-    description = "user";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ ];
-  };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -81,7 +66,4 @@
   security.sudo.wheelNeedsPassword = false;
 
   networking.firewall.enable = false;
-
-  system.stateVersion = "23.05";
-
 }
