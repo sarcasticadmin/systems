@@ -16,8 +16,6 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  system.stateVersion = "24.11";
-
   networking.hostName = "roomservice";
 
   # Use the systemd-boot UEFI boot loader

@@ -16,9 +16,6 @@ in
   # need to be 6.18 to avoid https://copy.fail/
   boot.kernelPackages = pkgs.linuxPackages_6_18;
 
-  # Necessary in most configurations
-  nixpkgs.config.allowUnfree = true;
-
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # enabled apropos and "man -K" searching
@@ -74,8 +71,6 @@ in
 
   users.groups.plugdev = { };
 
-  # allowed whitelist of insecure pkgs
-  nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
@@ -94,10 +89,6 @@ in
       imagemagick
       magic-wormhole
       pkgs-unstable.nixpkgs-review
-      # hardware key
-      gnupg
-      pcsclite
-      pinentry-tty
       nmap
       mob
       strace
@@ -177,21 +168,8 @@ in
 
   services.logind.settings.Login = { HandleLidSwitch = "ignore"; };
 
-  # part of gnupg reqs
-  services.pcscd.enable = true;
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    # Make pinentry across multiple terminal windows, seamlessly
-    enableSSHSupport = true;
-  };
-
   # Mosh server setup with proper setguid
   programs.mosh.enable = true;
-
-  programs.less.lessopen = lib.mkDefault null;
 
   programs.ssh = {
     extraConfig = ''
@@ -293,6 +271,7 @@ in
     mynvim.enable = true;
     base.enable = true;
     users.rherna.enable = true;
+    hardwareToken.enable = true;
     nix = {
       inherit (inputs) nixpkgs nixpkgs-unstable;
       enable = true;
@@ -301,6 +280,4 @@ in
 
   # dont autostart the VPN
   services.twingate.enable = false;
-
-  system.stateVersion = config.system.nixos.release;
 }

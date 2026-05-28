@@ -1,25 +1,9 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-let
-  # Locals
-in
+{ inputs, pkgs, ... }:
 {
   imports =
     [
       ./hardware-configuration.nix
-      ../_common/base.nix
     ];
-
-  # Necessary in most configurations
-  nixpkgs.config.allowUnfree = true;
-
-  # remove the annoying experimental warnings
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -49,14 +33,6 @@ in
 
   # Enable sound
   sound.enable = false;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rherna = {
-    isNormalUser = true;
-    uid = 1000;
-    extraGroups = [ "wheel" "audio" "sound" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -99,6 +75,12 @@ in
     };
   };
 
-  system.stateVersion = "22.05";
-
+  sarcasticadmin = {
+    base.enable = true;
+    users.rherna.enable = true;
+    nix = {
+      inherit (inputs) nixpkgs nixpkgs-unstable;
+      enable = true;
+    };
+  };
 }

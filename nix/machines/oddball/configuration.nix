@@ -20,8 +20,6 @@ in
 
   security.sudo.wheelNeedsPassword = false;
 
-  system.stateVersion = "23.05";
-
   networking.hostName = "oddball";
 
   # Use the systemd-boot UEFI boot loader

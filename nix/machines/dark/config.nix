@@ -13,8 +13,6 @@ in
 
   security.sudo.wheelNeedsPassword = false;
 
-  system.stateVersion = "23.11";
-
   networking.hostName = "darktangent";
 
   # Use the systemd-boot UEFI boot loader
