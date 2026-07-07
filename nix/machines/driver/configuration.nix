@@ -213,6 +213,7 @@ in
     bindings = [
       { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10; ${osd_bar}"; }
       { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10; ${osd_bar}"; }
+      { keys = [ 227 ]; events = [ "key" ]; command = "export DISPLAY=:0.0; /run/current-system/sw/bin/autorandr --force common; echo 'autorandr: common' | /run/current-system/sw/bin/osd_cat -A center -p bottom -o 120 -f -*-*-bold-*-*-*-36-120-*-*-*-*-*-* -c green"; }
     ];
   };
 
