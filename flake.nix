@@ -34,6 +34,7 @@
     }@inputs: {
 
       nixosModules = import ./nix/nixos-modules inputs;
+      overlays = import ./nix/overlays inputs;
       packages.x86_64-linux =
         let
           pkgs = import nixpkgs {
