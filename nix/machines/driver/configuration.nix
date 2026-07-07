@@ -196,8 +196,16 @@ in
 
   services.actkbd =
   let
-    osd_bar = "(export DISPLAY=:0.0; /run/current-system/sw/bin/osd_cat -A center -p bottom -o 120 -f -*-*-bold-*-*-*-36-120-*-*-*-*-*-* -c green -s 1 -d 2 -w -b percentage -P $(/run/current-system/sw/bin/light) -T brightness &)";
-    #osd_bar = "(export DISPLAY=:0.0; /run/current-system/sw/bin/osd_cat -A center -p bottom -o 120 -f -*-*-bold-*-*-*-36-120-*-*-*-*-*-* -c green -d 1 -s 1 -a 0 -b percentage -P $(/run/current-system/sw/bin/light) -T brightness > /tmp/brightdown.log 2>&1)";
+    backlight = pkgs.writeShellScript "backlight.sh" ''
+       export DISPLAY=:0.0
+       # this doesnt work
+       #pkill -f osd_cat 2>/dev/null || true
+
+       ${pkgs.xosd}/bin/osd_cat -A center -p bottom -o 120 \
+         -f "-*-*-bold-*-*-*-36-120-*-*-*-*-*-*" \
+         -c green -s 1 -d 2 -w -b percentage \
+         -P $(${pkgs.light}/bin/light) -T brightness &
+    '';
   in
   {
     enable = true;
@@ -211,8 +219,9 @@ in
     # F5-F6 = /dev/input/event5
     # F7-F12 = /dev/input/event10
     bindings = [
-      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10; ${osd_bar}"; }
-      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10; ${osd_bar}"; }
+      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10; ${backlight}"; }
+      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10; ${backlight}"; }
+      { keys = [ 227 ]; events = [ "key" ]; command = "export DISPLAY=:0.0; /run/current-system/sw/bin/autorandr --force common; echo 'autorandr: common' | /run/current-system/sw/bin/osd_cat -A center -p bottom -o 120 -f -*-*-bold-*-*-*-36-120-*-*-*-*-*-* -c green"; }
     ];
   };
 
