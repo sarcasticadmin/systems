@@ -183,11 +183,6 @@ in
     '';
   };
 
-  # TODO: light is deprecated in 26.05
-  #
-  # move video extragroup to desktop
-  users.users.rherna.extraGroups = lib.optional config.programs.light.enable "video";
-  programs.light.enable = true;
   systemd.services."actkbd@" =
     {
       # Not great but allows actkbd to be able to access the display and display vars easily
@@ -204,7 +199,7 @@ in
        ${pkgs.xosd}/bin/osd_cat -A center -p bottom -o 120 \
          -f "-*-*-bold-*-*-*-36-120-*-*-*-*-*-*" \
          -c green -s 1 -d 2 -w -b percentage \
-         -P $(${pkgs.light}/bin/light) -T brightness &
+         -P $(${lib.getExe pkgs.acpilight}) -get &
     '';
   in
   {
@@ -219,8 +214,8 @@ in
     # F5-F6 = /dev/input/event5
     # F7-F12 = /dev/input/event10
     bindings = [
-      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10; ${backlight}"; }
-      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10; ${backlight}"; }
+      { keys = [ 224 ]; events = [ "key" ]; command = "${lib.getExe pkgs.acpilight} -inc 10; ${backlight}"; }
+      { keys = [ 225 ]; events = [ "key" ]; command = "${lib.getExe pkgs.acpilight} -dec 10; ${backlight}"; }
       { keys = [ 227 ]; events = [ "key" ]; command = "export DISPLAY=:0.0; /run/current-system/sw/bin/autorandr --force common; echo 'autorandr: common' | /run/current-system/sw/bin/osd_cat -A center -p bottom -o 120 -f -*-*-bold-*-*-*-36-120-*-*-*-*-*-* -c green"; }
     ];
   };
@@ -286,6 +281,7 @@ in
       enable = true;
     };
     wifi.enable = true;
+    backlight.enable = true;
   };
 
   # dont autostart the VPN
