@@ -20,7 +20,7 @@ in
 
   # enabled apropos and "man -K" searching
   # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
-  documentation.man.generateCaches = true;
+  documentation.man.cache.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

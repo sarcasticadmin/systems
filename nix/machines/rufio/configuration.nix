@@ -34,11 +34,10 @@ in
 
   # enabled apropos and "man -K" searching
   # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
-  documentation.man.generateCaches = true;
-
   boot.extraModulePackages = with config.boot.kernelPackages; [
     rtl8812au # Realtek usb adapter 0bda:8812
   ];
+  documentation.man.cache.enable = true;
 
   # Disable scatter-gather so kernel doesnt crash for mediatek cards
   #   confirm via: cat /sys/modules/mt76_usb/parameters/disable_usb (should result in Y
