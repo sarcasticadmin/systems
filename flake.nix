@@ -10,8 +10,8 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/643809054d65fdd466a63e3155b8c498cb483c04";
     nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
     ham-overlay = {
       url = "github:sarcasticadmin/ham-overlay";

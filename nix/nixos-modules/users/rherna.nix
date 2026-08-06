@@ -21,6 +21,7 @@ in
         ++ lib.optional config.virtualisation.libvirtd.enable "libvirtd"
         ++ lib.optional config.virtualisation.docker.enable "docker"
         ++ lib.optional config.services.actkbd.enable "input"
+        ++ lib.optionals config.hardware.acpilight.enable [ "input" "video" ]
         ++ lib.optionals config.services.pipewire.enable [ "audio" "sound" ]
         ++ lib.optional (lib.hasAttrByPath [ "plugdev" ] config.users.groups) "plugdev";
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEiESod7DOT2cmT2QEYjBIrzYqTDnJLld1em3doDROq" ];

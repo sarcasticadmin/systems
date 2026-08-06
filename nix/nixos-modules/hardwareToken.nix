@@ -32,10 +32,11 @@ in
       enable = true;
       # Make pinentry across multiple terminal windows, seamlessly
       enableSSHSupport = true;
+      pinentryPackage = pkgs.pinentry-tty; # dont rely on ~/.gnupg/gpg-agent.conf:pinentry-program
     };
 
-    # since gpg-agent looks for fullpath (/usr/bin/pinentry-tty)
-    # keep this symlink to ensure compat across all systems
+    # since gpg-agent looks for fullpath (/usr/bin/pinentry-tty) if using ~/.gnupg/gpg-agent.conf:pinentry-program
+    # keep this symlink to ensure compat across all systems if local dotfiles are used
     systemd.tmpfiles.rules = [
       "L+ /usr/bin/pinentry-tty - - - - ${pkgs.pinentry-tty}/bin/pinentry-tty"
     ];

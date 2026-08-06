@@ -39,7 +39,7 @@ in
     viewnior
     mpv
     xournalpp # pdf annotations
-    xorg.xmodmap # util for modding keymaps and pointer button mappings in Xorg
+    xmodmap # util for modding keymaps and pointer button mappings in Xorg
     #imagemagick # dup might be a problem?
   ];
 

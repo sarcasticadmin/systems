@@ -1,28 +1,28 @@
 { config, pkgs, inputs, ... }:
 let
-  myReaverwps-t6x = pkgs.reaverwps-t6x.overrideAttrs (finalAttrs: previousAttrs: {
-    version = "2023-07-19_unstable";
-    src = pkgs.fetchFromGitHub {
-      owner = "t6x";
-      repo = "reaver-wps-fork-t6x";
-      rev = "bd0f38262224c1b88ba9f1f95cb5476a488d2295";
-      sha256 = "sha256-DE0Jai9EXioueo6HBTDTJUan7mA8b3f+o2LbvvMfgKg=";
-    };
-  });
+  # myReaverwps-t6x = pkgs.reaverwps-t6x.overrideAttrs (finalAttrs: previousAttrs: {
+  #   version = "2023-07-19_unstable";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "t6x";
+  #     repo = "reaver-wps-fork-t6x";
+  #     rev = "bd0f38262224c1b88ba9f1f95cb5476a488d2295";
+  #     sha256 = "sha256-DE0Jai9EXioueo6HBTDTJUan7mA8b3f+o2LbvvMfgKg=";
+  #   };
+  # });
 
   # Use unstable since there hasn't been a release in year+
-  myKismet = pkgs.kismet.overrideAttrs (finalAttrs: previousAttrs: {
-    pname = "kismet";
-    version = "2025-08-06_unstable";
-    src = pkgs.fetchFromGitHub {
-      owner = "kismetwireless";
-      repo = "kismet";
-      rev = "62599e6ee19b149fb98ca75e7d9a91dbd90a45b9";
-      sha256 = "sha256-oYj7ysGxJbSCg8SboCtD8iIRBlrDrRpcZf0UCc3pATc=";
-    };
-    buildInputs = previousAttrs.buildInputs ++ [ pkgs.mosquitto pkgs.rtl-sdr-librtlsdr ];
-    #nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [ pkgs.breakpointHook ];
-  });
+  # myKismet = pkgs.kismet.overrideAttrs (finalAttrs: previousAttrs: {
+  #   pname = "kismet";
+  #   version = "2025-08-06_unstable";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "kismetwireless";
+  #     repo = "kismet";
+  #     rev = "62599e6ee19b149fb98ca75e7d9a91dbd90a45b9";
+  #     sha256 = "sha256-oYj7ysGxJbSCg8SboCtD8iIRBlrDrRpcZf0UCc3pATc=";
+  #   };
+  #   buildInputs = previousAttrs.buildInputs ++ [ pkgs.mosquitto pkgs.rtl-sdr-librtlsdr ];
+  #   #nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [ pkgs.breakpointHook ];
+  # });
 in
 {
   imports =
@@ -34,11 +34,7 @@ in
 
   # enabled apropos and "man -K" searching
   # https://nixos.org/manual/nixos/stable/options.html#opt-documentation.man.generateCaches
-  documentation.man.generateCaches = true;
-
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    rtl8812au # Realtek usb adapter 0bda:8812
-  ];
+  documentation.man.cache.enable = true;
 
   # Disable scatter-gather so kernel doesnt crash for mediatek cards
   #   confirm via: cat /sys/modules/mt76_usb/parameters/disable_usb (should result in Y
@@ -49,30 +45,33 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  networking = {
+      hostName = "rufio"; # Define your hostname.
+      # Need to be set for ZFS or else leads to:
+      # Failed assertions:
+      # - ZFS requires networking.hostId to be set
+      hostId = "38590d79";
 
-  networking.hostName = "rufio"; # Define your hostname.
-  # Need to be set for ZFS or else leads to:
-  # Failed assertions:
-  # - ZFS requires networking.hostId to be set
-  #networking.hostId = "7f702d2b";
+      # use systemd.networkd full stop
+      useNetworkd = true;
+
+      # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+      # Per-interface useDHCP will be mandatory in the future, so this generated config
+      # replicates the default behaviour.
+      useDHCP = false;
+
+      interfaces.enp6s0.useDHCP = true;
+      interfaces.wlan0.useDHCP = true;
+    };
+
+  # The notion of "online" is a broken concept
+  # also cant guarantee that laptop will always have a connection
+  # https://github.com/systemd/systemd/blob/e1b45a756f71deac8c1aa9a008bd0dab47f64777/NEWS#L13
+  # https://github.com/NixOS/nixpkgs/issues/247608
+  systemd.network.wait-online.enable = false;
+
   # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
-
-  # dhcpcd will conflict with interfaces being put into monitoring mode
-  networking.useDHCP = false;
-
-  # Make sure that dhcpcd doesnt timeout when interfaces are down
-  # ref: https://nixos.org/manual/nixos/stable/options.html#opt-networking.dhcpcd.wait
-  networking.dhcpcd.wait = "if-carrier-up";
-  # Explicitly set interfaces we need dhcp on
-  networking.interfaces.enp0s25.useDHCP = true;
-  networking.interfaces.wlan0.useDHCP = true;
-
-  # Tether to android
-  networking.interfaces.enp0s20u2.useDHCP = true;
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  time.timeZone = "America/Los_Angeles";
 
   # Enable sound.
   services.pulseaudio.enable = false;
@@ -105,9 +104,10 @@ in
       vagrant
       proxmark3
       aircrack-ng
-      myKismet
+      #myKismet
+      kismet
       wifite2
-      myReaverwps-t6x
+      #myReaverwps-t6x
       wireshark
       tshark
       tcpdump
