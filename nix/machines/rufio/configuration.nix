@@ -188,4 +188,5 @@ in
       enable = true;
     };
     wifi.enable = true;
+    backlight.enable = true;
   };}
