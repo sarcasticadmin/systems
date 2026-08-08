@@ -76,9 +76,8 @@ in
                 plugin = pkgs.vimPlugins.nvim-lspconfig;
                 type = "lua";
                 config = ''
-                  lua << EOF
                     vim.lsp.enable("nixd")
-                                                                                                                                               -- rust-analyzer
+		    -- rust-analyzer
                     vim.lsp.config("rust_analyzer", {
                       settings = {
                         ["rust-analyzer"] = {},
@@ -101,7 +100,6 @@ in
                         client.server_capabilities.semanticTokensProvider = nil
                       end,
                     });
-                  EOF
                 '';
               }
               {
@@ -109,12 +107,10 @@ in
                 plugin = pkgs.vimPlugins.vim-better-whitespace;
                 type = "lua";
                 config = ''
-                  lua << EOF
                     vim.g.better_whitespace_ctermcolor = "lightgrey"
                     vim.g.strip_whitespace_on_save = 1
                     vim.g.strip_only_modified_lines = 1
                     vim.g.strip_whitespace_confirm = 0
-                  EOF
                 '';
               }
               {
@@ -137,12 +133,10 @@ in
                 ]);
                 type = "lua";
                 config = ''
-                  lua << EOD
-                    require('nvim-treesitter.configs').setup {
+                    require('nvim-treesitter.config').setup({
                       highlight = { enable = true},
                       indent = { enable = true}
-                    }
-                  EOD
+                    })
                 '';
               }
             ];
