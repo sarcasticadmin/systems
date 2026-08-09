@@ -112,6 +112,7 @@ in
       ntfs3g
       chirp
       pkgs-unstable.cc-tool # TI CC Debugger
+      zoom-us
       inputs.self.packages.${pkgs.system}.cm108
       inputs.self.packages.${pkgs.system}.accrip
       inputs.self.packages.${pkgs.system}.myabcde
@@ -280,6 +281,7 @@ in
       inherit (inputs) nixpkgs nixpkgs-unstable;
       enable = true;
     };
+    i3.enable = true;
     wifi.enable = true;
     backlight.enable = true;
   };

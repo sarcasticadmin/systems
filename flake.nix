@@ -72,7 +72,6 @@
           specialArgs = { inherit inputs; };
           modules = [
             inputs.self.nixosModules.default
-            ./nix/machines/_common/desktop.nix
             ./nix/machines/driver/configuration.nix ];
         };
         mulligan = nixpkgs-unstable.lib.nixosSystem {
@@ -95,7 +94,6 @@
             ham-overlay.nixosModules.default.mheardd
             ham-overlay.nixosModules.default.axlistend
             ham-overlay.nixosModules.default.beacond
-            ./nix/machines/_common/desktop.nix
             ./nix/machines/oddball/configuration.nix
           ];
         };
