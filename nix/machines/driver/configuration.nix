@@ -280,6 +280,7 @@ in
       inherit (inputs) nixpkgs nixpkgs-unstable;
       enable = true;
     };
+    i3.enable = true;
     wifi.enable = true;
     backlight.enable = true;
   };
