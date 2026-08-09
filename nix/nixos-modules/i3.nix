@@ -42,6 +42,7 @@ in
       fend # calculate all the things
       scrot # screenshots
       feh # set wallpaper
+      imagemagick
       zathura # simple pdf viewer
       alacritty
       obsidian
@@ -51,7 +52,6 @@ in
       mpv
       xournalpp # pdf annotations
       xmodmap # util for modding keymaps and pointer button mappings in Xorg
-      #imagemagick # dup might be a problem?
     ];
 
     programs.firefox = {
