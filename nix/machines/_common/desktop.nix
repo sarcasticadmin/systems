@@ -123,8 +123,13 @@ in
   # required as of 25.05 since PAM services for i3lock now default to disabled
   programs.i3lock.enable = true;
 
-  environment.etc."i3status.conf" = {
-    source = "${inputs.self.packages.${pkgs.system}.dotfiles}/workstation/.i3status.conf";
+  environment.etc = {
+    "i3status.conf" = {
+      source = "${inputs.self.packages.${pkgs.system}.dotfiles}/workstation/.i3status.conf";
+    };
+    "alacritty/alacritty.toml" = {
+      source = "${inputs.self.packages.${pkgs.system}.dotfiles}/alacritty/.config/alacritty/alacritty.toml";
+    };
   };
 
   # good baseline of fonts
