@@ -60,8 +60,12 @@ in
       units # gnu-units for unit everyday unit conversions
     ];
 
-    # Purge nano from being the default
-    # this will also work for nvim since if its enabled it points vim -> nvim
-    environment.variables = { EDITOR = "vim"; };
+    environment = {
+      # Purge nano from being the default
+      # this will also work for nvim since if its enabled it points vim -> nvim
+      variables = { EDITOR = "vim"; };
+      # enable environment variables for lists of words (dictionary)
+      wordlist.enable = true;
+    };
   };
 }
