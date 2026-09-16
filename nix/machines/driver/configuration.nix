@@ -13,9 +13,6 @@ in
       ./wg.nix
     ];
 
-  # need to be 6.18 to avoid https://copy.fail/
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
-
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # enabled apropos and "man -K" searching
@@ -90,6 +87,7 @@ in
       magic-wormhole
       pkgs-unstable.nixpkgs-review
       nmap
+      mergiraf
       mob
       strace
       tailscale
