@@ -87,6 +87,7 @@ in
       magic-wormhole
       pkgs-unstable.nixpkgs-review
       nmap
+      mergiraf
       mob
       strace
       tailscale
