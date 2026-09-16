@@ -1,7 +1,7 @@
 { lib, stdenvNoCC, fetchFromGitHub }:
 let
   pname = "sarcasticadmin-dotfiles";
-  version = "2025.10.0";
+  version = "2026.4.0";
 in
 stdenvNoCC.mkDerivation {
   inherit pname version;
@@ -10,7 +10,7 @@ stdenvNoCC.mkDerivation {
     owner = "sarcasticadmin";
     repo = "dotfiles";
     rev = "${version}";
-    hash = "sha256-mIIkUsqRyqV6jMcPzCGZ6Qpdm9kYPbEsHNQxdpvMLbE=";
+    hash = "sha256-7Kc8lucW5do6nBLciTbun8f5RiWsyiSxfQD5HRF00T0=";
   };
 
   phases = "unpackPhase patchPhase installPhase";
